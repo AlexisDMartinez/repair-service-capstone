@@ -7,7 +7,7 @@ import Login from "./pages/Login";
 import Services from "./pages/Services";
 import Book from "./pages/Book";
 import Dashboard from "./pages/Dashboard";
-import AIAssistant from "./pages/AIAssistant";
+import AIAssistant from "./pages/AiAssistant";
 
 function App() {
   return (
