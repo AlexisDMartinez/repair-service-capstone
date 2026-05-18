@@ -6,13 +6,27 @@ function Services() {
 
   useEffect(() => {
     API.get("/services")
-      .then((res) => setServices(res.data))
-      .catch(() => alert("Could not load services."));
+      .then((res) => {
+        if (Array.isArray(res.data)) {
+          setServices(res.data);
+        } else {
+          setServices([]);
+          console.log("Unexpected services response:", res.data);
+        }
+      })
+      .catch((error) => {
+        console.log("Could not load services:", error);
+        setServices([]);
+      });
   }, []);
 
   return (
     <div className="page">
       <h1>Repair Services</h1>
+
+      {services.length === 0 && (
+        <p>No services are available right now.</p>
+      )}
 
       <div className="grid">
         {services.map((service) => (
@@ -31,3 +45,4 @@ function Services() {
 }
 
 export default Services;
+

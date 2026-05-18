@@ -12,16 +12,34 @@ function Book() {
   });
 
   useEffect(() => {
-    API.get("/services").then((res) => setServices(res.data));
+    API.get("/services")
+      .then((res) => {
+        if (Array.isArray(res.data)) {
+          setServices(res.data);
+        } else {
+          setServices([]);
+          console.log("Unexpected services response:", res.data);
+        }
+      })
+      .catch((error) => {
+        console.log("Could not load services:", error);
+        setServices([]);
+      });
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!form.service || !form.date || !form.time) {
+      alert("Please select a service, date, and time.");
+      return;
+    }
+
     try {
       await API.post("/bookings", form);
       alert("Booking created successfully.");
     } catch (error) {
+      console.log("Booking error:", error);
       alert("Booking failed. Make sure you are logged in.");
     }
   };
@@ -31,7 +49,12 @@ function Book() {
       <h1>Book a Repair Appointment</h1>
 
       <form onSubmit={handleSubmit}>
-        <select onChange={(e) => setForm({ ...form, service: e.target.value })}>
+        <select
+          value={form.service}
+          onChange={(e) =>
+            setForm({ ...form, service: e.target.value })
+          }
+        >
           <option value="">Select Service</option>
 
           {services.map((service) => (
@@ -43,20 +66,29 @@ function Book() {
 
         <input
           type="date"
-          onChange={(e) => setForm({ ...form, date: e.target.value })}
+          value={form.date}
+          onChange={(e) =>
+            setForm({ ...form, date: e.target.value })
+          }
         />
 
         <input
           type="time"
-          onChange={(e) => setForm({ ...form, time: e.target.value })}
+          value={form.time}
+          onChange={(e) =>
+            setForm({ ...form, time: e.target.value })
+          }
         />
 
         <textarea
           placeholder="Describe the repair issue"
-          onChange={(e) => setForm({ ...form, notes: e.target.value })}
+          value={form.notes}
+          onChange={(e) =>
+            setForm({ ...form, notes: e.target.value })
+          }
         />
 
-        <button>Book Appointment</button>
+        <button type="submit">Book Appointment</button>
       </form>
     </div>
   );
