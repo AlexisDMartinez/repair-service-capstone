@@ -120,20 +120,10 @@ https://github.com/AlexisDMartinez/repair-service-capstone
 
 ## AI Usage During Development
 
-AI tools were used throughout the project lifecycle to assist with:
+AI tools were used throughout the development process to assist with implementation, problem-solving, and project support.
 
-- architecture planning
-- debugging
-- API integration
-- frontend development
-- MongoDB setup
-- deployment troubleshooting
-- documentation generation
-- UI enhancement
-- backend route structure
-- React component generation
+All functionality and final implementation decisions were reviewed and tested before deployment.
 
-All generated code was reviewed, tested, and validated before deployment.
 
 ---
 
