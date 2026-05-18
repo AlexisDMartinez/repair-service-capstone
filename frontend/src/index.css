@@ -82,3 +82,55 @@ textarea {
 textarea {
   min-height: 120px;
 }
+.auth-page {
+  min-height: 100vh;
+  background: linear-gradient(to bottom right, #000000, #151515);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 480px;
+  background: #111111;
+  border: 1px solid #2d2d2d;
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.5);
+}
+
+.auth-card h1 {
+  color: #d4af37;
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 38px;
+}
+
+.auth-card h2 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.auth-card p {
+  text-align: center;
+  color: #cfcfcf;
+  margin-bottom: 25px;
+}
+
+.auth-switch {
+  margin-top: 20px;
+  text-align: center;
+  color: #d1d1d1;
+}
+
+.auth-switch span {
+  color: #d4af37;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.auth-switch span:hover {
+  text-decoration: underline;
+  
