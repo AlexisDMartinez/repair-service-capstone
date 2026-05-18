@@ -1,8 +1,8 @@
-# FixFlow AI-Powered Repair Service Platform
+# A&S Industrial AI-Powered Repair Service Platform
 
 ## Project Overview
 
-FixFlow is a full-stack AI-powered repair service booking platform that allows users to register, browse repair services, book appointments, manage bookings, and receive AI-generated repair recommendations.
+A&S Industrial is a full-stack AI-powered repair service booking platform that allows users to register, browse repair services, book appointments, manage bookings, and receive AI-generated repair recommendations.
 
 This project was built as a capstone portfolio application using React.js, Node.js, Express.js, and MongoDB.
 
@@ -168,4 +168,4 @@ All functionality and final implementation decisions were reviewed and tested be
 
 Alexis D Martinez
 
-Capstone Project – AI-Powered Full-Stack Service Booking Platform
+Capstone Project –  A&S Industrial AI-Powered Service Booking Platform
