@@ -125,12 +125,12 @@ textarea {
   color: #d1d1d1;
 }
 
-.auth-switch span {
+.auth-switch a {
   color: #d4af37;
-  cursor: pointer;
   font-weight: bold;
+  text-decoration: none;
 }
 
-.auth-switch span:hover {
+.auth-switch a:hover {
   text-decoration: underline;
-  
+}
