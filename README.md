@@ -1,105 +1,181 @@
-# Repair Service Capstone Project
+# FixFlow AI-Powered Repair Service Platform
 
-## Overview
+## Project Overview
 
-This project is a full-stack MERN repair service platform that allows users to register, log in, browse repair services, book repair appointments, manage bookings, and receive AI-generated repair recommendations.
+FixFlow is a full-stack AI-powered repair service booking platform that allows users to register, browse repair services, book appointments, manage bookings, and receive AI-generated repair recommendations.
 
-The application was built as a capstone project using MongoDB, Express.js, React, and Node.js.
-
----
-
-## Features
-
-- User Registration
-- User Login Authentication
-- Repair Service Listings
-- Appointment Booking System
-- Dashboard Management
-- AI Repair Recommendation Assistant
-- MongoDB Atlas Database Integration
-- Full MERN Stack Architecture
+This project was built as a capstone portfolio application using React.js, Node.js, Express.js, and MongoDB.
 
 ---
 
-## Technologies Used
+## Tech Stack
 
 ### Frontend
-- React
+- React.js
 - Vite
-- React Router DOM
+- React Router
 - Axios
-- CSS
 
 ### Backend
 - Node.js
 - Express.js
+- JWT Authentication
+
+### Database
 - MongoDB Atlas
 - Mongoose
-- JWT Authentication
+
+### Deployment
+- Vercel (Frontend)
+- Render (Backend)
 
 ---
 
-## Installation Instructions
+## Key Features
 
-### Backend Setup
+- User registration and login
+- JWT authentication
+- Browse repair services
+- Book repair appointments
+- User dashboard
+- AI-powered repair recommendation assistant
+- MongoDB database integration
+- Public cloud deployment
 
-cd backend
-npm install
-npm run dev
+---
+
+## AI-Powered Feature
+
+The application includes an AI-powered repair assistant that analyzes repair issue descriptions and recommends the most appropriate repair service for the user.
+
+This feature improves the booking workflow by helping users identify the correct service category before scheduling an appointment.
+
+---
+
+## Project Architecture
+
+### Presentation Layer
+- React.js frontend
+- Component-based structure
+- Responsive UI design
+- React Router navigation
+
+### Application Layer
+- Node.js and Express backend
+- REST API architecture
+- Authentication middleware
+- Booking and service management routes
+
+### Data Layer
+- MongoDB Atlas database
+- Mongoose schema models
+- Users, services, and bookings collections
+
+---
+
+## Setup Instructions
 
 ### Frontend Setup
 
+```bash
 cd frontend
 npm install
 npm run dev
+```
+
+### Backend Setup
+
+```bash
+cd backend
+npm install
+npm start
+```
 
 ---
 
-## API Routes
+## Environment Variables
+
+Create a `.env` file inside the backend folder:
+
+```env
+PORT=5000
+MONGO_URI=YOUR_MONGODB_CONNECTION_STRING
+JWT_SECRET=YOUR_SECRET_KEY
+```
+
+---
+
+## Deployment Links
+
+### Frontend
+https://repair-service-capstone.vercel.app/
+
+### Backend
+https://repair-service-backend.onrender.com
+
+### GitHub Repository
+https://github.com/AlexisDMartinez/repair-service-capstone
+
+---
+
+## AI Usage During Development
+
+AI tools were used throughout the project lifecycle to assist with:
+
+- architecture planning
+- debugging
+- API integration
+- frontend development
+- MongoDB setup
+- deployment troubleshooting
+- documentation generation
+- UI enhancement
+- backend route structure
+- React component generation
+
+All generated code was reviewed, tested, and validated before deployment.
+
+---
+
+## Main Functional Features
 
 ### Authentication
+- User registration
+- User login
+- JWT token authentication
+- Protected routes
 
-- POST /api/auth/register
-- POST /api/auth/login
+### Service Browsing
+- Browse repair services
+- View categories and descriptions
+- Display estimated pricing and duration
 
-### Services
+### Booking Management
+- Create appointments
+- View bookings in dashboard
+- Manage appointment information
 
-- GET /api/services
+### Dashboard
+- Display user bookings
+- Show booking summaries
+- Personalized user area
 
-### Bookings
-
-- POST /api/bookings
-- GET /api/bookings/my-bookings
-
-### AI Assistant
-
-- POST /api/ai/recommend
-
----
-
-## AI Feature
-
-The AI Repair Assistant analyzes user-submitted repair issues and generates recommended repair services using keyword-based recommendation logic.
-
-Example:
-
-- Laptop overheating → Computer Repair Service
-- Phone screen damage → Phone Screen Replacement
+### AI Integration
+- AI-powered repair recommendation assistant
+- User issue analysis and suggested repair service
 
 ---
 
-## Future Improvements
+## Deployment Platforms
 
-- OpenAI API integration
-- Payment processing
-- Technician assignment system
-- Email notifications
-- Admin dashboard
-- Mobile optimization
-- Live booking calendar
+- Frontend deployed on Vercel
+- Backend deployed on Render
+- Database hosted on MongoDB Atlas
 
 ---
 
 ## Author
 
-Your Name
+Alexis D Martinez
+
+Capstone Project – AI-Powered Full-Stack Service Booking Platform
