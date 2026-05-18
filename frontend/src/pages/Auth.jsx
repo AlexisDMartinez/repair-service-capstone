@@ -1,10 +1,23 @@
 import { useState } from "react";
-        });
+import axios from "axios";
 
-        localStorage.setItem("token", res.data.token);
+const API = axios.create({ baseURL: process.env.REACT_APP_API_URL || "" });
 
-        alert("Login successful");
-        navigate("/dashboard");
+function Auth() {
+  const [isLogin, setIsLogin] = useState(true);
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    password: ""
+  });
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      if (isLogin) {
+        await API.post("/auth/login", form);
+        alert("Login successful.");
       } else {
         await API.post("/auth/register", form);
 
@@ -39,6 +52,7 @@ import { useState } from "react";
           <button
             className={isLogin ? "active-auth" : "inactive-auth"}
             onClick={() => setIsLogin(true)}
+            type="button"
           >
             Login
           </button>
@@ -46,6 +60,7 @@ import { useState } from "react";
           <button
             className={!isLogin ? "active-auth" : "inactive-auth"}
             onClick={() => setIsLogin(false)}
+            type="button"
           >
             Register
           </button>
@@ -57,9 +72,7 @@ import { useState } from "react";
               type="text"
               placeholder="Full Name"
               value={form.name}
-              onChange={(e) =>
-                setForm({ ...form, name: e.target.value })
-              }
+              onChange={(e) => setForm({ ...form, name: e.target.value })}
             />
           )}
 
@@ -67,18 +80,14 @@ import { useState } from "react";
             type="email"
             placeholder="Email Address"
             value={form.email}
-            onChange={(e) =>
-              setForm({ ...form, email: e.target.value })
-            }
+            onChange={(e) => setForm({ ...form, email: e.target.value })}
           />
 
           <input
             type="password"
             placeholder="Password"
             value={form.password}
-            onChange={(e) =>
-              setForm({ ...form, password: e.target.value })
-            }
+            onChange={(e) => setForm({ ...form, password: e.target.value })}
           />
 
           <button type="submit">
