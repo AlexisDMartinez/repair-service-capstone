@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "repair-service-backend.onrender.com/api/services"
+  baseURL: "https://repair-service-backend.onrender.com/api"
 });
 
 API.interceptors.request.use((req) => {
