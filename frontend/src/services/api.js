@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://repair-service-backend.onrender.com"
+  baseURL: "repair-service-backend.onrender.com/api/services"
 });
 
 API.interceptors.request.use((req) => {
@@ -15,4 +15,3 @@ API.interceptors.request.use((req) => {
 });
 
 export default API;
-
