@@ -132,10 +132,16 @@ button:hover {
   font-weight: bold;
 }
 
+.nav-links {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+}
+
 .nav-links a {
-  margin-left: 20px;
   color: white;
   font-weight: bold;
+  transition: 0.3s;
 }
 
 .nav-links a:hover {
