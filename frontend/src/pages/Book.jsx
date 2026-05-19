@@ -1,7 +1,13 @@
 import { useEffect, useState } from "react";
 import API from "../services/api";
+import { Navigate } from "react-router-dom";
 
 function Book() {
+    const token = localStorage.getItem("token");
+
+if (!token) {
+  return <Navigate to="/login" />;
+}
   const [services, setServices] = useState([]);
 
   const [form, setForm] = useState({
