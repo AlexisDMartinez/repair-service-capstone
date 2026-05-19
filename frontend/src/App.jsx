@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
+import AIAssistantWidget from "./components/AIAssistantWidget";
 
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -13,6 +14,7 @@ function App() {
   return (
     <BrowserRouter>
       <Navbar />
+      <AIAssistantWidget />
 
       <Routes>
         <Route path="/" element={<Home />} />

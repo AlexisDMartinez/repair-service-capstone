@@ -201,3 +201,63 @@ button:hover {
   text-decoration: underline;
 }
 
+.ai-floating-button {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #d4af37;
+  color: black;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.ai-widget {
+  position: fixed;
+  bottom: 95px;
+  right: 25px;
+  width: 360px;
+  background: #111111;
+  color: white;
+  border: 1px solid #d4af37;
+  border-radius: 16px;
+  padding: 20px;
+  z-index: 1000;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+}
+
+.ai-widget-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ai-widget-header h3 {
+  color: #d4af37;
+  margin: 0;
+}
+
+.ai-close {
+  background: transparent;
+  color: white;
+  width: auto;
+  padding: 0;
+  font-size: 24px;
+}
+
+.ai-widget textarea {
+  min-height: 90px;
+}
+
+.ai-result {
+  margin-top: 15px;
+  padding: 12px;
+  border-radius: 10px;
+  background: #000000;
+  border: 1px solid #333333;
+}
+
