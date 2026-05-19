@@ -15,18 +15,19 @@ function App() {
       <Navbar />
 
       <Routes>
-        <Route path="/" element={<Home />} /> 
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/services" element={<Services />} />
         <Route path="/book" element={<Book />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/ai-assistant" element={<AIAssistant />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
       </Routes>
     </BrowserRouter>
   );
 }
 
 export default App;
+
 
 
