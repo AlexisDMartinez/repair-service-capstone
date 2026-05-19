@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import API from "../services/api";
 
 function Login() {
@@ -7,6 +8,8 @@ function Login() {
     password: ""
   });
 
+  const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -14,32 +17,58 @@ function Login() {
       const res = await API.post("/auth/login", form);
 
       localStorage.setItem("token", res.data.token);
-      localStorage.setItem("user", JSON.stringify(res.data.user));
 
-      alert("Login successful.");
+      alert("Login successful");
+
+      navigate("/dashboard");
     } catch (error) {
-      alert("Login failed.");
+      console.log(error);
+      alert("Invalid login credentials.");
     }
   };
 
   return (
-    <div className="page form-page">
-      <h1>Login</h1>
+    <div className="auth-page">
+      <div className="auth-card">
+        <h1>A&S Industrial</h1>
 
-      <form onSubmit={handleSubmit}>
-        <input
-          placeholder="Email"
-          onChange={(e) => setForm({ ...form, email: e.target.value })}
-        />
+        <h2>Welcome Back</h2>
 
-        <input
-          type="password"
-          placeholder="Password"
-          onChange={(e) => setForm({ ...form, password: e.target.value })}
-        />
+        <p>
+          Access your repair bookings and service dashboard
+        </p>
 
-        <button>Login</button>
-      </form>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="email"
+            placeholder="Email Address"
+            value={form.email}
+            onChange={(e) =>
+              setForm({ ...form, email: e.target.value })
+            }
+          />
+
+          <input
+            type="password"
+            placeholder="Password"
+            value={form.password}
+            onChange={(e) =>
+              setForm({ ...form, password: e.target.value })
+            }
+          />
+
+          <button type="submit">
+            Sign In
+          </button>
+        </form>
+
+        <p className="auth-switch">
+          Don&apos;t have an account?{" "}
+          <Link to="/register">
+            Create an account
+          </Link>
+        </p>
+      </div>
     </div>
   );
 }
