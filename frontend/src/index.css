@@ -1,45 +1,104 @@
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f4f7fb;
-  color: #222;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #000000;
+  color: #ffffff;
 }
 
-.navbar {
-  background: #101828;
-  color: white;
-  padding: 18px 40px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.navbar a {
-  color: white;
-  margin-left: 18px;
+a {
   text-decoration: none;
+  color: #d4af37;
 }
 
 .page {
   padding: 40px;
+  min-height: 100vh;
+  background: #000000;
+  color: #ffffff;
 }
 
 .hero {
   text-align: center;
-  padding: 100px 30px;
+  padding: 100px 20px;
+  background: linear-gradient(to bottom right, #000000, #111111);
 }
 
 .hero h1 {
-  font-size: 42px;
+  font-size: 52px;
+  margin-bottom: 20px;
+  color: #d4af37;
 }
 
 .hero p {
   font-size: 18px;
-  max-width: 700px;
-  margin: 20px auto;
+  max-width: 750px;
+  margin: auto;
+  color: #ffffff;
+  line-height: 1.7;
 }
 
-.button,
+.button {
+  display: inline-block;
+  margin-top: 30px;
+  background: #d4af37;
+  color: black;
+  padding: 14px 30px;
+  border-radius: 10px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.button:hover {
+  background: #f5d76e;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  margin-top: 30px;
+}
+
+.card {
+  background: #111111;
+  padding: 24px;
+  border-radius: 16px;
+  border: 1px solid #2d2d2d;
+  box-shadow: 0px 4px 15px rgba(0,0,0,0.5);
+}
+
+.card h3 {
+  color: #d4af37;
+}
+
+.card p {
+  color: #ffffff;
+  line-height: 1.6;
+}
+
+form {
+  max-width: 600px;
+  margin: auto;
+  background: #111111;
+  padding: 30px;
+  border-radius: 16px;
+  border: 1px solid #2d2d2d;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 14px;
+  margin-top: 15px;
+  border-radius: 10px;
+  border: 1px solid #333333;
+  background: #000000;
+  color: white;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
 button {
   width: 100%;
   margin-top: 20px;
@@ -48,6 +107,7 @@ button {
   border-radius: 10px;
   background: #d4af37;
   color: black;
+  font-size: 16px;
   font-weight: bold;
   cursor: pointer;
   transition: 0.3s;
@@ -57,38 +117,31 @@ button:hover {
   background: #f5d76e;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 20px;
-}
-
-.card {
-  background: white;
-  padding: 24px;
-  border-radius: 12px;
-  margin-bottom: 20px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-}
-
-.form-page form {
-  max-width: 500px;
+.navbar {
+  background: #000000;
+  padding: 20px 40px;
+  border-bottom: 1px solid #222222;
   display: flex;
-  flex-direction: column;
-  gap: 15px;
+  justify-content: space-between;
+  align-items: center;
 }
 
-input,
-select,
-textarea {
-  padding: 12px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
+.logo {
+  color: #d4af37;
+  font-size: 24px;
+  font-weight: bold;
 }
 
-textarea {
-  min-height: 120px;
+.nav-links a {
+  margin-left: 20px;
+  color: white;
+  font-weight: bold;
 }
+
+.nav-links a:hover {
+  color: #d4af37;
+}
+
 .auth-page {
   min-height: 100vh;
   background: linear-gradient(to bottom right, #000000, #151515);
@@ -136,9 +189,9 @@ textarea {
 .auth-switch a {
   color: #d4af37;
   font-weight: bold;
-  text-decoration: none;
 }
 
 .auth-switch a:hover {
   text-decoration: underline;
 }
+
