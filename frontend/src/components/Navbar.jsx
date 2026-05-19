@@ -10,7 +10,6 @@ function Navbar() {
         <Link to="/services">Services</Link>
         <Link to="/book">Book</Link>
         <Link to="/dashboard">Dashboard</Link>
-        <Link to="/ai-assistant">AI Assistant</Link>
         <Link to="/login">Account</Link>
       </div>
     </nav>

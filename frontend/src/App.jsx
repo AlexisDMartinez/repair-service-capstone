@@ -8,7 +8,6 @@ import Register from "./pages/Register";
 import Services from "./pages/Services";
 import Book from "./pages/Book";
 import Dashboard from "./pages/Dashboard";
-import AIAssistant from "./pages/AiAssistant";
 
 function App() {
   return (
@@ -23,7 +22,6 @@ function App() {
         <Route path="/services" element={<Services />} />
         <Route path="/book" element={<Book />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/ai-assistant" element={<AIAssistant />} />
       </Routes>
     </BrowserRouter>
   );
