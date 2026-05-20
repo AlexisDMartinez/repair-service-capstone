@@ -5,28 +5,54 @@ const router = express.Router();
 router.post("/recommend", async (req, res) => {
   const { issue } = req.body;
 
-  let recommendation = "General Repair Service";
+  const text = issue.toLowerCase();
+
+  let recommendation = "Custom Metal Fabrication";
 
   if (
-    issue.toLowerCase().includes("laptop") ||
-    issue.toLowerCase().includes("computer")
+    text.includes("gate") ||
+    text.includes("railing") ||
+    text.includes("weld") ||
+    text.includes("welding")
   ) {
-    recommendation = "Computer Repair Service";
-  }
-
-  if (
-    issue.toLowerCase().includes("phone") ||
-    issue.toLowerCase().includes("screen")
+    recommendation = "Railing & Gate Welding";
+  } else if (
+    text.includes("fence") ||
+    text.includes("pipe fence") ||
+    text.includes("pipe fencing")
   ) {
-    recommendation = "Phone Screen Replacement";
+    recommendation = "Pipe Fencing Services";
+  } else if (
+    text.includes("iron") ||
+    text.includes("steel") ||
+    text.includes("erection") ||
+    text.includes("structure") ||
+    text.includes("structural")
+  ) {
+    recommendation = "Structural Iron Erection";
+  } else if (
+    text.includes("fabrication") ||
+    text.includes("custom") ||
+    text.includes("metal") ||
+    text.includes("fabricate")
+  ) {
+    recommendation = "Custom Metal Fabrication";
+  } else if (
+    text.includes("pipe") ||
+    text.includes("piping") ||
+    text.includes("process") ||
+    text.includes("system")
+  ) {
+    recommendation = "Process Piping Systems";
   }
 
   res.json({
     recommendation,
     summary:
-      "AI analyzed the repair issue and generated a recommended service."
+      "AI reviewed your request and recommended the best matching A&S Industrial service."
   });
 });
 
 module.exports = router;
+
 

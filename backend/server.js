@@ -1,56 +1,39 @@
 const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+require("dotenv").config();
 
-const router = express.Router();
+const authRoutes = require("./routes/authRoutes");
+const serviceRoutes = require("./routes/serviceRoutes");
+const bookingRoutes = require("./routes/bookingRoutes");
+const aiRoutes = require("./routes/aiRoutes");
 
-router.post("/recommend", async (req, res) => {
-  const { issue } = req.body;
+const app = express();
 
-  const text = issue.toLowerCase();
+app.use(cors());
+app.use(express.json());
 
-  let recommendation = "Custom Metal Fabrication";
-
-  if (
-    text.includes("gate") ||
-    text.includes("railing") ||
-    text.includes("weld") ||
-    text.includes("welding")
-  ) {
-    recommendation = "Railing & Gate Welding";
-  } else if (
-    text.includes("fence") ||
-    text.includes("pipe fence") ||
-    text.includes("pipe fencing")
-  ) {
-    recommendation = "Pipe Fencing Services";
-  } else if (
-    text.includes("iron") ||
-    text.includes("steel") ||
-    text.includes("erection") ||
-    text.includes("structure") ||
-    text.includes("structural")
-  ) {
-    recommendation = "Structural Iron Erection";
-  } else if (
-    text.includes("fabrication") ||
-    text.includes("custom") ||
-    text.includes("metal") ||
-    text.includes("fabricate")
-  ) {
-    recommendation = "Custom Metal Fabrication";
-  } else if (
-    text.includes("pipe") ||
-    text.includes("piping") ||
-    text.includes("process") ||
-    text.includes("system")
-  ) {
-    recommendation = "Process Piping Systems";
-  }
-
-  res.json({
-    recommendation,
-    summary:
-      "AI reviewed your request and recommended the best matching A&S Industrial service."
-  });
+app.get("/", (req, res) => {
+  res.send("A&S Industrial Repair Services API is running");
 });
 
-module.exports = router;
+app.use("/api/auth", authRoutes);
+app.use("/api/services", serviceRoutes);
+app.use("/api/bookings", bookingRoutes);
+app.use("/api/ai", aiRoutes);
+
+const PORT = process.env.PORT || 5000;
+
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => {
+    console.log("MongoDB connected successfully");
+
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  })
+  .catch((error) => {
+    console.error("MongoDB connection failed:", error.message);
+  });
+  
