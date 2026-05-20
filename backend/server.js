@@ -1,27 +1,56 @@
 const express = require("express");
-const dotenv = require("dotenv");
-const cors = require("cors");
-const connectDB = require("./config/db");
 
-dotenv.config();
-connectDB();
+const router = express.Router();
 
-const app = express();
+router.post("/recommend", async (req, res) => {
+  const { issue } = req.body;
 
-app.use(cors());
-app.use(express.json());
+  const text = issue.toLowerCase();
 
-app.use("/api/auth", require("./routes/authRoutes"));
-app.use("/api/services", require("./routes/serviceRoutes"));
-app.use("/api/bookings", require("./routes/bookingRoutes"));
-app.use("/api/ai", require("./routes/aiRoutes"));
+  let recommendation = "Custom Metal Fabrication";
 
-app.get("/", (req, res) => {
-  res.send("FixFlow Repair Services API is running");
+  if (
+    text.includes("gate") ||
+    text.includes("railing") ||
+    text.includes("weld") ||
+    text.includes("welding")
+  ) {
+    recommendation = "Railing & Gate Welding";
+  } else if (
+    text.includes("fence") ||
+    text.includes("pipe fence") ||
+    text.includes("pipe fencing")
+  ) {
+    recommendation = "Pipe Fencing Services";
+  } else if (
+    text.includes("iron") ||
+    text.includes("steel") ||
+    text.includes("erection") ||
+    text.includes("structure") ||
+    text.includes("structural")
+  ) {
+    recommendation = "Structural Iron Erection";
+  } else if (
+    text.includes("fabrication") ||
+    text.includes("custom") ||
+    text.includes("metal") ||
+    text.includes("fabricate")
+  ) {
+    recommendation = "Custom Metal Fabrication";
+  } else if (
+    text.includes("pipe") ||
+    text.includes("piping") ||
+    text.includes("process") ||
+    text.includes("system")
+  ) {
+    recommendation = "Process Piping Systems";
+  }
+
+  res.json({
+    recommendation,
+    summary:
+      "AI reviewed the service request and recommended the best matching industrial service."
+  });
 });
 
-const PORT = process.env.PORT || 5000;
-
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+module.exports = router;
