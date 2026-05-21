@@ -264,4 +264,19 @@ button:hover {
   background: #000000;
   border: 1px solid #333333;
 }
+.logout-button {
+  background: #d4af37;
+  color: black;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  width: auto;
+  margin-top: 0;
+}
+
+.logout-button:hover {
+  background: #f5d76e;
+}
 
