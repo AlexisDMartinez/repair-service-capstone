@@ -26,7 +26,9 @@ function AppContent() {
     <>
       <Navbar />
 
-      {shouldShowAIWidget && <AIAssistantWidget />}
+      {shouldShowAIWidget && (
+        <AIAssistantWidget autoOpen={pathname === "/book"} />
+      )}
 
       <Routes>
         <Route path="/" element={<Home />} />
