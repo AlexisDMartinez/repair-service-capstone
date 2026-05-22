@@ -1,37 +1,44 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import API from "../services/api";
 
-function AIAssistantWidget() {
+function AIAssistantWidget({ autoOpen = false }) {
   const [open, setOpen] = useState(false);
   const [issue, setIssue] = useState("");
   const [result, setResult] = useState(null);
+
+  useEffect(() => {
+    if (autoOpen) {
+      setOpen(true);
+    }
+  }, [autoOpen]);
 
   const handleAskAI = async (e) => {
     e.preventDefault();
 
     try {
       const res = await API.post("/ai/recommend", { issue });
-
       setResult(res.data);
     } catch (error) {
       console.log(error);
-      alert("AI recommendation failed.");
+      alert("Recommendation failed.");
     }
   };
 
   return (
     <>
-      <button
-        className="ai-floating-button"
-        onClick={() => setOpen(!open)}
-      >
-        AI Service Assistant
-      </button>
+      {!open && (
+        <button
+          className="ai-floating-button"
+          onClick={() => setOpen(true)}
+        >
+          Service Match Assistant
+        </button>
+      )}
 
       {open && (
         <div className="ai-widget">
           <div className="ai-widget-header">
-            <h3>AI Repair Assistant</h3>
+            <h3>Service Match Assistant</h3>
 
             <button
               className="ai-close"
@@ -42,25 +49,22 @@ function AIAssistantWidget() {
           </div>
 
           <p>
-            Describe your issue and receive a repair service recommendation.
+            Not sure which service to book? Describe your project and we will recommend the best match.
           </p>
 
           <form onSubmit={handleAskAI}>
             <textarea
-              placeholder="Example: My laptop is overheating and shutting off."
+              placeholder="Example: I need a gate welded at my property."
               value={issue}
               onChange={(e) => setIssue(e.target.value)}
             />
 
-            <button type="submit">
-              Get Recommendation
-            </button>
+            <button type="submit">Get Recommendation</button>
           </form>
 
           {result && (
             <div className="ai-result">
               <strong>{result.recommendation}</strong>
-
               <p>{result.summary}</p>
             </div>
           )}
