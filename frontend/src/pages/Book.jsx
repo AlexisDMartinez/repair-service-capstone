@@ -21,6 +21,14 @@ function Book() {
 
   const today = new Date().toISOString().split("T")[0];
 
+  const timeSlots = [
+    "08:00",
+    "10:00",
+    "12:00",
+    "14:00",
+    "16:00"
+  ];
+
   useEffect(() => {
     API.get("/services")
       .then((res) => {
@@ -49,19 +57,11 @@ function Book() {
   const handleDateChange = (selectedDate) => {
     if (fullyBookedDates.includes(selectedDate)) {
       alert("This date is fully booked. Please select another date.");
-
-      setForm({
-        ...form,
-        date: ""
-      });
-
+      setForm({ ...form, date: "" });
       return;
     }
 
-    setForm({
-      ...form,
-      date: selectedDate
-    });
+    setForm({ ...form, date: selectedDate });
   };
 
   const handleSubmit = async (e) => {
@@ -69,16 +69,6 @@ function Book() {
 
     if (!form.service || !form.date || !form.time) {
       alert("Please select a service, date, and time.");
-      return;
-    }
-
-    if (form.date < today) {
-      alert("Please select today or a future date.");
-      return;
-    }
-
-    if (fullyBookedDates.includes(form.date)) {
-      alert("This date is fully booked. Please select another date.");
       return;
     }
 
@@ -95,22 +85,20 @@ function Book() {
       });
     } catch (error) {
       console.log("Booking error:", error);
-      alert("Booking failed. Make sure you are logged in.");
+      alert("Booking failed. Please try again.");
     }
   };
 
   return (
     <div className="page form-page">
-      <h1>Book a Repair Appointment</h1>
+      <h1>Book a Service Appointment</h1>
 
       <form onSubmit={handleSubmit}>
+        <label>Service</label>
         <select
           value={form.service}
           onChange={(e) =>
-            setForm({
-              ...form,
-              service: e.target.value
-            })
+            setForm({ ...form, service: e.target.value })
           }
         >
           <option value="">Select Service</option>
@@ -122,6 +110,7 @@ function Book() {
           ))}
         </select>
 
+        <label>Appointment Date</label>
         <input
           type="date"
           min={today}
@@ -129,25 +118,28 @@ function Book() {
           onChange={(e) => handleDateChange(e.target.value)}
         />
 
-        <input
-          type="time"
+        <label>Appointment Time</label>
+        <select
           value={form.time}
           onChange={(e) =>
-            setForm({
-              ...form,
-              time: e.target.value
-            })
+            setForm({ ...form, time: e.target.value })
           }
-        />
+        >
+          <option value="">Select Time Slot</option>
 
+          {timeSlots.map((slot) => (
+            <option value={slot} key={slot}>
+              {slot}
+            </option>
+          ))}
+        </select>
+
+        <label>Project Notes</label>
         <textarea
-          placeholder="Describe the repair issue"
+          placeholder="Describe the service needed"
           value={form.notes}
           onChange={(e) =>
-            setForm({
-              ...form,
-              notes: e.target.value
-            })
+            setForm({ ...form, notes: e.target.value })
           }
         />
 
@@ -158,4 +150,5 @@ function Book() {
 }
 
 export default Book;
+
 
