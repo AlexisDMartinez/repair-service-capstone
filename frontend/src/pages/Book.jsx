@@ -22,12 +22,13 @@ function Book() {
   const today = new Date().toISOString().split("T")[0];
 
   const timeSlots = [
-    "08:00",
-    "10:00",
-    "12:00",
-    "14:00",
-    "16:00"
-  ];
+  "7:00 AM",
+  "9:00 AM",
+  "11:00 AM",
+  "1:00 PM",
+  "3:00 PM",
+  "5:00 PM"
+];
 
   useEffect(() => {
     API.get("/services")
