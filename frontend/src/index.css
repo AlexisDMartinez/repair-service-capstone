@@ -321,13 +321,14 @@ input[type="date"] {
 }
 
 input[type="date"]::-webkit-calendar-picker-indicator {
-  filter: invert(1);
-  opacity: 1;
   cursor: pointer;
+  opacity: 1;
+  filter: invert(1) brightness(100);
 }
 
 input[type="time"]::-webkit-calendar-picker-indicator {
-  filter: invert(84%) sepia(30%) saturate(600%) hue-rotate(360deg);
   cursor: pointer;
+  opacity: 1;
+  filter: invert(1) brightness(100);
 }
 
