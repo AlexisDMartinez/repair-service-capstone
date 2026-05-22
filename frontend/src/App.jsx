@@ -7,6 +7,7 @@ import {
 
 import Navbar from "./components/Navbar";
 import AIAssistantWidget from "./components/AIAssistantWidget";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -20,23 +21,59 @@ const AI_ENABLED_ROUTES = ["/services", "/book"];
 function AppContent() {
   const { pathname } = useLocation();
 
-  const shouldShowAIWidget = AI_ENABLED_ROUTES.includes(pathname);
+  const shouldShowAIWidget =
+    AI_ENABLED_ROUTES.includes(pathname);
 
   return (
     <>
       <Navbar />
 
       {shouldShowAIWidget && (
-        <AIAssistantWidget autoOpen={pathname === "/book"} />
+        <AIAssistantWidget
+          autoOpen={pathname === "/book"}
+        />
       )}
 
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/services" element={<Services />} />
-        <Route path="/book" element={<Book />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+
+        <Route
+          path="/"
+          element={<Home />}
+        />
+
+        <Route
+          path="/login"
+          element={<Login />}
+        />
+
+        <Route
+          path="/register"
+          element={<Register />}
+        />
+
+        <Route
+          path="/services"
+          element={<Services />}
+        />
+
+        <Route
+          path="/book"
+          element={
+            <ProtectedRoute>
+              <Book />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+
       </Routes>
     </>
   );
@@ -51,7 +88,3 @@ function App() {
 }
 
 export default App;
-
-
-
-
