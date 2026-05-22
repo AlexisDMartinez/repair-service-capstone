@@ -49,7 +49,7 @@ router.post("/recommend", async (req, res) => {
   res.json({
     recommendation,
     summary:
-      "AI reviewed your request and recommended the best matching A&S Industrial service."
+      "The submitted project requirements were evaluated and aligned with the most appropriate A&S Industrial service solution."
   });
 });
 
