@@ -13,6 +13,36 @@ router.post("/", protect, createBooking);
 router.get("/my-bookings", protect, getMyBookings);
 router.put("/cancel/:id", protect, cancelBooking);
 
+// Get booked dates that reached daily capacity
+router.get("/fully-booked/dates", async (req, res) => {
+  try {
+    const bookings = await Booking.aggregate([
+      {
+        $match: {
+          status: { $ne: "Cancelled" }
+        }
+      },
+      {
+        $group: {
+          _id: "$date",
+          count: { $sum: 1 }
+        }
+      },
+      {
+        $match: {
+          count: { $gte: 5 }
+        }
+      }
+    ]);
+
+    const fullyBookedDates = bookings.map((booking) => booking._id);
+
+    res.json(fullyBookedDates);
+  } catch (error) {
+    res.status(500).json({ message: "Unable to load booked dates" });
+  }
+});
+
 module.exports = router;
 // Update booking
 router.put("/:id", authMiddleware, async (req, res) => {
