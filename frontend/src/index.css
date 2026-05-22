@@ -279,4 +279,54 @@ button:hover {
 .logout-button:hover {
   background: #f5d76e;
 }
+.form-page form {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.form-page label {
+  color: #d4af37;
+  font-weight: bold;
+  margin-bottom: -10px;
+}
+
+.form-page input,
+.form-page select,
+.form-page textarea {
+  background: #111111;
+  color: white;
+  border: 1px solid #444444;
+  padding: 14px;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+.form-page textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.form-page input:focus,
+.form-page select:focus,
+.form-page textarea:focus {
+  outline: none;
+  border: 1px solid #d4af37;
+  box-shadow: 0 0 8px rgba(212, 175, 55, 0.5);
+}
+
+/* Calendar icon styling */
+input[type="date"] {
+  color-scheme: dark;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(84%) sepia(30%) saturate(600%) hue-rotate(360deg);
+  cursor: pointer;
+}
+
+input[type="time"]::-webkit-calendar-picker-indicator {
+  filter: invert(84%) sepia(30%) saturate(600%) hue-rotate(360deg);
+  cursor: pointer;
+}
 
