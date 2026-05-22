@@ -7,10 +7,22 @@ function AIAssistantWidget({ autoOpen = false }) {
   const [result, setResult] = useState(null);
 
   useEffect(() => {
-    if (autoOpen) {
-      setOpen(true);
-    }
-  }, [autoOpen]);
+
+  let timer;
+
+  if (autoOpen) {
+
+    setOpen(true);
+
+    timer = setTimeout(() => {
+      setOpen(false);
+    }, 10000);
+
+  }
+
+  return () => clearTimeout(timer);
+
+    }, [autoOpen]);
 
   const handleAskAI = async (e) => {
     e.preventDefault();
