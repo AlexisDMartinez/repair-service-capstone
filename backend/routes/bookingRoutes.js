@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const protect = require("../middleware/authMiddleware");
+const adminMiddleware = require("../middleware/adminMiddleware");
 
 const {
   createBooking,
@@ -42,6 +43,26 @@ router.get("/fully-booked/dates", async (req, res) => {
     res.status(500).json({ message: "Unable to load booked dates" });
   }
 });
+
+router.get(
+  "/admin/all",
+  authMiddleware,
+  adminMiddleware,
+  async (req, res) => {
+    try {
+      const bookings = await Booking.find()
+        .populate("user", "name email")
+        .populate("service")
+        .sort({ createdAt: -1 });
+
+      res.json(bookings);
+    } catch (error) {
+      res.status(500).json({
+        message: "Unable to load admin bookings"
+      });
+    }
+  }
+);
 
 module.exports = router;
 // Update booking

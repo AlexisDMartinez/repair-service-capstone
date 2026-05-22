@@ -17,10 +17,15 @@ function Login() {
       const res = await API.post("/auth/login", form);
 
       localStorage.setItem("token", res.data.token);
+      localStorage.setItem("user", JSON.stringify(res.data.user));
 
       alert("Login successful");
 
-      navigate("/dashboard");
+      if (res.data.user?.role === "admin") {
+        navigate("/admin-dashboard");
+      } else {
+        navigate("/dashboard");
+      }
     } catch (error) {
       console.log(error);
       alert("Invalid login credentials.");
@@ -74,4 +79,3 @@ function Login() {
 }
 
 export default Login;
-

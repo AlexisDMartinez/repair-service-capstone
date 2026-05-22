@@ -15,6 +15,7 @@ import Register from "./pages/Register";
 import Services from "./pages/Services";
 import Book from "./pages/Book";
 import Dashboard from "./pages/Dashboard";
+import AdminDashboard from "./pages/AdminDashboard";
 
 const AI_ENABLED_ROUTES = ["/services", "/book"];
 
@@ -74,6 +75,15 @@ function AppContent() {
           }
         />
 
+        <Route
+          path="/admin-dashboard"
+          element={
+            <ProtectedRoute>
+              <AdminDashboard />
+            </ProtectedRoute>
+          }
+        />
+
       </Routes>
     </>
   );
@@ -88,3 +98,4 @@ function App() {
 }
 
 export default App;
+

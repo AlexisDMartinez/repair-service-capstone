@@ -22,7 +22,8 @@ const registerUser = async (req, res) => {
 
     res.status(201).json({
       message: "User registered successfully",
-      userId: user._id
+      userId: user._id,
+      role: user.role
     });
   } catch (error) {
     res.status(500).json({ message: "Registration failed" });
@@ -45,9 +46,16 @@ const loginUser = async (req, res) => {
       return res.status(400).json({ message: "Invalid email or password" });
     }
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "1d"
-    });
+    const token = jwt.sign(
+      {
+        id: user._id,
+        role: user.role
+      },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "1d"
+      }
+    );
 
     res.json({
       message: "Login successful",
@@ -55,7 +63,8 @@ const loginUser = async (req, res) => {
       user: {
         id: user._id,
         name: user.name,
-        email: user.email
+        email: user.email,
+        role: user.role
       }
     });
   } catch (error) {
@@ -64,3 +73,4 @@ const loginUser = async (req, res) => {
 };
 
 module.exports = { registerUser, loginUser };
+
