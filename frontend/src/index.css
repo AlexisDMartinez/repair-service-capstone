@@ -393,8 +393,14 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   margin-bottom: 40px;
 }
 
+.service-details {
+  margin-top: 28px;
+  padding-top: 18px;
+  border-top: 1px solid #2d2d2d;
+}
+
 .service-details p {
-  margin: 3px 0;
+  margin: 4px 0;
   line-height: 1.2;
 }
 
