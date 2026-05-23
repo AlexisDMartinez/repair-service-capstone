@@ -3,7 +3,7 @@ import API from "../services/api";
 
 function AIAssistantWidget({
   autoOpen = false,
-  autoCloseDelay = 10000
+  autoCloseDelay = 5000
 }) {
   const [open, setOpen] = useState(false);
   const [issue, setIssue] = useState("");
