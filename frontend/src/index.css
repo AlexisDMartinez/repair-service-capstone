@@ -651,3 +651,59 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     font-size: 28px;
   }
 }
+
+.mobile-menu-button {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    position: relative;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .mobile-menu-button {
+    display: block;
+    background: #d4af37;
+    color: black;
+    border: none;
+    font-size: 28px;
+    font-weight: bold;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    width: auto;
+    margin: 0;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 0;
+    right: -260px;
+    width: 240px;
+    height: 100vh;
+    background: #111111;
+    border-left: 1px solid #d4af37;
+    padding: 90px 24px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    transition: right 0.3s ease;
+    z-index: 2000;
+  }
+
+  .nav-links.open {
+    right: 0;
+  }
+
+  .nav-links a {
+    font-size: 22px;
+  }
+
+  .logout-button {
+    width: 100%;
+    margin-top: 10px;
+  }
+}

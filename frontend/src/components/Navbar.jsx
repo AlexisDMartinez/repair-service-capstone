@@ -1,6 +1,9 @@
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 function Navbar() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   const token = localStorage.getItem("token");
   const user = JSON.parse(localStorage.getItem("user"));
 
@@ -10,6 +13,7 @@ function Navbar() {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
 
+    setMenuOpen(false);
     navigate("/login");
   };
 
@@ -19,26 +23,57 @@ function Navbar() {
     <nav className="navbar">
       <h2 className="logo">A&S Industrial</h2>
 
-      <div className="nav-links">
+      <button
+        className="mobile-menu-button"
+        onClick={() => setMenuOpen(!menuOpen)}
+      >
+        ☰
+      </button>
+
+      <div className={`nav-links ${menuOpen ? "open" : ""}`}>
         {!token && (
           <>
-            <Link to="/">Home</Link>
-            <Link to="/services">Services</Link>
-            <Link to="/login">Account</Link>
+            <Link to="/" onClick={() => setMenuOpen(false)}>
+              Home
+            </Link>
+
+            <Link to="/services" onClick={() => setMenuOpen(false)}>
+              Services
+            </Link>
+
+            <Link to="/login" onClick={() => setMenuOpen(false)}>
+              Account
+            </Link>
           </>
         )}
 
         {token && !isAdmin && (
           <>
-            <Link to="/">Home</Link>
-            <Link to="/services">Services</Link>
-            <Link to="/book">Book</Link>
-            <Link to="/dashboard">Dashboard</Link>
+            <Link to="/" onClick={() => setMenuOpen(false)}>
+              Home
+            </Link>
+
+            <Link to="/services" onClick={() => setMenuOpen(false)}>
+              Services
+            </Link>
+
+            <Link to="/book" onClick={() => setMenuOpen(false)}>
+              Book
+            </Link>
+
+            <Link to="/dashboard" onClick={() => setMenuOpen(false)}>
+              Dashboard
+            </Link>
           </>
         )}
 
         {token && isAdmin && (
-          <Link to="/admin-dashboard">Admin Dashboard</Link>
+          <Link
+            to="/admin-dashboard"
+            onClick={() => setMenuOpen(false)}
+          >
+            Admin Dashboard
+          </Link>
         )}
 
         {token && (
@@ -55,7 +90,3 @@ function Navbar() {
 }
 
 export default Navbar;
-
-
-
-
