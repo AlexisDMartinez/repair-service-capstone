@@ -276,6 +276,25 @@ select {
   min-height: 100px;
 }
 
+.ai-widget button[type="submit"] {
+  background: #d4af37;
+  color: black;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  display: block;
+  margin: 20px auto 0 auto;
+  width: fit-content;
+  box-shadow: 0px 4px 12px rgba(212, 175, 55, 0.2);
+}
+
+.ai-widget button[type="submit"]:hover {
+  background: #e5c14a;
+}
+
 .ai-result {
   margin-top: 15px;
   padding: 14px;
