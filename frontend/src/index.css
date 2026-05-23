@@ -205,6 +205,26 @@ select {
   line-height: 1.6;
 }
 
+.auth-card button {
+  background: #d4af37;
+  color: black;
+  border: none;
+  padding: 14px 24px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 18px;
+  cursor: pointer;
+  display: block;
+  margin: 24px auto 0 auto;
+  width: 100%;
+  max-width: 220px;
+  transition: 0.3s;
+}
+
+.auth-card button:hover {
+  background: #e5c14a;
+}
+
 .auth-switch {
   margin-top: 25px;
   text-align: center;
