@@ -1,8 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
 
 function Navbar() {
-
   const token = localStorage.getItem("token");
+  const user = JSON.parse(localStorage.getItem("user"));
 
   const navigate = useNavigate();
 
@@ -13,27 +13,35 @@ function Navbar() {
     navigate("/login");
   };
 
+  const isAdmin = user?.role === "admin";
+
   return (
     <nav className="navbar">
       <h2 className="logo">A&S Industrial</h2>
 
       <div className="nav-links">
+        {!token && (
+          <>
+            <Link to="/">Home</Link>
+            <Link to="/services">Services</Link>
+            <Link to="/login">Account</Link>
+          </>
+        )}
 
-        <Link to="/">Home</Link>
+        {token && !isAdmin && (
+          <>
+            <Link to="/">Home</Link>
+            <Link to="/services">Services</Link>
+            <Link to="/book">Book</Link>
+            <Link to="/dashboard">Dashboard</Link>
+          </>
+        )}
 
-        <Link to="/services">Services</Link>
-
-        {token && (
-          <Link to="/book">Book</Link>
+        {token && isAdmin && (
+          <Link to="/admin-dashboard">Admin Dashboard</Link>
         )}
 
         {token && (
-          <Link to="/dashboard">Dashboard</Link>
-        )}
-
-        {!token ? (
-          <Link to="/login">Account</Link>
-        ) : (
           <button
             className="logout-button"
             onClick={handleLogout}
@@ -41,13 +49,13 @@ function Navbar() {
             Logout
           </button>
         )}
-
       </div>
     </nav>
   );
 }
 
 export default Navbar;
+
 
 
 
