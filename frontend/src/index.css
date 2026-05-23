@@ -375,6 +375,28 @@ select {
   background: #e5c14a;
 }
 
+.edit-booking-buttons {
+  display: flex;
+  gap: 14px;
+  margin-top: 24px;
+}
+
+.edit-booking-buttons button {
+  background: #d4af37;
+  color: black;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  flex: 1;
+  transition: 0.3s;
+}
+
+.edit-booking-buttons button:hover {
+  background: #e5c14a;
+}
 
 .form-page form {
   display: flex;
