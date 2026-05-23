@@ -1,21 +1,23 @@
 function EditBookingForm({
-  editForm = {
-    date: "",
-    time: "",
-    notes: ""
-  },
+  editForm,
   setEditForm,
   onSave,
   onCancel
 }) {
+  const safeForm = editForm || {
+    date: "",
+    time: "",
+    notes: ""
+  };
+
   return (
     <>
       <input
         type="date"
-        value={editForm.date || ""}
+        value={safeForm.date || ""}
         onChange={(e) =>
           setEditForm({
-            ...editForm,
+            ...safeForm,
             date: e.target.value
           })
         }
@@ -23,10 +25,10 @@ function EditBookingForm({
 
       <input
         type="time"
-        value={editForm.time || ""}
+        value={safeForm.time || ""}
         onChange={(e) =>
           setEditForm({
-            ...editForm,
+            ...safeForm,
             time: e.target.value
           })
         }
@@ -34,10 +36,10 @@ function EditBookingForm({
 
       <textarea
         placeholder="Update notes"
-        value={editForm.notes || ""}
+        value={safeForm.notes || ""}
         onChange={(e) =>
           setEditForm({
-            ...editForm,
+            ...safeForm,
             notes: e.target.value
           })
         }
