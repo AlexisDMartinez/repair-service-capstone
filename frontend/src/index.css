@@ -229,11 +229,12 @@ select {
   font-weight: bold;
   border: none;
   border-radius: 50px;
-  padding: 16px 24px;
+  padding: 18px 30px;
   cursor: pointer;
   z-index: 1000;
   width: auto;
   height: auto;
+  font-size: 18px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
 }
 

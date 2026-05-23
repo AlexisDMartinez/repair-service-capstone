@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import API from "../services/api";
+import AIAssistantWidget from "../components/AIAssistantWidget";
 
 function Services() {
   const [services, setServices] = useState([]);
@@ -22,6 +23,8 @@ function Services() {
 
   return (
     <div className="page">
+      <AIAssistantWidget autoOpen={true} autoCloseDelay={5000} />
+
       <h1>Repair Services</h1>
 
       {services.length === 0 && (
@@ -60,5 +63,3 @@ function Services() {
 }
 
 export default Services;
-
-

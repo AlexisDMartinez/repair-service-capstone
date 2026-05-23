@@ -17,7 +17,7 @@ import Book from "./pages/Book";
 import Dashboard from "./pages/Dashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 
-const AI_ENABLED_ROUTES = ["/services", "/book"];
+const AI_ENABLED_ROUTES = ["/book"];
 
 function AppContent() {
   const { pathname } = useLocation();
@@ -98,4 +98,3 @@ function App() {
 }
 
 export default App;
-

@@ -1,28 +1,27 @@
 import { useEffect, useState } from "react";
 import API from "../services/api";
 
-function AIAssistantWidget({ autoOpen = false }) {
+function AIAssistantWidget({
+  autoOpen = false,
+  autoCloseDelay = 10000
+}) {
   const [open, setOpen] = useState(false);
   const [issue, setIssue] = useState("");
   const [result, setResult] = useState(null);
 
   useEffect(() => {
+    let timer;
 
-  let timer;
+    if (autoOpen) {
+      setOpen(true);
 
-  if (autoOpen) {
+      timer = setTimeout(() => {
+        setOpen(false);
+      }, autoCloseDelay);
+    }
 
-    setOpen(true);
-
-    timer = setTimeout(() => {
-      setOpen(false);
-    }, 10000);
-
-  }
-
-  return () => clearTimeout(timer);
-
-    }, [autoOpen]);
+    return () => clearTimeout(timer);
+  }, [autoOpen, autoCloseDelay]);
 
   const handleAskAI = async (e) => {
     e.preventDefault();
@@ -71,7 +70,9 @@ function AIAssistantWidget({ autoOpen = false }) {
               onChange={(e) => setIssue(e.target.value)}
             />
 
-            <button type="submit">Get Recommendation</button>
+            <button type="submit">
+              Get Recommendation
+            </button>
           </form>
 
           {result && (
@@ -87,4 +88,3 @@ function AIAssistantWidget({ autoOpen = false }) {
 }
 
 export default AIAssistantWidget;
-
