@@ -88,7 +88,7 @@ function AdminDashboard() {
           </p>
 
           {booking.status !== "Cancelled" && (
-            <>
+            <div className="admin-actions">
               <button
                 onClick={() => requestTimeChange(booking._id)}
               >
@@ -100,7 +100,7 @@ function AdminDashboard() {
               >
                 Cancel Customer Booking
               </button>
-            </>
+            </div>
           )}
         </div>
       ))}
@@ -109,4 +109,3 @@ function AdminDashboard() {
 }
 
 export default AdminDashboard;
-
