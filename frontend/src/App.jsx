@@ -31,7 +31,10 @@ function AppContent() {
 
       {shouldShowAIWidget && (
         <AIAssistantWidget
-          autoOpen={pathname === "/book"}
+          autoOpen={
+            pathname === "/book" &&
+            window.innerWidth > 768
+          }
         />
       )}
 
