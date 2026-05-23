@@ -10,17 +10,23 @@ function AIAssistantWidget({
   const [result, setResult] = useState(null);
 
   useEffect(() => {
-    let timer;
+    let openTimer;
+    let closeTimer;
 
     if (autoOpen) {
-      setOpen(true);
+      openTimer = setTimeout(() => {
+        setOpen(true);
 
-      timer = setTimeout(() => {
-        setOpen(false);
-      }, autoCloseDelay);
+        closeTimer = setTimeout(() => {
+          setOpen(false);
+        }, autoCloseDelay);
+      }, 3000);
     }
 
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(openTimer);
+      clearTimeout(closeTimer);
+    };
   }, [autoOpen, autoCloseDelay]);
 
   const handleAskAI = async (e) => {
