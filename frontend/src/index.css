@@ -40,18 +40,16 @@ a {
   line-height: 1.7;
 }
 
-button {
+.button {
+  display: inline-block;
+  margin-top: 30px;
   background: #d4af37;
   color: black;
-  border: none;
-  padding: 12px 28px;
-  border-radius: 8px;
+  padding: 18px 40px;
+  border-radius: 12px;
   font-weight: bold;
-  font-size: 16px;
-  cursor: pointer;
+  font-size: 22px;
   transition: 0.3s;
-  width: 100%;
-  margin-top: 18px;
 }
 
 .button:hover {
@@ -62,13 +60,16 @@ button {
   background: #d4af37;
   color: black;
   border: none;
-  padding: 8px 14px;
-  border-radius: 8px;
+  padding: 16px 24px;
+  border-radius: 10px;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 20px;
   cursor: pointer;
   transition: 0.3s;
-  width: auto;
+  width: 100%;
+  max-width: 220px;
+  margin: 25px auto 0 auto;
+  display: block;
 }
 
 button:hover {
@@ -333,8 +334,6 @@ select {
   box-shadow: 0 0 8px rgba(212, 175, 55, 0.5);
 }
 
-/* Calendar icon styling */
-
 input[type="date"] {
   color-scheme: light;
 }
@@ -358,7 +357,8 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 
 .hero-section {
   min-height: 85vh;
-  background-image: linear-gradient(
+  background-image:
+    linear-gradient(
       rgba(0, 0, 0, 0.65),
       rgba(0, 0, 0, 0.75)
     ),
