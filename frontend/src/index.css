@@ -392,3 +392,12 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   line-height: 1.7;
   margin-bottom: 40px;
 }
+
+.service-details p {
+  margin: 3px 0;
+  line-height: 1.2;
+}
+
+.service-details strong {
+  color: #d4af37;
+}

@@ -32,11 +32,26 @@ function Services() {
         {services.map((service) => (
           <div className="card" key={service._id}>
             <h3>{service.name}</h3>
+
             <p>{service.description}</p>
-            <p><strong>Category:</strong> {service.category}</p>
-            <p><strong>Duration:</strong> {service.duration}</p>
-            <p><strong>Estimate:</strong> {service.priceEstimate}</p>
-            <a className="button" href="/book">Book Service</a>
+
+            <div className="service-details">
+              <p>
+                <strong>Category:</strong> {service.category}
+              </p>
+
+              <p>
+                <strong>Duration:</strong> {service.duration}
+              </p>
+
+              <p>
+                <strong>Estimate:</strong> {service.priceEstimate}
+              </p>
+            </div>
+
+            <a className="button" href="/book">
+              Book Service
+            </a>
           </div>
         ))}
       </div>
@@ -45,4 +60,5 @@ function Services() {
 }
 
 export default Services;
+
 
