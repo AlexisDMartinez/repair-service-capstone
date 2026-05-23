@@ -42,15 +42,19 @@ function BookingCard({
           </p>
 
           {booking.status !== "Cancelled" && (
-            <>
-              <button onClick={() => onStartEditing(booking)}>
+            <div className="dashboard-actions">
+              <button
+                onClick={() => onStartEditing(booking)}
+              >
                 Update Booking
               </button>
 
-              <button onClick={() => onCancelBooking(booking._id)}>
+              <button
+                onClick={() => onCancelBooking(booking._id)}
+              >
                 Cancel Booking
               </button>
-            </>
+            </div>
           )}
         </>
       )}
