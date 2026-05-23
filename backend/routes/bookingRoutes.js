@@ -3,6 +3,7 @@ const router = express.Router();
 
 const protect = require("../middleware/authMiddleware");
 const adminMiddleware = require("../middleware/adminMiddleware");
+const Booking = require("../models/Booking");
 
 const {
   createBooking,
@@ -10,60 +11,13 @@ const {
   cancelBooking
 } = require("../controllers/bookingController");
 
+// Create booking
 router.post("/", protect, createBooking);
+
+// Get logged-in user's bookings
 router.get("/my-bookings", protect, getMyBookings);
-router.put("/cancel/:id", protect, cancelBooking);
 
 // Get booked dates that reached daily capacity
-router.get("/fully-booked/dates", async (req, res) => {
-  try {
-    const bookings = await Booking.aggregate([
-      {
-        $match: {
-          status: { $ne: "Cancelled" }
-        }
-      },
-      {
-        $group: {
-          _id: "$date",
-          count: { $sum: 1 }
-        }
-      },
-      {
-        $match: {
-          count: { $gte: 5 }
-        }
-      }
-    ]);
-
-    const fullyBookedDates = bookings.map((booking) => booking._id);
-
-    res.json(fullyBookedDates);
-  } catch (error) {
-    res.status(500).json({ message: "Unable to load booked dates" });
-  }
-});
-
-router.get(
-  "/admin/all",
-  authMiddleware,
-  adminMiddleware,
-  async (req, res) => {
-    try {
-      const bookings = await Booking.find()
-        .populate("user", "name email")
-        .populate("service")
-        .sort({ createdAt: -1 });
-
-      res.json(bookings);
-    } catch (error) {
-      res.status(500).json({
-        message: "Unable to load admin bookings"
-      });
-    }
-  }
-);
-
 router.get("/fully-booked/dates", async (req, res) => {
   try {
     const bookings = await Booking.aggregate([
@@ -95,9 +49,24 @@ router.get("/fully-booked/dates", async (req, res) => {
   }
 });
 
-module.exports = router;
+// Admin: get all bookings
+router.get("/admin/all", protect, adminMiddleware, async (req, res) => {
+  try {
+    const bookings = await Booking.find()
+      .populate("user", "name email")
+      .populate("service")
+      .sort({ createdAt: -1 });
+
+    res.json(bookings);
+  } catch (error) {
+    res.status(500).json({
+      message: "Unable to load admin bookings"
+    });
+  }
+});
+
 // Update booking
-router.put("/:id", authMiddleware, async (req, res) => {
+router.put("/:id", protect, async (req, res) => {
   try {
     const { date, time, notes } = req.body;
 
@@ -117,37 +86,20 @@ router.put("/:id", authMiddleware, async (req, res) => {
     ).populate("service");
 
     if (!booking) {
-      return res.status(404).json({ message: "Booking not found" });
+      return res.status(404).json({
+        message: "Booking not found"
+      });
     }
 
     res.json(booking);
   } catch (error) {
-    res.status(500).json({ message: "Unable to update booking" });
+    res.status(500).json({
+      message: "Unable to update booking"
+    });
   }
 });
 
 // Cancel booking
-router.put("/cancel/:id", authMiddleware, async (req, res) => {
-  try {
-    const booking = await Booking.findOneAndUpdate(
-      {
-        _id: req.params.id,
-        user: req.user.id
-      },
-      {
-        status: "Cancelled"
-      },
-      {
-        new: true
-      }
-    ).populate("service");
+router.put("/cancel/:id", protect, cancelBooking);
 
-    if (!booking) {
-      return res.status(404).json({ message: "Booking not found" });
-    }
-
-    res.json(booking);
-  } catch (error) {
-    res.status(500).json({ message: "Unable to cancel booking" });
-  }
-});
+module.exports = router;
