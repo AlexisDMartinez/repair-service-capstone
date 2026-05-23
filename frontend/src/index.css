@@ -1,8 +1,9 @@
-@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Akatab:wght@400;500;600;700&display=swap");
+
 body {
   margin: 0;
   padding: 0;
-  font-family: "Oswald", sans-serif;
+  font-family: "Akatab", sans-serif;
   background-color: #111111;
   color: white;
 }
@@ -44,13 +45,29 @@ a {
   margin-top: 30px;
   background: #d4af37;
   color: black;
-  padding: 14px 30px;
+  padding: 18px 40px;
   border-radius: 10px;
   font-weight: bold;
+  font-size: 20px;
   transition: 0.3s;
 }
 
 .button:hover {
+  background: #f5d76e;
+}
+
+button {
+  background: #d4af37;
+  color: black;
+  border: none;
+  padding: 14px 24px;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
   background: #f5d76e;
 }
 
@@ -66,7 +83,7 @@ a {
   padding: 24px;
   border-radius: 16px;
   border: 1px solid #2d2d2d;
-  box-shadow: 0px 4px 15px rgba(0,0,0,0.5);
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
 }
 
 .card h3 {
@@ -101,22 +118,6 @@ select {
   box-sizing: border-box;
 }
 
-.button {
-  display: inline-block;
-  margin-top: 30px;
-  background: #d4af37;
-  color: black;
-  padding: 18px 40px;
-  border-radius: 10px;
-  font-weight: bold;
-  font-size: 20px;
-  transition: 0.3s;
-}
-
-button:hover {
-  background: #f5d76e;
-}
-
 .navbar {
   background: #000000;
   padding: 20px 40px;
@@ -135,17 +136,17 @@ button:hover {
 
 .nav-links {
   display: flex;
-  gap: 30px;
+  gap: 45px;
   align-items: center;
 }
 
 .nav-links a {
   color: white;
-  font-weight: bold;
-  font-size: 20px;
+  font-weight: 600;
+  font-size: 28px;
+  letter-spacing: 1px;
   transition: 0.3s;
 }
-
 
 .nav-links a:hover {
   color: #d4af37;
@@ -220,7 +221,7 @@ button:hover {
   z-index: 1000;
   width: auto;
   height: auto;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
 }
 
 .ai-widget {
@@ -234,7 +235,7 @@ button:hover {
   border-radius: 16px;
   padding: 20px;
   z-index: 1000;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
 }
 
 .ai-widget-header {
@@ -267,6 +268,7 @@ button:hover {
   background: #000000;
   border: 1px solid #333333;
 }
+
 .logout-button {
   background: #d4af37;
   color: black;
@@ -282,6 +284,7 @@ button:hover {
 .logout-button:hover {
   background: #f5d76e;
 }
+
 .form-page form {
   display: flex;
   flex-direction: column;
@@ -319,6 +322,7 @@ button:hover {
 }
 
 /* Calendar icon styling */
+
 input[type="date"] {
   color-scheme: light;
 }
@@ -373,8 +377,4 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   font-size: 28px;
   line-height: 1.6;
   margin-bottom: 35px;
-}
-
-* {
-  font-family: "Oswald", sans-serif;
 }
