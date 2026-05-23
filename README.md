@@ -1,8 +1,9 @@
-# A&S Industrial AI-Powered Repair Service Platform
+# A&S Industrial Service Management Platform
 
 ## Project Overview
 
-A&S Industrial is a full-stack AI-powered repair service booking platform that allows users to register, browse repair services, book appointments, manage bookings, and receive AI-generated repair recommendations.
+A&S Industrial is a full-stack industrial service management platform designed to streamline customer service scheduling, appointment management, and project coordination through a modern web-based application experience.
+The platform also incorporates an intelligent service recommendation assistant to help users identify the most appropriate industrial service category during the booking workflow.
 
 This project was built as a capstone portfolio application using React.js, Node.js, Express.js, and MongoDB.
 
@@ -38,21 +39,39 @@ This project was built as a capstone portfolio application using React.js, Node.
 - Browse repair services
 - Book repair appointments
 - User dashboard
-- AI-powered repair recommendation assistant
+- Intelligent Service Recommendation Assistant
 - MongoDB database integration
 - Public cloud deployment
 
 ---
 
-## AI-Powered Feature
+## Intelligent Service Recommendation Feature
 
-The application includes an AI-powered repair assistant that analyzes repair issue descriptions and recommends the most appropriate repair service for the user.
+The platform includes an integrated intelligent recommendation feature that evaluates project descriptions and aligns users with the most appropriate industrial service offering.
 
 This feature improves the booking workflow by helping users identify the correct service category before scheduling an appointment.
 
 ---
 
+
+## Security Features
+
+- JWT-based authentication
+- Protected frontend routes
+- Secure password hashing
+- Environment variable protection
+- Backend authorization middleware
+
 ## Project Architecture
+
+### Architectural Design Principles
+
+- Modular component-based frontend architecture
+- Separation of concerns across frontend, backend, middleware, and database layers
+- Reusable React components
+- Protected route authorization structure
+- RESTful API communication
+- Non-monolithic application structure
 
 ### Presentation Layer
 - React.js frontend
@@ -118,9 +137,9 @@ https://github.com/AlexisDMartinez/repair-service-capstone
 
 ---
 
-## AI Usage During Development
+## Development Assistance and Tooling
 
-AI tools were used throughout the development process to assist with implementation, problem-solving, and project support.
+AI-assisted development tools were utilized during implementation, debugging, architectural refinement, and deployment support throughout the project lifecycle.
 
 All functionality and final implementation decisions were reviewed and tested before deployment.
 
@@ -128,6 +147,25 @@ All functionality and final implementation decisions were reviewed and tested be
 ---
 
 ## Main Functional Features
+- Update and cancel appointments
+- Dynamic booking availability validation
+- Protected booking management
+- Role-based authentication structure
+
+## Modular Application Structure
+
+### Frontend
+- Pages separated from reusable UI components
+- ProtectedRoute authorization wrapper
+- Dedicated booking and dashboard components
+- Reusable AI assistant widget
+- Centralized route protection using reusable ProtectedRoute components
+
+### Backend
+- Express route separation
+- Middleware-based authentication
+- Modular backend route and middleware structure
+- MongoDB model abstraction
 
 ### Authentication
 - User registration
@@ -144,15 +182,17 @@ All functionality and final implementation decisions were reviewed and tested be
 - Create appointments
 - View bookings in dashboard
 - Manage appointment information
+- Create, update, and cancel booking operations
 
 ### Dashboard
 - Display user bookings
 - Show booking summaries
 - Personalized user area
 
-### AI Integration
-- AI-powered repair recommendation assistant
-- User issue analysis and suggested repair service
+### Intelligent Recommendation Integration
+- Intelligent service recommendation workflow
+- Project requirement evaluation and service alignment
+- Integrated customer booking assistance
 
 ---
 
@@ -164,8 +204,14 @@ All functionality and final implementation decisions were reviewed and tested be
 
 ---
 
+## Project Summary
+
+This project demonstrates a modern full-stack industrial service platform focused on secure authentication, appointment scheduling, modular application structure, and intelligent service guidance for users throughout the booking experience.
+
+---
+
 ## Author
 
 Alexis D Martinez
 
-Capstone Project –  A&S Industrial AI-Powered Service Booking Platform
+Capstone Project – Modular Full-Stack Industrial Service Management Platform
