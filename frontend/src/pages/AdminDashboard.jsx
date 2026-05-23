@@ -4,20 +4,50 @@ import API from "../services/api";
 function AdminDashboard() {
   const [bookings, setBookings] = useState([]);
 
-  useEffect(() => {
-    API.get("/bookings/admin/all")
-      .then((res) => {
-        if (Array.isArray(res.data)) {
-          setBookings(res.data);
-        } else {
-          setBookings([]);
-        }
-      })
-      .catch((error) => {
-        console.log("Admin dashboard error:", error);
+  const loadBookings = async () => {
+    try {
+      const res = await API.get("/bookings/admin/all");
+
+      if (Array.isArray(res.data)) {
+        setBookings(res.data);
+      } else {
         setBookings([]);
-      });
+      }
+    } catch (error) {
+      console.log("Admin dashboard error:", error);
+      setBookings([]);
+    }
+  };
+
+  useEffect(() => {
+    loadBookings();
   }, []);
+
+  const cancelCustomerBooking = async (id) => {
+    try {
+      await API.put(`/bookings/admin/cancel/${id}`);
+
+      alert("Customer booking cancelled.");
+
+      loadBookings();
+    } catch (error) {
+      console.log("Admin cancel booking error:", error);
+      alert("Unable to cancel customer booking.");
+    }
+  };
+
+  const requestTimeChange = async (id) => {
+    try {
+      await API.put(`/bookings/admin/request-time-change/${id}`);
+
+      alert("Time change request sent.");
+
+      loadBookings();
+    } catch (error) {
+      console.log("Admin time change request error:", error);
+      alert("Unable to request time change.");
+    }
+  };
 
   return (
     <div className="page">
@@ -56,6 +86,22 @@ function AdminDashboard() {
           <p>
             <strong>Notes:</strong> {booking.notes}
           </p>
+
+          {booking.status !== "Cancelled" && (
+            <>
+              <button
+                onClick={() => requestTimeChange(booking._id)}
+              >
+                Request Time Change
+              </button>
+
+              <button
+                onClick={() => cancelCustomerBooking(booking._id)}
+              >
+                Cancel Customer Booking
+              </button>
+            </>
+          )}
         </div>
       ))}
     </div>
@@ -63,3 +109,4 @@ function AdminDashboard() {
 }
 
 export default AdminDashboard;
+
