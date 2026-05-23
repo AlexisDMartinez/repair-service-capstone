@@ -1,5 +1,9 @@
 function EditBookingForm({
-  editForm,
+  editForm = {
+    date: "",
+    time: "",
+    notes: ""
+  },
   setEditForm,
   onSave,
   onCancel
@@ -8,7 +12,7 @@ function EditBookingForm({
     <>
       <input
         type="date"
-        value={editForm.date}
+        value={editForm.date || ""}
         onChange={(e) =>
           setEditForm({
             ...editForm,
@@ -19,7 +23,7 @@ function EditBookingForm({
 
       <input
         type="time"
-        value={editForm.time}
+        value={editForm.time || ""}
         onChange={(e) =>
           setEditForm({
             ...editForm,
@@ -30,7 +34,7 @@ function EditBookingForm({
 
       <textarea
         placeholder="Update notes"
-        value={editForm.notes}
+        value={editForm.notes || ""}
         onChange={(e) =>
           setEditForm({
             ...editForm,
@@ -39,13 +43,15 @@ function EditBookingForm({
         }
       />
 
-      <button onClick={onSave}>
-        Save Changes
-      </button>
+      <div className="edit-booking-buttons">
+        <button onClick={onSave}>
+          Save Changes
+        </button>
 
-      <button onClick={onCancel}>
-        Cancel Edit
-      </button>
+        <button onClick={onCancel}>
+          Cancel Edit
+        </button>
+      </div>
     </>
   );
 }
