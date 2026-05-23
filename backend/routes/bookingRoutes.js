@@ -65,6 +65,9 @@ router.get("/admin/all", protect, adminMiddleware, async (req, res) => {
   }
 });
 
+// Cancel booking
+router.put("/cancel/:id", protect, cancelBooking);
+
 // Update booking
 router.put("/:id", protect, async (req, res) => {
   try {
@@ -98,8 +101,5 @@ router.put("/:id", protect, async (req, res) => {
     });
   }
 });
-
-// Cancel booking
-router.put("/cancel/:id", protect, cancelBooking);
 
 module.exports = router;
