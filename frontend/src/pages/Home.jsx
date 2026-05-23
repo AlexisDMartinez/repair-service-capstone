@@ -1,17 +1,22 @@
+import { Link } from "react-router-dom";
+
 function Home() {
   return (
-    <div className="hero">
-      <h1>AI Powered Repair Service Platform</h1>
+    <div className="home-page">
+      <section className="hero-section">
+        <div className="hero-overlay">
+          <h1>Precision Welding & Industrial Fabrication Solutions</h1>
 
-      <p>
-        Book trusted repair services for computers,
-        phones, appliances, plumbing, electrical issues,
-        and home maintenance.
-      </p>
+          <p>
+            Veteran-Owned Industrial Welding and Fabrication Focused on
+            Precision, Durability, and Professional Service Excellence.
+          </p>
 
-      <a className="button" href="/services">
-        Browse Services
-      </a>
+          <Link to="/services" className="button">
+            Browse Services
+          </Link>
+        </div>
+      </section>
     </div>
   );
 }
