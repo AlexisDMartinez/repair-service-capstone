@@ -23,7 +23,7 @@ function Services() {
 
   return (
     <div className="page">
-      <AIAssistantWidget autoOpen={true} autoCloseDelay={5000} />
+      <AIAssistantWidget autoOpen={window.innerWidth > 768} />
 
       <h1>Repair Services</h1>
 
