@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import API from "../services/api";
 
 function BookingForm() {
+  const navigate = useNavigate();
+
   const [services, setServices] = useState([]);
   const [fullyBookedDates, setFullyBookedDates] = useState([]);
 
@@ -25,7 +28,11 @@ function BookingForm() {
   useEffect(() => {
     API.get("/services")
       .then((res) => {
-        setServices(Array.isArray(res.data) ? res.data : []);
+        if (Array.isArray(res.data)) {
+          setServices(res.data);
+        } else {
+          setServices([]);
+        }
       })
       .catch((error) => {
         console.log("Could not load services:", error);
@@ -34,7 +41,9 @@ function BookingForm() {
 
     API.get("/bookings/fully-booked/dates")
       .then((res) => {
-        setFullyBookedDates(Array.isArray(res.data) ? res.data : []);
+        if (Array.isArray(res.data)) {
+          setFullyBookedDates(res.data);
+        }
       })
       .catch((error) => {
         console.log("Unable to load fully booked dates:", error);
@@ -78,13 +87,12 @@ function BookingForm() {
         time: "",
         notes: ""
       });
+
+      navigate("/dashboard");
+
     } catch (error) {
       console.log("Booking error:", error);
-
-      alert(
-        error.response?.data?.message ||
-          "Booking failed. Please try again."
-      );
+      alert("Booking failed. Please try again.");
     }
   };
 

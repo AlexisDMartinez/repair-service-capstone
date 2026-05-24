@@ -5,6 +5,8 @@ import AIAssistantWidget from "../components/AIAssistantWidget";
 function Services() {
   const [services, setServices] = useState([]);
 
+  const isDesktop = window.innerWidth > 768;
+
   useEffect(() => {
     API.get("/services")
       .then((res) => {
@@ -23,7 +25,7 @@ function Services() {
 
   return (
     <div className="page">
-      <AIAssistantWidget autoOpen={window.innerWidth > 768} />
+      <AIAssistantWidget autoOpen={isDesktop} />
 
       <h1>Repair Services</h1>
 

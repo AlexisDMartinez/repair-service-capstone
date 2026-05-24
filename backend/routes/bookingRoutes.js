@@ -54,10 +54,25 @@ router.get("/admin/all", protect, adminMiddleware, async (req, res) => {
   try {
     const bookings = await Booking.find()
       .populate("user", "name email")
-      .populate("service")
-      .sort({ createdAt: -1 });
+      .populate("service");
 
-    res.json(bookings);
+    const sortedBookings = bookings.sort((a, b) => {
+      const statusOrder = {
+        Cancelled: 2,
+        "Time Change Requested": 1
+      };
+
+      const aOrder = statusOrder[a.status] || 0;
+      const bOrder = statusOrder[b.status] || 0;
+
+      if (aOrder !== bOrder) {
+        return aOrder - bOrder;
+      }
+
+      return new Date(b.createdAt) - new Date(a.createdAt);
+    });
+
+    res.json(sortedBookings);
   } catch (error) {
     res.status(500).json({
       message: "Unable to load admin bookings"
