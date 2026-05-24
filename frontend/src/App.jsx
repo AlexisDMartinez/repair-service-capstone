@@ -25,13 +25,15 @@ function AppContent() {
   const shouldShowAIWidget =
     AI_ENABLED_ROUTES.includes(pathname);
 
+  const isDesktop = window.innerWidth > 768;
+
   return (
     <>
       <Navbar />
 
       {shouldShowAIWidget && (
         <AIAssistantWidget
-          autoOpen={window.innerWidth > 768}
+          autoOpen={isDesktop}
         />
       )}
 
