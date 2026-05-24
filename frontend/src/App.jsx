@@ -1,7 +1,8 @@
 import {
   BrowserRouter,
   Route,
-  Routes
+  Routes,
+  useLocation
 } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
@@ -17,33 +18,27 @@ import Dashboard from "./pages/Dashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 
 function AppContent() {
+  const { pathname } = useLocation();
+
+  const user = JSON.parse(localStorage.getItem("user"));
+  const isAdmin = user?.role === "admin";
+
+  const showAIButtonOnly =
+    pathname === "/book" && !isAdmin;
+
   return (
     <>
       <Navbar />
 
-      <AIAssistantWidget autoOpen={false} />
+      {showAIButtonOnly && (
+        <AIAssistantWidget autoOpen={false} />
+      )}
 
       <Routes>
-
-        <Route
-          path="/"
-          element={<Home />}
-        />
-
-        <Route
-          path="/login"
-          element={<Login />}
-        />
-
-        <Route
-          path="/register"
-          element={<Register />}
-        />
-
-        <Route
-          path="/services"
-          element={<Services />}
-        />
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/services" element={<Services />} />
 
         <Route
           path="/book"
@@ -71,7 +66,6 @@ function AppContent() {
             </ProtectedRoute>
           }
         />
-
       </Routes>
     </>
   );

@@ -7,6 +7,10 @@ function Services() {
 
   const isDesktop = window.innerWidth > 768;
 
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  const isAdmin = user?.role === "admin";
+
   useEffect(() => {
     API.get("/services")
       .then((res) => {
@@ -25,7 +29,14 @@ function Services() {
 
   return (
     <div className="page">
-      <AIAssistantWidget autoOpen={isDesktop} />
+
+      {!isAdmin && (
+        <AIAssistantWidget
+          autoOpen={isDesktop}
+          autoOpenDelay={3000}
+          autoCloseDelay={5000}
+        />
+      )}
 
       <h1>Repair Services</h1>
 
