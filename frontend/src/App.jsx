@@ -1,12 +1,10 @@
 import {
   BrowserRouter,
   Route,
-  Routes,
-  useLocation
+  Routes
 } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
-import AIAssistantWidget from "./components/AIAssistantWidget";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 import Home from "./pages/Home";
@@ -17,25 +15,10 @@ import Book from "./pages/Book";
 import Dashboard from "./pages/Dashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 
-const AI_ENABLED_ROUTES = ["/book"];
-
 function AppContent() {
-  const { pathname } = useLocation();
-
-  const shouldShowAIWidget =
-    AI_ENABLED_ROUTES.includes(pathname);
-
-  const isDesktop = window.innerWidth > 768;
-
   return (
     <>
       <Navbar />
-
-      {shouldShowAIWidget && (
-        <AIAssistantWidget
-          autoOpen={isDesktop}
-        />
-      )}
 
       <Routes>
 
