@@ -6,13 +6,28 @@ const bookingSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User"
     },
+
     service: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Service"
     },
+
+    email: {
+      type: String,
+      required: true
+    },
+
+    phone: {
+      type: String,
+      required: true
+    },
+
     date: String,
+
     time: String,
+
     notes: String,
+
     status: {
       type: String,
       default: "Scheduled"
@@ -22,3 +37,4 @@ const bookingSchema = new mongoose.Schema(
 );
 
 module.exports = mongoose.model("Booking", bookingSchema);
+

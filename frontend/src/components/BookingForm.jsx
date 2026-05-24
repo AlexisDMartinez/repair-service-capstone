@@ -12,6 +12,8 @@ function BookingForm() {
     service: "",
     date: "",
     time: "",
+    email: "",
+    phone: "",
     notes: ""
   });
 
@@ -71,8 +73,14 @@ function BookingForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!form.service || !form.date || !form.time) {
-      alert("Please select a service, date, and time.");
+    if (
+      !form.service ||
+      !form.date ||
+      !form.time ||
+      !form.email ||
+      !form.phone
+    ) {
+      alert("Please select a service, date, time, email, and phone number.");
       return;
     }
 
@@ -85,14 +93,19 @@ function BookingForm() {
         service: "",
         date: "",
         time: "",
+        email: "",
+        phone: "",
         notes: ""
       });
 
       navigate("/dashboard");
-
     } catch (error) {
       console.log("Booking error:", error);
-      alert("Booking failed. Please try again.");
+
+      alert(
+        error.response?.data?.message ||
+          "Booking failed. Please try again."
+      );
     }
   };
 
@@ -146,6 +159,34 @@ function BookingForm() {
           </option>
         ))}
       </select>
+
+      <label>Email</label>
+
+      <input
+        type="email"
+        placeholder="Enter your email"
+        value={form.email}
+        onChange={(e) =>
+          setForm({
+            ...form,
+            email: e.target.value
+          })
+        }
+      />
+
+      <label>Phone Number</label>
+
+      <input
+        type="tel"
+        placeholder="Enter your phone number"
+        value={form.phone}
+        onChange={(e) =>
+          setForm({
+            ...form,
+            phone: e.target.value
+          })
+        }
+      />
 
       <label>Project Notes</label>
 

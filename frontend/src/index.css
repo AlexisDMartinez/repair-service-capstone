@@ -709,3 +709,21 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     margin-top: 10px;
   }
 }
+
+input[type="date"],
+input[type="time"],
+select {
+  color: white;
+  background-color: #000000;
+  border: 1px solid #444444;
+}
+
+input[type="date"]::-webkit-datetime-edit,
+input[type="time"]::-webkit-datetime-edit {
+  color: white;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}

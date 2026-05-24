@@ -36,19 +36,6 @@ function AdminDashboard() {
     }
   };
 
-  const requestTimeChange = async (id) => {
-    try {
-      await API.put(`/bookings/admin/request-time-change/${id}`);
-
-      alert("Time change request sent.");
-
-      loadBookings();
-    } catch (error) {
-      console.log("Admin time change request error:", error);
-      alert("Unable to request time change.");
-    }
-  };
-
   return (
     <div className="page">
       <h1>Admin Dashboard</h1>
@@ -68,7 +55,12 @@ function AdminDashboard() {
 
           <p>
             <strong>Email:</strong>{" "}
-            {booking.user?.email || "No email"}
+            {booking.email || booking.user?.email || "No email"}
+          </p>
+
+          <p>
+            <strong>Phone:</strong>{" "}
+            {booking.phone || "No phone"}
           </p>
 
           <p>
@@ -89,12 +81,6 @@ function AdminDashboard() {
 
           {booking.status !== "Cancelled" && (
             <div className="admin-actions">
-              <button
-                onClick={() => requestTimeChange(booking._id)}
-              >
-                Request Time Change
-              </button>
-
               <button
                 onClick={() => cancelCustomerBooking(booking._id)}
               >

@@ -2,7 +2,7 @@ const Booking = require("../models/Booking");
 
 const createBooking = async (req, res) => {
   try {
-    const { service, date, time, notes } = req.body;
+    const { service, date, time, email, phone, notes } = req.body;
 
     const existingBooking = await Booking.findOne({
       date,
@@ -21,6 +21,8 @@ const createBooking = async (req, res) => {
       service,
       date,
       time,
+      email,
+      phone,
       notes
     });
 
@@ -38,7 +40,26 @@ const getMyBookings = async (req, res) => {
       user: req.user.id
     }).populate("service");
 
-    res.json(bookings);
+    const sortedBookings = bookings.sort((a, b) => {
+      const statusOrder = {
+        Cancelled: 2,
+        "Time Change Requested": 1
+      };
+
+      const aOrder = statusOrder[a.status] || 0;
+      const bOrder = statusOrder[b.status] || 0;
+
+      if (aOrder !== bOrder) {
+        return aOrder - bOrder;
+      }
+
+      const aDateTime = new Date(`${a.date} ${a.time}`);
+      const bDateTime = new Date(`${b.date} ${b.time}`);
+
+      return aDateTime - bDateTime;
+    });
+
+    res.json(sortedBookings);
   } catch (error) {
     res.status(500).json({
       message: "Unable to load bookings"
