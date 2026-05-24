@@ -5,6 +5,7 @@ import {
 } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
+import AIAssistantWidget from "./components/AIAssistantWidget";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 import Home from "./pages/Home";
@@ -19,6 +20,8 @@ function AppContent() {
   return (
     <>
       <Navbar />
+
+      <AIAssistantWidget autoOpen={false} />
 
       <Routes>
 
