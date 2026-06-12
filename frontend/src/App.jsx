@@ -12,6 +12,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 import Services from "./pages/Services";
 import Book from "./pages/Book";
 import Dashboard from "./pages/Dashboard";
@@ -24,21 +26,20 @@ function AppContent() {
   const user = JSON.parse(localStorage.getItem("user"));
   const isAdmin = user?.role === "admin";
 
-  const showAIButtonOnly =
-    pathname === "/book" && !isAdmin;
+  const showAIButtonOnly = pathname === "/book" && !isAdmin;
 
   return (
     <>
       <Navbar />
 
-      {showAIButtonOnly && (
-        <AIAssistantWidget autoOpen={false} />
-      )}
+      {showAIButtonOnly && <AIAssistantWidget autoOpen={false} />}
 
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
         <Route path="/services" element={<Services />} />
 
         <Route
@@ -90,4 +91,5 @@ function App() {
 }
 
 export default App;
+
 

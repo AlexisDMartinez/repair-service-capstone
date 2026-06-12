@@ -14,7 +14,12 @@ function Login() {
     e.preventDefault();
 
     try {
-      const res = await API.post("/auth/login", form);
+      const loginData = {
+        email: form.email.toLowerCase().trim(),
+        password: form.password
+      };
+
+      const res = await API.post("/auth/login", loginData);
 
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
@@ -39,9 +44,7 @@ function Login() {
 
         <h2>Welcome Back</h2>
 
-        <p>
-          Access your repair bookings and service dashboard
-        </p>
+        <p>Access your repair bookings and service dashboard</p>
 
         <form onSubmit={handleSubmit}>
           <input
@@ -49,8 +52,12 @@ function Login() {
             placeholder="Email Address"
             value={form.email}
             onChange={(e) =>
-              setForm({ ...form, email: e.target.value })
+              setForm({
+                ...form,
+                email: e.target.value
+              })
             }
+            required
           />
 
           <input
@@ -58,20 +65,24 @@ function Login() {
             placeholder="Password"
             value={form.password}
             onChange={(e) =>
-              setForm({ ...form, password: e.target.value })
+              setForm({
+                ...form,
+                password: e.target.value
+              })
             }
+            required
           />
 
-          <button type="submit">
-            Sign In
-          </button>
+          <button type="submit">Sign In</button>
         </form>
 
         <p className="auth-switch">
+          <Link to="/forgot-password">Forgot Password?</Link>
+        </p>
+
+        <p className="auth-switch">
           Don&apos;t have an account?{" "}
-          <Link to="/register">
-            Create an account
-          </Link>
+          <Link to="/register">Create an account</Link>
         </p>
       </div>
     </div>
@@ -79,3 +90,4 @@ function Login() {
 }
 
 export default Login;
+
