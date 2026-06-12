@@ -20,7 +20,7 @@ function ForgotPassword() {
     } catch (error) {
       alert(
         error.response?.data?.message ||
-          "Unable to find security question for this account."
+          "Unable to locate an account with that email address."
       );
     }
   };
@@ -39,9 +39,11 @@ function ForgotPassword() {
       <div className="auth-card">
         <h1>A&S Industrial</h1>
 
-        <h2>Account Recovery</h2>
+        <h2>Reset Password</h2>
 
-        <p>Enter your email address to find your security question.</p>
+        <p>
+          Enter your email address to begin the password reset process.
+        </p>
 
         <form onSubmit={handleGetQuestion}>
           <input
@@ -52,23 +54,29 @@ function ForgotPassword() {
             required
           />
 
-          <button type="submit">Find Security Question</button>
+          <button type="submit">
+            Reset Password
+          </button>
         </form>
 
         {securityQuestion && (
           <div className="security-question-box">
             <p>
-              <strong>Security Question:</strong>
+              <strong>Security Question</strong>
             </p>
 
             <p>{securityQuestion}</p>
 
-            <button onClick={goToResetPassword}>Answer Question</button>
+            <button onClick={goToResetPassword}>
+              Continue to Reset Password
+            </button>
           </div>
         )}
 
         <p className="auth-switch">
-          <Link to="/login">Back to Login</Link>
+          <Link to="/login">
+            Back to Login
+          </Link>
         </p>
       </div>
     </div>
