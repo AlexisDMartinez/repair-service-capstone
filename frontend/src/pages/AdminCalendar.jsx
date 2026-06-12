@@ -1,9 +1,19 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import API from "../services/api";
 
 function AdminCalendar() {
   const [bookings, setBookings] = useState([]);
   const [currentDate, setCurrentDate] = useState(new Date());
+
+  const [adminForm, setAdminForm] = useState({
+    customerName: "",
+    email: "",
+    phone: "",
+    serviceName: "",
+    date: "",
+    time: "",
+    notes: ""
+  });
 
   useEffect(() => {
     fetchBookings();
@@ -11,22 +21,51 @@ function AdminCalendar() {
 
   const fetchBookings = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/bookings");
-      setBookings(res.data);
+      const res = await API.get("/bookings/admin/all");
+
+      if (Array.isArray(res.data)) {
+        setBookings(res.data);
+      } else {
+        setBookings([]);
+      }
     } catch (error) {
       console.error("Error loading bookings:", error);
+      setBookings([]);
+    }
+  };
+
+  const createAdminBooking = async (e) => {
+    e.preventDefault();
+
+    try {
+      await API.post("/bookings/admin/create", adminForm);
+
+      setAdminForm({
+        customerName: "",
+        email: "",
+        phone: "",
+        serviceName: "",
+        date: "",
+        time: "",
+        notes: ""
+      });
+
+      fetchBookings();
+
+      alert("Appointment scheduled successfully.");
+    } catch (error) {
+      alert(error.response?.data?.message || "Unable to schedule appointment.");
     }
   };
 
   const updateBookingStatus = async (bookingId, status) => {
     try {
-      await axios.put(`http://localhost:5000/api/bookings/${bookingId}/status`, {
-        status,
+      await API.put(`/bookings/admin/status/${bookingId}`, {
+        status
       });
 
       fetchBookings();
     } catch (error) {
-      console.error("Error updating booking status:", error);
       alert("Unable to update booking status.");
     }
   };
@@ -38,33 +77,12 @@ function AdminCalendar() {
   const daysInMonth = new Date(year, month + 1, 0).getDate();
 
   const getBookingsForDay = (day) => {
-    const dateString = new Date(year, month, day).toDateString();
+    const selectedDate = new Date(year, month, day).toDateString();
 
     return bookings.filter((booking) => {
-      const bookingDate = new Date(
-        booking.date || booking.appointmentDate || booking.bookingDate
-      );
-
-      return bookingDate.toDateString() === dateString;
+      const bookingDate = new Date(booking.date).toDateString();
+      return bookingDate === selectedDate;
     });
-  };
-
-  const previousMonth = () => {
-    setCurrentDate(new Date(year, month - 1, 1));
-  };
-
-  const nextMonth = () => {
-    setCurrentDate(new Date(year, month + 1, 1));
-  };
-
-  const handleMonthChange = (e) => {
-    const selectedMonth = Number(e.target.value);
-    setCurrentDate(new Date(year, selectedMonth, 1));
-  };
-
-  const handleYearChange = (e) => {
-    const selectedYear = Number(e.target.value);
-    setCurrentDate(new Date(selectedYear, month, 1));
   };
 
   const calendarDays = [];
@@ -89,10 +107,11 @@ function AdminCalendar() {
     "September",
     "October",
     "November",
-    "December",
+    "December"
   ];
 
   const years = [];
+
   for (let y = 2024; y <= 2035; y++) {
     years.push(y);
   }
@@ -101,11 +120,111 @@ function AdminCalendar() {
     <div className="calendar-container">
       <h1>Admin Schedule Calendar</h1>
 
+      <form className="admin-booking-form" onSubmit={createAdminBooking}>
+        <h2>Schedule Appointment for Customer</h2>
+
+        <input
+          type="text"
+          placeholder="Customer Name"
+          value={adminForm.customerName}
+          onChange={(e) =>
+            setAdminForm({
+              ...adminForm,
+              customerName: e.target.value
+            })
+          }
+          required
+        />
+
+        <input
+          type="email"
+          placeholder="Customer Email"
+          value={adminForm.email}
+          onChange={(e) =>
+            setAdminForm({
+              ...adminForm,
+              email: e.target.value
+            })
+          }
+          required
+        />
+
+        <input
+          type="text"
+          placeholder="Phone"
+          value={adminForm.phone}
+          onChange={(e) =>
+            setAdminForm({
+              ...adminForm,
+              phone: e.target.value
+            })
+          }
+          required
+        />
+
+        <input
+          type="text"
+          placeholder="Service"
+          value={adminForm.serviceName}
+          onChange={(e) =>
+            setAdminForm({
+              ...adminForm,
+              serviceName: e.target.value
+            })
+          }
+          required
+        />
+
+        <input
+          type="date"
+          value={adminForm.date}
+          onChange={(e) =>
+            setAdminForm({
+              ...adminForm,
+              date: e.target.value
+            })
+          }
+          required
+        />
+
+        <input
+          type="time"
+          value={adminForm.time}
+          onChange={(e) =>
+            setAdminForm({
+              ...adminForm,
+              time: e.target.value
+            })
+          }
+          required
+        />
+
+        <textarea
+          placeholder="Notes"
+          value={adminForm.notes}
+          onChange={(e) =>
+            setAdminForm({
+              ...adminForm,
+              notes: e.target.value
+            })
+          }
+        />
+
+        <button type="submit">Schedule Appointment</button>
+      </form>
+
       <div className="calendar-header">
-        <button onClick={previousMonth}>Back</button>
+        <button onClick={() => setCurrentDate(new Date(year, month - 1, 1))}>
+          Back
+        </button>
 
         <div className="calendar-title-area">
-          <select value={month} onChange={handleMonthChange}>
+          <select
+            value={month}
+            onChange={(e) =>
+              setCurrentDate(new Date(year, Number(e.target.value), 1))
+            }
+          >
             {months.map((monthName, index) => (
               <option key={monthName} value={index}>
                 {monthName}
@@ -113,7 +232,12 @@ function AdminCalendar() {
             ))}
           </select>
 
-          <select value={year} onChange={handleYearChange}>
+          <select
+            value={year}
+            onChange={(e) =>
+              setCurrentDate(new Date(Number(e.target.value), month, 1))
+            }
+          >
             {years.map((calendarYear) => (
               <option key={calendarYear} value={calendarYear}>
                 {calendarYear}
@@ -122,7 +246,9 @@ function AdminCalendar() {
           </select>
         </div>
 
-        <button onClick={nextMonth}>Forward</button>
+        <button onClick={() => setCurrentDate(new Date(year, month + 1, 1))}>
+          Forward
+        </button>
       </div>
 
       <div className="calendar-grid calendar-weekdays">
@@ -153,23 +279,38 @@ function AdminCalendar() {
                   {dayBookings.map((booking) => (
                     <div key={booking._id} className="booking-card">
                       <p className="booking-name">
-                        {booking.name || booking.customerName || "Customer"}
-                      </p>
-
-                      <p>{booking.service || "Service not listed"}</p>
-
-                      <p>
-                        <strong>Time:</strong>{" "}
-                        {booking.time ||
-                          booking.appointmentTime ||
-                          booking.bookingTime ||
-                          "No time listed"}
+                        {booking.user?.name ||
+                          booking.customerName ||
+                          "Customer"}
                       </p>
 
                       <p>
-                        <strong>Status:</strong>{" "}
-                        {booking.status || "Pending"}
+                        {booking.service?.name ||
+                          booking.serviceName ||
+                          "Service not listed"}
                       </p>
+
+                      <p>
+                        <strong>Email:</strong> {booking.email}
+                      </p>
+
+                      <p>
+                        <strong>Phone:</strong> {booking.phone}
+                      </p>
+
+                      <p>
+                        <strong>Time:</strong> {booking.time || "No time listed"}
+                      </p>
+
+                      <p>
+                        <strong>Status:</strong> {booking.status || "Scheduled"}
+                      </p>
+
+                      {booking.notes && (
+                        <p>
+                          <strong>Notes:</strong> {booking.notes}
+                        </p>
+                      )}
 
                       <div className="booking-actions">
                         <button

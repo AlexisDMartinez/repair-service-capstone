@@ -3,7 +3,9 @@ const router = express.Router();
 
 const protect = require("../middleware/authMiddleware");
 const adminMiddleware = require("../middleware/adminMiddleware");
+
 const Booking = require("../models/Booking");
+const User = require("../models/User");
 
 const {
   createBooking,
@@ -57,18 +59,6 @@ router.get("/admin/all", protect, adminMiddleware, async (req, res) => {
       .populate("service");
 
     const sortedBookings = bookings.sort((a, b) => {
-      const statusOrder = {
-        Cancelled: 2,
-        "Time Change Requested": 1
-      };
-
-      const aOrder = statusOrder[a.status] || 0;
-      const bOrder = statusOrder[b.status] || 0;
-
-      if (aOrder !== bOrder) {
-        return aOrder - bOrder;
-      }
-
       return new Date(b.createdAt) - new Date(a.createdAt);
     });
 
@@ -76,6 +66,82 @@ router.get("/admin/all", protect, adminMiddleware, async (req, res) => {
   } catch (error) {
     res.status(500).json({
       message: "Unable to load admin bookings"
+    });
+  }
+});
+
+// Admin: create booking for customer
+router.post("/admin/create", protect, adminMiddleware, async (req, res) => {
+  try {
+    const {
+      customerName,
+      email,
+      phone,
+      serviceName,
+      date,
+      time,
+      notes
+    } = req.body;
+
+    const existingBooking = await Booking.findOne({
+      date,
+      time,
+      status: { $ne: "Cancelled" }
+    });
+
+    if (existingBooking) {
+      return res.status(400).json({
+        message: "This appointment time is already booked."
+      });
+    }
+
+    const customer = await User.findOne({ email });
+
+    const booking = await Booking.create({
+      user: customer ? customer._id : null,
+      service: null,
+      customerName,
+      email,
+      phone,
+      serviceName,
+      date,
+      time,
+      notes,
+      status: "Scheduled"
+    });
+
+    res.status(201).json(booking);
+  } catch (error) {
+    res.status(500).json({
+      message: "Unable to create admin booking",
+      error: error.message
+    });
+  }
+});
+
+// Admin: update booking status
+router.put("/admin/status/:id", protect, adminMiddleware, async (req, res) => {
+  try {
+    const { status } = req.body;
+
+    const booking = await Booking.findByIdAndUpdate(
+      req.params.id,
+      { status },
+      { new: true }
+    )
+      .populate("user", "name email")
+      .populate("service");
+
+    if (!booking) {
+      return res.status(404).json({
+        message: "Booking not found"
+      });
+    }
+
+    res.json(booking);
+  } catch (error) {
+    res.status(500).json({
+      message: "Unable to update booking status"
     });
   }
 });
@@ -160,7 +226,8 @@ router.put("/:id", protect, async (req, res) => {
 
     if (existingBooking) {
       return res.status(400).json({
-        message: "This appointment time is already booked. Please select another time."
+        message:
+          "This appointment time is already booked. Please select another time."
       });
     }
 

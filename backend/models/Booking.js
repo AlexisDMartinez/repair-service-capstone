@@ -4,12 +4,24 @@ const bookingSchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User"
+      ref: "User",
+      default: null
     },
 
     service: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Service"
+      ref: "Service",
+      default: null
+    },
+
+    serviceName: {
+      type: String,
+      default: ""
+    },
+
+    customerName: {
+      type: String,
+      default: ""
     },
 
     email: {
@@ -22,11 +34,20 @@ const bookingSchema = new mongoose.Schema(
       required: true
     },
 
-    date: String,
+    date: {
+      type: String,
+      required: true
+    },
 
-    time: String,
+    time: {
+      type: String,
+      required: true
+    },
 
-    notes: String,
+    notes: {
+      type: String,
+      default: ""
+    },
 
     status: {
       type: String,
