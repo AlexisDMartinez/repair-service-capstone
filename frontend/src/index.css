@@ -1065,4 +1065,23 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   }
 }
 
+.auth-page {
+  align-items: flex-start;
+  padding-top: 120px;
+}
+
+.auth-card {
+  margin-top: 0;
+}
+
+.auth-card form {
+  max-height: none;
+}
+
+@media (max-width: 768px) {
+  .auth-page {
+    padding-top: 80px;
+  }
+}
+
 
