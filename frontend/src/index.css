@@ -41,6 +41,10 @@ button,
   font-family: inherit;
 }
 
+button {
+  cursor: pointer;
+}
+
 .button {
   display: flex;
   justify-content: center;
@@ -152,7 +156,6 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   border-radius: 10px;
   font-weight: 700;
   font-size: 16px;
-  cursor: pointer;
   width: auto;
   margin-top: 0;
 }
@@ -317,7 +320,6 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   border-radius: 10px;
   font-weight: 700;
   font-size: 18px;
-  cursor: pointer;
   display: block;
   margin: 24px auto 0;
   width: 100%;
@@ -369,22 +371,22 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 }
 
 .password-match-message {
-  color: #26d07c !important;
+  color: #26d07c;
   font-weight: 700;
-  margin: 8px 0 0 !important;
-  text-align: left !important;
+  margin: 8px 0 0;
+  text-align: left;
 }
 
 .password-error-message {
-  color: #ff4d4d !important;
+  color: #ff4d4d;
   font-weight: 700;
-  margin: 8px 0 0 !important;
-  text-align: left !important;
+  margin: 8px 0 0;
+  text-align: left;
 }
 
 .disabled-button {
   opacity: 0.55;
-  cursor: not-allowed !important;
+  cursor: not-allowed;
 }
 
 /* =========================
@@ -434,7 +436,6 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   border-radius: 10px;
   font-weight: 700;
   font-size: 16px;
-  cursor: pointer;
   flex: 1;
 }
 
@@ -451,7 +452,6 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   border: none;
   border-radius: 50px;
   padding: 18px 30px;
-  cursor: pointer;
   z-index: 1000;
   font-size: 18px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
@@ -492,7 +492,6 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   border-radius: 10px;
   font-size: 24px;
   font-weight: bold;
-  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -510,7 +509,6 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   border-radius: 10px;
   font-weight: 700;
   font-size: 16px;
-  cursor: pointer;
   display: block;
   margin: 20px auto 0;
   width: fit-content;
@@ -532,8 +530,8 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 }
 
 .admin-calendar-page {
-  background: #ffffff !important;
-  color: #000000 !important;
+  background: #ffffff;
+  color: #000000;
   min-height: calc(100vh - 95px);
   padding: 14px 20px;
 }
@@ -550,7 +548,6 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   border: none;
   padding: 8px 14px;
   border-radius: 6px;
-  cursor: pointer;
   margin-bottom: 10px;
 }
 
@@ -579,7 +576,6 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   border-radius: 6px;
   background: #111111;
   color: #ffffff;
-  cursor: pointer;
   font-size: 14px;
 }
 
@@ -672,11 +668,12 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 }
 
 .today-schedule-panel {
+  display: block;
   background: #000000;
   color: #ffffff;
-  border: 1px solid #d4af37;
+  border: 2px solid #d4af37;
   padding: 12px;
-  border-radius: 10px;
+  border-radius: 14px;
   height: fit-content;
   max-height: calc(100vh - 190px);
   overflow-y: auto;
@@ -684,15 +681,16 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   top: 20px;
 }
 
-.today-schedule-panel h2,
-.today-schedule-panel p,
-.today-schedule-panel strong {
-  color: #ffffff;
-}
-
 .today-schedule-panel h2 {
+  color: #ffffff;
   font-size: 20px;
   margin: 0 0 8px;
+}
+
+.today-schedule-panel p,
+.today-schedule-panel strong,
+.today-schedule-panel .selected-date-label {
+  color: #ffffff;
 }
 
 .today-add-button,
@@ -703,7 +701,6 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   padding: 10px 14px;
   border-radius: 8px;
   font-weight: 700;
-  cursor: pointer;
   margin-bottom: 14px;
 }
 
@@ -711,6 +708,7 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 .day-booking-tab {
   background: #ffffff;
   color: #000000;
+  border: 1px solid #cccccc;
   border-radius: 10px;
   padding: 8px;
   margin-top: 10px;
@@ -739,8 +737,7 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   color: #000000;
   border: 1px solid #000000;
   padding: 5px 8px;
-  border-radius: 5px;
-  cursor: pointer;
+  border-radius: 8px;
   font-size: 11px;
   font-weight: 700;
 }
@@ -751,6 +748,17 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 .day-modal-add-button:hover {
   background: #d4af37;
   color: #000000;
+}
+
+.status-selected-message {
+  background: #ffffff;
+  color: #000000;
+  border: 1px solid #000000;
+  padding: 8px;
+  font-weight: 700;
+  margin-top: 8px;
+  text-align: center;
+  border-radius: 8px;
 }
 
 /* =========================
@@ -764,6 +772,8 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  overflow: hidden;
+  padding: 16px;
 }
 
 .schedule-modal,
@@ -771,10 +781,11 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 .crm-modal {
   position: relative;
   width: 95%;
-  max-height: 85vh;
+  max-height: 82vh;
   overflow-y: auto;
   border-radius: 14px;
   padding: 28px;
+  margin: auto;
 }
 
 .schedule-modal {
@@ -812,7 +823,6 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   border: none;
   background: transparent;
   font-size: 28px;
-  cursor: pointer;
 }
 
 .day-modal-close {
@@ -842,7 +852,6 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   border: none;
   padding: 12px;
   border-radius: 6px;
-  cursor: pointer;
 }
 
 /* =========================
@@ -913,7 +922,6 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   border-radius: 10px;
   padding: 12px 18px;
   font-weight: 800;
-  cursor: pointer;
   margin-top: 16px;
 }
 
@@ -963,7 +971,6 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     font-weight: bold;
     padding: 8px 14px;
     border-radius: 8px;
-    cursor: pointer;
     z-index: 3001;
   }
 
@@ -1077,36 +1084,31 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   }
 
   .mobile-calendar-note {
-    display: block;
-    color: #000000;
-    background: transparent;
-    font-size: 10px;
-    text-align: center;
-    white-space: nowrap;
-    margin-bottom: 8px;
+    display: none;
   }
 
   .admin-calendar-page {
+    height: calc(100vh - 82px);
     min-height: calc(100vh - 82px);
-    padding: 10px;
-    overflow-x: hidden;
+    padding: 8px;
+    overflow: hidden;
   }
 
   .admin-calendar-page h1 {
-    font-size: 22px;
+    font-size: 18px;
     text-align: center;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
   }
 
   .admin-calendar-page .open-schedule-button {
     display: block;
-    margin: 0 auto 8px;
-    padding: 8px 12px;
-    font-size: 12px;
+    margin: 0 auto 6px;
+    padding: 7px 10px;
+    font-size: 11px;
   }
 
   .calendar-nav-button {
-    display: none !important;
+    display: none;
   }
 
   .admin-calendar-page .calendar-layout {
@@ -1116,7 +1118,8 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   .calendar-header {
     flex-direction: column;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
+    margin-bottom: 6px;
   }
 
   .calendar-title-area {
@@ -1143,12 +1146,12 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   }
 
   .calendar-body {
-    grid-template-rows: repeat(6, 70px);
+    grid-template-rows: repeat(6, 58px);
   }
 
   .calendar-day {
-    height: 70px;
-    min-height: 70px;
+    height: 58px;
+    min-height: 58px;
     padding: 2px;
   }
 
@@ -1156,15 +1159,8 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     font-size: 10px;
   }
 
-  .booking-card {
-    font-size: 6.5px;
-    padding: 2px;
-    margin-top: 1px;
-  }
-
-  .booking-card p {
-    margin: 0;
-    line-height: 1.1;
+  .admin-calendar-page .booking-card {
+    display: none;
   }
 
   .today-schedule-panel {
@@ -1172,9 +1168,10 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   }
 
   .modal-overlay {
-    align-items: flex-start;
-    padding: 20px 10px;
-    overflow-y: auto;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    overflow: hidden;
   }
 
   .schedule-modal,
@@ -1182,7 +1179,7 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   .crm-modal {
     width: 94%;
     max-width: 94%;
-    max-height: 88vh;
+    max-height: 82vh;
   }
 
   .day-booking-tab {
@@ -1228,188 +1225,4 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     font-size: 18px;
     line-height: 1;
   }
-}
-
-/* Show Today's Schedule on desktop, hide it on mobile */
-
-.today-schedule-panel {
-  display: block;
-}
-
-@media (min-width: 769px) {
-  .calendar-layout {
-    display: grid;
-    grid-template-columns: 1fr 300px;
-    gap: 14px;
-  }
-
-  .today-schedule-panel {
-    display: block !important;
-  }
-}
-
-@media (max-width: 768px) {
-  .today-schedule-panel {
-    display: none !important;
-  }
-}
-
-/* Desktop Today Schedule Panel */
-
-.today-schedule-panel {
-  background: #000000 !important;
-  color: #ffffff !important;
-  border: 2px solid #d4af37 !important;
-  border-radius: 0 !important;
-  padding: 15px !important;
-}
-
-.today-schedule-panel h2,
-.today-schedule-panel p,
-.today-schedule-panel strong,
-.today-schedule-panel .selected-date-label {
-  color: #ffffff !important;
-}
-
-.today-booking-tab {
-  background: #ffffff !important;
-  color: #000000 !important;
-  border: 1px solid #cccccc !important;
-  border-radius: 0 !important;
-  padding: 10px !important;
-  margin-bottom: 10px !important;
-}
-
-.today-booking-tab p,
-.today-booking-tab strong {
-  color: #000000 !important;
-}
-
-.today-tab-actions {
-  display: flex;
-  gap: 6px;
-  margin-top: 8px;
-}
-
-.today-tab-actions button,
-.today-add-button {
-  background: #ffffff !important;
-  color: #000000 !important;
-  border: 1px solid #000000 !important;
-  border-radius: 0 !important;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.today-tab-actions button:hover,
-.today-add-button:hover {
-  background: #d4af37 !important;
-  color: #000000 !important;
-}
-
-@media (max-width: 768px) {
-  .today-schedule-panel {
-    display: none !important;
-  }
-}
-
-.today-schedule-panel {
-  display: block;
-  background: #000000 !important;
-  color: #ffffff !important;
-  border: 2px solid #d4af37 !important;
-  border-radius: 0 !important;
-}
-
-.today-schedule-panel h2,
-.today-schedule-panel p,
-.today-schedule-panel strong,
-.today-schedule-panel .selected-date-label {
-  color: #ffffff !important;
-}
-
-.today-booking-tab {
-  background: #ffffff !important;
-  color: #000000 !important;
-  border-radius: 0 !important;
-}
-
-.today-booking-tab p,
-.today-booking-tab strong {
-  color: #000000 !important;
-}
-
-.today-tab-actions button,
-.today-add-button {
-  background: #ffffff !important;
-  color: #000000 !important;
-  border: 1px solid #000000 !important;
-  border-radius: 0 !important;
-}
-
-@media (max-width: 768px) {
-  .today-schedule-panel {
-    display: none !important;
-  }
-}
-
-@media (max-width: 768px) {
-  .mobile-calendar-note {
-    display: none !important;
-  }
-
-  .admin-calendar-page {
-    height: calc(100vh - 82px) !important;
-    min-height: calc(100vh - 82px) !important;
-    overflow: hidden !important;
-    padding: 8px !important;
-  }
-
-  .admin-calendar-page h1 {
-    font-size: 18px !important;
-    margin-bottom: 6px !important;
-  }
-
-  .admin-calendar-page .open-schedule-button {
-    margin-bottom: 6px !important;
-    padding: 7px 10px !important;
-    font-size: 11px !important;
-  }
-
-  .admin-calendar-page .calendar-header {
-    margin-bottom: 6px !important;
-  }
-
-  .admin-calendar-page .calendar-day {
-    height: 58px !important;
-    min-height: 58px !important;
-  }
-
-  .admin-calendar-page .booking-card {
-    display: none !important;
-  }
-}
-
-.modal-overlay {
-  align-items: center !important;
-  justify-content: center !important;
-  overflow: hidden !important;
-  padding: 16px !important;
-}
-
-.schedule-modal,
-.day-schedule-modal {
-  margin: auto !important;
-  max-height: 82vh !important;
-  overflow-y: auto !important;
-}
-
-.status-selected-message {
-  background: #ffffff;
-  color: #000000 !important;
-  border: 1px solid #000000;
-  padding: 8px;
-  font-weight: 700;
-  margin-top: 8px;
-  text-align: center;
 }
