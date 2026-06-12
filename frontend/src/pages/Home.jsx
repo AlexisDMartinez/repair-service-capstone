@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 
 function Home() {
   return (
-    <div className="home-page">
-      <section className="hero-section">
+    <main className="home-page">
+      <section className="hero-section full-home-hero">
         <div className="hero-overlay">
           <h1>Precision Welding & Industrial Fabrication Solutions</h1>
 
@@ -17,7 +17,7 @@ function Home() {
           </Link>
         </div>
       </section>
-    </div>
+    </main>
   );
 }
 
