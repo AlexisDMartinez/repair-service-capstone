@@ -171,9 +171,6 @@ function AdminCalendar() {
     <div className="calendar-container admin-calendar-page">
       <h1>Admin Schedule Calendar</h1>
 
-      <div className="mobile-calendar-note">
-        Tap a date to view schedule. Double tap a date to schedule a customer appointment.
-      </div>
 
       <button
         className="open-schedule-button"

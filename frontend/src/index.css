@@ -1352,3 +1352,40 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     display: none !important;
   }
 }
+
+@media (max-width: 768px) {
+  .mobile-calendar-note {
+    display: none !important;
+  }
+
+  .admin-calendar-page {
+    height: calc(100vh - 82px) !important;
+    min-height: calc(100vh - 82px) !important;
+    overflow: hidden !important;
+    padding: 8px !important;
+  }
+
+  .admin-calendar-page h1 {
+    font-size: 18px !important;
+    margin-bottom: 6px !important;
+  }
+
+  .admin-calendar-page .open-schedule-button {
+    margin-bottom: 6px !important;
+    padding: 7px 10px !important;
+    font-size: 11px !important;
+  }
+
+  .admin-calendar-page .calendar-header {
+    margin-bottom: 6px !important;
+  }
+
+  .admin-calendar-page .calendar-day {
+    height: 58px !important;
+    min-height: 58px !important;
+  }
+
+  .admin-calendar-page .booking-card {
+    display: none !important;
+  }
+}
