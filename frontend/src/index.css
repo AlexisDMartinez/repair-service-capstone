@@ -36,8 +36,8 @@ a {
   color: #ffffff;
 }
 
-.button,
-button {
+button,
+.button {
   font-family: inherit;
 }
 
@@ -54,8 +54,7 @@ button {
   font-size: 18px;
   transition: 0.3s;
   width: 100%;
-  max-width: 170px;
-  align-self: center;
+  max-width: 210px;
 }
 
 .button:hover {
@@ -207,9 +206,6 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 .hero-overlay .button {
   margin-left: auto;
   margin-right: auto;
-  max-width: 210px;
-  padding: 14px 24px;
-  font-size: 18px;
 }
 
 /* =========================
@@ -392,7 +388,7 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 }
 
 /* =========================
-   FORMS / DASHBOARD BUTTONS
+   FORMS / BUTTON GROUPS
 ========================= */
 .form-page form {
   display: flex;
@@ -531,12 +527,14 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 /* =========================
    ADMIN CALENDAR
 ========================= */
+.mobile-calendar-note {
+  display: none;
+}
+
 .admin-calendar-page {
   background: #ffffff !important;
   color: #000000 !important;
-  height: calc(100vh - 95px);
   min-height: calc(100vh - 95px);
-  overflow: hidden;
   padding: 14px 20px;
 }
 
@@ -560,13 +558,10 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   display: grid;
   grid-template-columns: 1fr 300px;
   gap: 14px;
-  height: calc(100vh - 190px);
 }
 
 .calendar-main {
   width: 100%;
-  height: 100%;
-  overflow: hidden;
   background: #ffffff;
 }
 
@@ -592,16 +587,11 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   display: flex;
   gap: 10px;
   align-items: center;
-  text-align: center;
 }
 
 .calendar-grid {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-}
-
-.calendar-weekdays {
-  height: 36px;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
 }
 
 .calendar-weekdays div {
@@ -615,14 +605,12 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 }
 
 .calendar-body {
-  height: calc(100% - 86px);
-  grid-template-rows: repeat(6, 1fr);
   background: #ffffff;
+  grid-template-rows: repeat(6, minmax(90px, 1fr));
 }
 
 .calendar-day {
-  min-height: 0;
-  height: 100%;
+  min-height: 90px;
   border: 1px solid #d7d7d7;
   padding: 5px;
   background: #ffffff;
@@ -689,22 +677,22 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   border: 1px solid #d4af37;
   padding: 12px;
   border-radius: 10px;
-  height: 100%;
-  min-height: 0;
-  overflow: hidden;
+  height: fit-content;
+  max-height: calc(100vh - 190px);
+  overflow-y: auto;
   position: sticky;
   top: 20px;
 }
 
-.today-schedule-panel h2 {
-  color: #ffffff;
-  font-size: 20px;
-  margin: 0 0 8px;
-}
-
+.today-schedule-panel h2,
 .today-schedule-panel p,
 .today-schedule-panel strong {
   color: #ffffff;
+}
+
+.today-schedule-panel h2 {
+  font-size: 20px;
+  margin: 0 0 8px;
 }
 
 .today-add-button,
@@ -812,8 +800,8 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 }
 
 .day-schedule-modal h2,
-.day-schedule-modal p,
-.day-schedule-modal strong {
+.day-schedule-modal > p,
+.day-schedule-modal > strong {
   color: #ffffff;
 }
 
@@ -1088,40 +1076,59 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     padding: 14px 20px;
   }
 
+  .mobile-calendar-note {
+    display: block;
+    color: #000000;
+    background: transparent;
+    font-size: 10px;
+    text-align: center;
+    white-space: nowrap;
+    margin-bottom: 8px;
+  }
+
   .admin-calendar-page {
-    height: auto;
     min-height: calc(100vh - 82px);
-    overflow-y: auto;
-    padding: 8px;
+    padding: 10px;
+    overflow-x: hidden;
   }
 
   .admin-calendar-page h1 {
-    font-size: 20px;
+    font-size: 22px;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+
+  .admin-calendar-page .open-schedule-button {
+    display: block;
+    margin: 0 auto 8px;
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+
+  .calendar-nav-button {
+    display: none !important;
   }
 
   .admin-calendar-page .calendar-layout {
     display: block;
-    height: auto;
-  }
-
-  .admin-calendar-page .calendar-main {
-    height: auto;
-    width: 100%;
   }
 
   .calendar-header {
     flex-direction: column;
+    align-items: center;
     gap: 8px;
   }
 
   .calendar-title-area {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
     width: 100%;
-    justify-content: center;
   }
 
   .calendar-title-area select {
-    width: 50%;
-    font-size: 13px;
+    width: 100%;
+    font-size: 12px;
     padding: 8px;
   }
 
@@ -1130,39 +1137,33 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     width: 100%;
   }
 
-  .calendar-weekdays {
-    height: auto;
-  }
-
   .calendar-weekdays div {
-    font-size: 8px;
+    font-size: 7px;
     padding: 5px 0;
   }
 
   .calendar-body {
-    height: auto;
-    grid-template-rows: none;
+    grid-template-rows: repeat(6, 70px);
   }
 
   .calendar-day {
-    height: 72px;
-    min-height: 72px;
-    padding: 3px;
+    height: 70px;
+    min-height: 70px;
+    padding: 2px;
   }
 
   .calendar-date-number {
-    font-size: 11px;
-    margin-bottom: 2px;
+    font-size: 10px;
   }
 
   .booking-card {
-    font-size: 7px;
-    padding: 2px 3px;
-    margin-top: 2px;
-    border-radius: 3px;
+    font-size: 6.5px;
+    padding: 2px;
+    margin-top: 1px;
   }
 
   .booking-card p {
+    margin: 0;
     line-height: 1.1;
   }
 
@@ -1179,9 +1180,19 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   .schedule-modal,
   .day-schedule-modal,
   .crm-modal {
-    width: 96%;
-    max-width: 96%;
+    width: 94%;
+    max-width: 94%;
     max-height: 88vh;
+  }
+
+  .day-booking-tab {
+    background: #ffffff;
+    color: #000000;
+  }
+
+  .day-booking-tab p,
+  .day-booking-tab strong {
+    color: #000000;
   }
 
   .day-tab-actions {

@@ -31,7 +31,7 @@ function AdminCalendar() {
     try {
       const res = await API.get("/bookings/admin/all");
       setBookings(Array.isArray(res.data) ? res.data : []);
-    } catch (error) {
+    } catch {
       setBookings([]);
     }
   };
@@ -40,12 +40,12 @@ function AdminCalendar() {
     try {
       const res = await API.get("/customers");
       setCustomers(Array.isArray(res.data) ? res.data : []);
-    } catch (error) {
+    } catch {
       setCustomers([]);
     }
   };
 
-  const openScheduleModal = (date = "") => {
+  const openScheduleModal = (date = today) => {
     setAdminForm({
       customerId: "",
       customerName: "",
@@ -93,10 +93,8 @@ function AdminCalendar() {
 
     try {
       await API.post("/bookings/admin/create", adminForm);
-
       setShowScheduleModal(false);
       fetchBookings();
-
       alert("Appointment scheduled successfully.");
     } catch (error) {
       alert(error.response?.data?.message || "Unable to schedule appointment.");
@@ -107,7 +105,7 @@ function AdminCalendar() {
     try {
       await API.put(`/bookings/admin/status/${bookingId}`, { status });
       fetchBookings();
-    } catch (error) {
+    } catch {
       alert("Unable to update booking status.");
     }
   };
@@ -167,11 +165,13 @@ function AdminCalendar() {
     ? getBookingsForDate(selectedDate)
     : [];
 
-  const todayBookings = getBookingsForDate(today);
-
   return (
     <div className="calendar-container admin-calendar-page">
       <h1>Admin Schedule Calendar</h1>
+
+      <div className="mobile-calendar-note">
+        Tap a date to view schedule. Double tap a date to schedule a customer appointment.
+      </div>
 
       <button
         className="open-schedule-button"
@@ -183,7 +183,10 @@ function AdminCalendar() {
       <div className="calendar-layout">
         <div className="calendar-main">
           <div className="calendar-header">
-            <button onClick={() => setCurrentDate(new Date(year, month - 1, 1))}>
+            <button
+              className="calendar-nav-button"
+              onClick={() => setCurrentDate(new Date(year, month - 1, 1))}
+            >
               Back
             </button>
 
@@ -215,7 +218,10 @@ function AdminCalendar() {
               </select>
             </div>
 
-            <button onClick={() => setCurrentDate(new Date(year, month + 1, 1))}>
+            <button
+              className="calendar-nav-button"
+              onClick={() => setCurrentDate(new Date(year, month + 1, 1))}
+            >
               Forward
             </button>
           </div>
@@ -283,63 +289,6 @@ function AdminCalendar() {
             })}
           </div>
         </div>
-
-        <aside className="today-schedule-panel">
-          <h2>Today&apos;s Schedule</h2>
-
-          <p className="selected-date-label">{today}</p>
-
-          <button
-            className="today-add-button"
-            onClick={() => openScheduleModal(today)}
-          >
-            Add Appointment
-          </button>
-
-          {todayBookings.length === 0 && (
-            <p>No appointments scheduled for today.</p>
-          )}
-
-          {todayBookings.map((booking) => (
-            <div key={booking._id} className="today-booking-tab">
-              <strong>
-                {booking.user?.name || booking.customerName || "Customer"}
-              </strong>
-
-              <p>
-                {booking.date} at {booking.time}
-              </p>
-
-              <p>{booking.status || "Scheduled"}</p>
-
-              <div className="today-tab-actions">
-                <button
-                  onClick={() =>
-                    updateBookingStatus(booking._id, "Confirmed")
-                  }
-                >
-                  Confirm
-                </button>
-
-                <button
-                  onClick={() =>
-                    updateBookingStatus(booking._id, "Declined")
-                  }
-                >
-                  Decline
-                </button>
-
-                <button
-                  onClick={() =>
-                    updateBookingStatus(booking._id, "Contact Customer")
-                  }
-                >
-                  Contact
-                </button>
-              </div>
-            </div>
-          ))}
-        </aside>
       </div>
 
       {showDayModal && (
