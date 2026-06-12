@@ -1,7 +1,5 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const crypto = require("crypto");
-const nodemailer = require("nodemailer");
 const User = require("../models/User");
 
 const generateToken = (id) => {
@@ -12,7 +10,14 @@ const generateToken = (id) => {
 
 const registerUser = async (req, res) => {
   try {
-    const { name, email, password, role } = req.body;
+    const {
+      name,
+      email,
+      password,
+      role,
+      securityQuestion,
+      securityAnswer
+    } = req.body;
 
     const normalizedEmail = email.toLowerCase().trim();
 
@@ -27,12 +32,18 @@ const registerUser = async (req, res) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedSecurityAnswer = await bcrypt.hash(
+      securityAnswer.toLowerCase().trim(),
+      10
+    );
 
     const user = await User.create({
-      name,
+      name: name.trim(),
       email: normalizedEmail,
       password: hashedPassword,
-      role: role || "user"
+      role: role || "user",
+      securityQuestion,
+      securityAnswer: hashedSecurityAnswer
     });
 
     res.status(201).json({
@@ -93,9 +104,40 @@ const loginUser = async (req, res) => {
   }
 };
 
-const forgotPassword = async (req, res) => {
+const getSecurityQuestion = async (req, res) => {
   try {
     const { email } = req.body;
+
+    const normalizedEmail = email.toLowerCase().trim();
+
+    const user = await User.findOne({
+      email: normalizedEmail
+    });
+
+    if (!user || !user.securityQuestion) {
+      return res.status(404).json({
+        message: "No account or security question found for that email."
+      });
+    }
+
+    res.json({
+      securityQuestion: user.securityQuestion
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Unable to get security question",
+      error: error.message
+    });
+  }
+};
+
+const resetPasswordWithSecurityAnswer = async (req, res) => {
+  try {
+    const {
+      email,
+      securityAnswer,
+      newPassword
+    } = req.body;
 
     const normalizedEmail = email.toLowerCase().trim();
 
@@ -109,76 +151,20 @@ const forgotPassword = async (req, res) => {
       });
     }
 
-    const resetToken = crypto.randomBytes(32).toString("hex");
+    const answerMatches = await bcrypt.compare(
+      securityAnswer.toLowerCase().trim(),
+      user.securityAnswer
+    );
 
-    const hashedToken = crypto
-      .createHash("sha256")
-      .update(resetToken)
-      .digest("hex");
-
-    user.resetPasswordToken = hashedToken;
-    user.resetPasswordExpires = Date.now() + 15 * 60 * 1000;
-
-    await user.save();
-
-    const resetUrl = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
-
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-      }
-    });
-
-    await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to: user.email,
-      subject: "A&S Industrial Password Reset",
-      html: `
-        <h2>Password Reset Request</h2>
-        <p>Click the link below to reset your password:</p>
-        <a href="${resetUrl}">${resetUrl}</a>
-        <p>This link expires in 15 minutes.</p>
-      `
-    });
-
-    res.json({
-      message: "Password reset link sent to your email."
-    });
-  } catch (error) {
-    res.status(500).json({
-      message: "Unable to send password reset email",
-      error: error.message
-    });
-  }
-};
-
-const resetPassword = async (req, res) => {
-  try {
-    const resetToken = req.params.token;
-
-    const hashedToken = crypto
-      .createHash("sha256")
-      .update(resetToken)
-      .digest("hex");
-
-    const user = await User.findOne({
-      resetPasswordToken: hashedToken,
-      resetPasswordExpires: { $gt: Date.now() }
-    });
-
-    if (!user) {
-      return res.status(400).json({
-        message: "Reset link is invalid or has expired."
+    if (!answerMatches) {
+      return res.status(401).json({
+        message: "Security answer is incorrect."
       });
     }
 
-    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
 
     user.password = hashedPassword;
-    user.resetPasswordToken = undefined;
-    user.resetPasswordExpires = undefined;
 
     await user.save();
 
@@ -196,7 +182,7 @@ const resetPassword = async (req, res) => {
 module.exports = {
   registerUser,
   loginUser,
-  forgotPassword,
-  resetPassword
+  getSecurityQuestion,
+  resetPasswordWithSecurityAnswer
 };
 

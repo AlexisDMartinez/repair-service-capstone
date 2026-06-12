@@ -6,7 +6,9 @@ function Register() {
   const [form, setForm] = useState({
     name: "",
     email: "",
-    password: ""
+    password: "",
+    securityQuestion: "",
+    securityAnswer: ""
   });
 
   const navigate = useNavigate();
@@ -15,14 +17,21 @@ function Register() {
     e.preventDefault();
 
     try {
-      await API.post("/auth/register", form);
+      const registerData = {
+        name: form.name.trim(),
+        email: form.email.toLowerCase().trim(),
+        password: form.password,
+        securityQuestion: form.securityQuestion,
+        securityAnswer: form.securityAnswer.trim()
+      };
 
-      alert("Registration successful. Please log in.");
+      await API.post("/auth/register", registerData);
 
+      alert("Account created successfully. Please log in.");
       navigate("/login");
     } catch (error) {
       console.log(error);
-      alert("Registration failed.");
+      alert(error.response?.data?.message || "Unable to register.");
     }
   };
 
@@ -33,9 +42,7 @@ function Register() {
 
         <h2>Create Account</h2>
 
-        <p>
-          Register to begin scheduling industrial repair services
-        </p>
+        <p>Create your account to book and manage repair services.</p>
 
         <form onSubmit={handleSubmit}>
           <input
@@ -43,8 +50,12 @@ function Register() {
             placeholder="Full Name"
             value={form.name}
             onChange={(e) =>
-              setForm({ ...form, name: e.target.value })
+              setForm({
+                ...form,
+                name: e.target.value
+              })
             }
+            required
           />
 
           <input
@@ -52,8 +63,12 @@ function Register() {
             placeholder="Email Address"
             value={form.email}
             onChange={(e) =>
-              setForm({ ...form, email: e.target.value })
+              setForm({
+                ...form,
+                email: e.target.value
+              })
             }
+            required
           />
 
           <input
@@ -61,20 +76,57 @@ function Register() {
             placeholder="Password"
             value={form.password}
             onChange={(e) =>
-              setForm({ ...form, password: e.target.value })
+              setForm({
+                ...form,
+                password: e.target.value
+              })
             }
+            required
           />
 
-          <button type="submit">
-            Create Account
-          </button>
+          <select
+            value={form.securityQuestion}
+            onChange={(e) =>
+              setForm({
+                ...form,
+                securityQuestion: e.target.value
+              })
+            }
+            required
+          >
+            <option value="">Select a security question</option>
+            <option value="What was the name of your first pet?">
+              What was the name of your first pet?
+            </option>
+            <option value="What city were you born in?">
+              What city were you born in?
+            </option>
+            <option value="What was your first car?">
+              What was your first car?
+            </option>
+            <option value="What is your favorite color?">
+              What is your favorite color?
+            </option>
+          </select>
+
+          <input
+            type="text"
+            placeholder="Security Answer"
+            value={form.securityAnswer}
+            onChange={(e) =>
+              setForm({
+                ...form,
+                securityAnswer: e.target.value
+              })
+            }
+            required
+          />
+
+          <button type="submit">Create Account</button>
         </form>
 
         <p className="auth-switch">
-          Already have an account?{" "}
-          <Link to="/login">
-            Login
-          </Link>
+          Already have an account? <Link to="/login">Sign in</Link>
         </p>
       </div>
     </div>
@@ -82,6 +134,5 @@ function Register() {
 }
 
 export default Register;
-
 
 

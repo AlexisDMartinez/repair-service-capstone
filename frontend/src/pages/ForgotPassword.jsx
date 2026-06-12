@@ -1,23 +1,37 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import API from "../services/api";
 
 function ForgotPassword() {
   const [email, setEmail] = useState("");
+  const [securityQuestion, setSecurityQuestion] = useState("");
 
-  const handleSubmit = async (e) => {
+  const navigate = useNavigate();
+
+  const handleGetQuestion = async (e) => {
     e.preventDefault();
 
     try {
-      await API.post("/auth/forgot-password", {
+      const res = await API.post("/auth/security-question", {
         email: email.toLowerCase().trim()
       });
 
-      alert("Password reset link sent to your email.");
-      setEmail("");
+      setSecurityQuestion(res.data.securityQuestion);
     } catch (error) {
-      alert(error.response?.data?.message || "Unable to send reset link.");
+      alert(
+        error.response?.data?.message ||
+          "Unable to find security question for this account."
+      );
     }
+  };
+
+  const goToResetPassword = () => {
+    navigate("/reset-password", {
+      state: {
+        email: email.toLowerCase().trim(),
+        securityQuestion
+      }
+    });
   };
 
   return (
@@ -25,11 +39,11 @@ function ForgotPassword() {
       <div className="auth-card">
         <h1>A&S Industrial</h1>
 
-        <h2>Reset Password</h2>
+        <h2>Account Recovery</h2>
 
-        <p>Enter your email address and we will send you a reset link.</p>
+        <p>Enter your email address to find your security question.</p>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleGetQuestion}>
           <input
             type="email"
             placeholder="Email Address"
@@ -38,8 +52,20 @@ function ForgotPassword() {
             required
           />
 
-          <button type="submit">Send Reset Link</button>
+          <button type="submit">Find Security Question</button>
         </form>
+
+        {securityQuestion && (
+          <div className="security-question-box">
+            <p>
+              <strong>Security Question:</strong>
+            </p>
+
+            <p>{securityQuestion}</p>
+
+            <button onClick={goToResetPassword}>Answer Question</button>
+          </div>
+        )}
 
         <p className="auth-switch">
           <Link to="/login">Back to Login</Link>
