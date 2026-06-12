@@ -69,27 +69,22 @@ function Navbar() {
 
         {token && isAdmin && (
           <>
-            <Link
-              to="/admin-dashboard"
-              onClick={() => setMenuOpen(false)}
-            >
+            <Link to="/admin-dashboard" onClick={() => setMenuOpen(false)}>
               Admin Dashboard
             </Link>
 
-            <Link
-              to="/admin/calendar"
-              onClick={() => setMenuOpen(false)}
-            >
+            <Link to="/admin/calendar" onClick={() => setMenuOpen(false)}>
               Schedule Calendar
+            </Link>
+
+            <Link to="/admin/crm" onClick={() => setMenuOpen(false)}>
+              Customer CRM
             </Link>
           </>
         )}
 
         {token && (
-          <button
-            className="logout-button"
-            onClick={handleLogout}
-          >
+          <button className="logout-button" onClick={handleLogout}>
             Logout
           </button>
         )}

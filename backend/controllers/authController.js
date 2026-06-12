@@ -11,7 +11,9 @@ const generateToken = (id) => {
 const registerUser = async (req, res) => {
   try {
     const {
-      name,
+      firstName,
+      lastName,
+      phone,
       email,
       password,
       role,
@@ -21,9 +23,7 @@ const registerUser = async (req, res) => {
 
     const normalizedEmail = email.toLowerCase().trim();
 
-    const userExists = await User.findOne({
-      email: normalizedEmail
-    });
+    const userExists = await User.findOne({ email: normalizedEmail });
 
     if (userExists) {
       return res.status(400).json({
@@ -32,13 +32,17 @@ const registerUser = async (req, res) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
+
     const hashedSecurityAnswer = await bcrypt.hash(
       securityAnswer.toLowerCase().trim(),
       10
     );
 
     const user = await User.create({
-      name: name.trim(),
+      firstName: firstName.trim(),
+      lastName: lastName.trim(),
+      name: `${firstName.trim()} ${lastName.trim()}`,
+      phone: phone.trim(),
       email: normalizedEmail,
       password: hashedPassword,
       role: role || "user",
@@ -50,7 +54,10 @@ const registerUser = async (req, res) => {
       token: generateToken(user._id),
       user: {
         id: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
         name: user.name,
+        phone: user.phone,
         email: user.email,
         role: user.role
       }
@@ -69,9 +76,7 @@ const loginUser = async (req, res) => {
 
     const normalizedEmail = email.toLowerCase().trim();
 
-    const user = await User.findOne({
-      email: normalizedEmail
-    });
+    const user = await User.findOne({ email: normalizedEmail });
 
     if (!user) {
       return res.status(401).json({
@@ -91,7 +96,10 @@ const loginUser = async (req, res) => {
       token: generateToken(user._id),
       user: {
         id: user._id,
-        name: user.name,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        name: user.name || `${user.firstName} ${user.lastName}`,
+        phone: user.phone,
         email: user.email,
         role: user.role
       }
@@ -110,9 +118,7 @@ const getSecurityQuestion = async (req, res) => {
 
     const normalizedEmail = email.toLowerCase().trim();
 
-    const user = await User.findOne({
-      email: normalizedEmail
-    });
+    const user = await User.findOne({ email: normalizedEmail });
 
     if (!user || !user.securityQuestion) {
       return res.status(404).json({
@@ -133,17 +139,11 @@ const getSecurityQuestion = async (req, res) => {
 
 const resetPasswordWithSecurityAnswer = async (req, res) => {
   try {
-    const {
-      email,
-      securityAnswer,
-      newPassword
-    } = req.body;
+    const { email, securityAnswer, newPassword } = req.body;
 
     const normalizedEmail = email.toLowerCase().trim();
 
-    const user = await User.findOne({
-      email: normalizedEmail
-    });
+    const user = await User.findOne({ email: normalizedEmail });
 
     if (!user) {
       return res.status(404).json({
@@ -162,9 +162,7 @@ const resetPasswordWithSecurityAnswer = async (req, res) => {
       });
     }
 
-    const hashedPassword = await bcrypt.hash(newPassword, 10);
-
-    user.password = hashedPassword;
+    user.password = await bcrypt.hash(newPassword, 10);
 
     await user.save();
 

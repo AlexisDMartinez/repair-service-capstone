@@ -19,6 +19,7 @@ import Book from "./pages/Book";
 import Dashboard from "./pages/Dashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminCalendar from "./pages/AdminCalendar";
+import AdminCRM from "./pages/AdminCRM";
 
 function AppContent() {
   const { pathname } = useLocation();
@@ -74,6 +75,15 @@ function AppContent() {
           element={
             <ProtectedRoute>
               <AdminCalendar />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/crm"
+          element={
+            <ProtectedRoute>
+              <AdminCRM />
             </ProtectedRoute>
           }
         />

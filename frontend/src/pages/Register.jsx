@@ -4,9 +4,12 @@ import API from "../services/api";
 
 function Register() {
   const [form, setForm] = useState({
-    name: "",
+    firstName: "",
+    lastName: "",
+    phone: "",
     email: "",
     password: "",
+    confirmPassword: "",
     securityQuestion: "",
     securityAnswer: ""
   });
@@ -16,9 +19,16 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (form.password !== form.confirmPassword) {
+      alert("Passwords do not match.");
+      return;
+    }
+
     try {
       const registerData = {
-        name: form.name.trim(),
+        firstName: form.firstName.trim(),
+        lastName: form.lastName.trim(),
+        phone: form.phone.trim(),
         email: form.email.toLowerCase().trim(),
         password: form.password,
         securityQuestion: form.securityQuestion,
@@ -30,7 +40,6 @@ function Register() {
       alert("Account created successfully. Please log in.");
       navigate("/login");
     } catch (error) {
-      console.log(error);
       alert(error.response?.data?.message || "Unable to register.");
     }
   };
@@ -47,13 +56,30 @@ function Register() {
         <form onSubmit={handleSubmit}>
           <input
             type="text"
-            placeholder="Full Name"
-            value={form.name}
+            placeholder="First Name"
+            value={form.firstName}
             onChange={(e) =>
-              setForm({
-                ...form,
-                name: e.target.value
-              })
+              setForm({ ...form, firstName: e.target.value })
+            }
+            required
+          />
+
+          <input
+            type="text"
+            placeholder="Last Name"
+            value={form.lastName}
+            onChange={(e) =>
+              setForm({ ...form, lastName: e.target.value })
+            }
+            required
+          />
+
+          <input
+            type="tel"
+            placeholder="Phone Number"
+            value={form.phone}
+            onChange={(e) =>
+              setForm({ ...form, phone: e.target.value })
             }
             required
           />
@@ -63,10 +89,7 @@ function Register() {
             placeholder="Email Address"
             value={form.email}
             onChange={(e) =>
-              setForm({
-                ...form,
-                email: e.target.value
-              })
+              setForm({ ...form, email: e.target.value })
             }
             required
           />
@@ -76,10 +99,17 @@ function Register() {
             placeholder="Password"
             value={form.password}
             onChange={(e) =>
-              setForm({
-                ...form,
-                password: e.target.value
-              })
+              setForm({ ...form, password: e.target.value })
+            }
+            required
+          />
+
+          <input
+            type="password"
+            placeholder="Confirm Password"
+            value={form.confirmPassword}
+            onChange={(e) =>
+              setForm({ ...form, confirmPassword: e.target.value })
             }
             required
           />
@@ -87,10 +117,7 @@ function Register() {
           <select
             value={form.securityQuestion}
             onChange={(e) =>
-              setForm({
-                ...form,
-                securityQuestion: e.target.value
-              })
+              setForm({ ...form, securityQuestion: e.target.value })
             }
             required
           >
@@ -114,10 +141,7 @@ function Register() {
             placeholder="Security Answer"
             value={form.securityAnswer}
             onChange={(e) =>
-              setForm({
-                ...form,
-                securityAnswer: e.target.value
-              })
+              setForm({ ...form, securityAnswer: e.target.value })
             }
             required
           />
@@ -134,5 +158,6 @@ function Register() {
 }
 
 export default Register;
+
 
 

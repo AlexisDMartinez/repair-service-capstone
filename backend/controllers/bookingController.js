@@ -1,8 +1,17 @@
 const Booking = require("../models/Booking");
+const User = require("../models/User");
 
 const createBooking = async (req, res) => {
   try {
-    const { service, date, time, email, phone, notes } = req.body;
+    const { service, date, time, notes } = req.body;
+
+    const customer = await User.findById(req.user.id);
+
+    if (!customer) {
+      return res.status(404).json({
+        message: "Customer account not found"
+      });
+    }
 
     const existingBooking = await Booking.findOne({
       date,
@@ -17,19 +26,22 @@ const createBooking = async (req, res) => {
     }
 
     const booking = await Booking.create({
-      user: req.user.id,
+      user: customer._id,
       service,
+      customerName: customer.name || `${customer.firstName} ${customer.lastName}`,
+      email: customer.email,
+      phone: customer.phone,
       date,
       time,
-      email,
-      phone,
-      notes
+      notes,
+      status: "Scheduled"
     });
 
     res.status(201).json(booking);
   } catch (error) {
     res.status(500).json({
-      message: "Booking failed"
+      message: "Booking failed",
+      error: error.message
     });
   }
 };
@@ -41,18 +53,6 @@ const getMyBookings = async (req, res) => {
     }).populate("service");
 
     const sortedBookings = bookings.sort((a, b) => {
-      const statusOrder = {
-        Cancelled: 2,
-        "Time Change Requested": 1
-      };
-
-      const aOrder = statusOrder[a.status] || 0;
-      const bOrder = statusOrder[b.status] || 0;
-
-      if (aOrder !== bOrder) {
-        return aOrder - bOrder;
-      }
-
       const aDateTime = new Date(`${a.date} ${a.time}`);
       const bDateTime = new Date(`${b.date} ${b.time}`);
 

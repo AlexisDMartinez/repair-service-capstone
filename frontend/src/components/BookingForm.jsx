@@ -5,6 +5,8 @@ import API from "../services/api";
 function BookingForm() {
   const navigate = useNavigate();
 
+  const user = JSON.parse(localStorage.getItem("user"));
+
   const [services, setServices] = useState([]);
   const [fullyBookedDates, setFullyBookedDates] = useState([]);
 
@@ -12,8 +14,6 @@ function BookingForm() {
     service: "",
     date: "",
     time: "",
-    email: "",
-    phone: "",
     notes: ""
   });
 
@@ -30,14 +30,9 @@ function BookingForm() {
   useEffect(() => {
     API.get("/services")
       .then((res) => {
-        if (Array.isArray(res.data)) {
-          setServices(res.data);
-        } else {
-          setServices([]);
-        }
+        setServices(Array.isArray(res.data) ? res.data : []);
       })
-      .catch((error) => {
-        console.log("Could not load services:", error);
+      .catch(() => {
         setServices([]);
       });
 
@@ -47,9 +42,7 @@ function BookingForm() {
           setFullyBookedDates(res.data);
         }
       })
-      .catch((error) => {
-        console.log("Unable to load fully booked dates:", error);
-      });
+      .catch(() => {});
   }, []);
 
   const handleDateChange = (selectedDate) => {
@@ -73,14 +66,8 @@ function BookingForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (
-      !form.service ||
-      !form.date ||
-      !form.time ||
-      !form.email ||
-      !form.phone
-    ) {
-      alert("Please select a service, date, time, email, and phone number.");
+    if (!form.service || !form.date || !form.time) {
+      alert("Please select a service, date, and time.");
       return;
     }
 
@@ -93,15 +80,11 @@ function BookingForm() {
         service: "",
         date: "",
         time: "",
-        email: "",
-        phone: "",
         notes: ""
       });
 
       navigate("/dashboard");
     } catch (error) {
-      console.log("Booking error:", error);
-
       alert(
         error.response?.data?.message ||
           "Booking failed. Please try again."
@@ -111,6 +94,23 @@ function BookingForm() {
 
   return (
     <form onSubmit={handleSubmit}>
+      <div className="customer-prefill-box">
+        <h3>Customer Information</h3>
+
+        <p>
+          <strong>Name:</strong>{" "}
+          {user?.name || `${user?.firstName || ""} ${user?.lastName || ""}`}
+        </p>
+
+        <p>
+          <strong>Email:</strong> {user?.email}
+        </p>
+
+        <p>
+          <strong>Phone:</strong> {user?.phone || "Phone not listed"}
+        </p>
+      </div>
+
       <label>Service</label>
 
       <select
@@ -121,6 +121,7 @@ function BookingForm() {
             service: e.target.value
           })
         }
+        required
       >
         <option value="">Select Service</option>
 
@@ -138,6 +139,7 @@ function BookingForm() {
         min={today}
         value={form.date}
         onChange={(e) => handleDateChange(e.target.value)}
+        required
       />
 
       <label>Appointment Time</label>
@@ -150,6 +152,7 @@ function BookingForm() {
             time: e.target.value
           })
         }
+        required
       >
         <option value="">Select Time Slot</option>
 
@@ -159,34 +162,6 @@ function BookingForm() {
           </option>
         ))}
       </select>
-
-      <label>Email</label>
-
-      <input
-        type="email"
-        placeholder="Enter your email"
-        value={form.email}
-        onChange={(e) =>
-          setForm({
-            ...form,
-            email: e.target.value
-          })
-        }
-      />
-
-      <label>Phone Number</label>
-
-      <input
-        type="tel"
-        placeholder="Enter your phone number"
-        value={form.phone}
-        onChange={(e) =>
-          setForm({
-            ...form,
-            phone: e.target.value
-          })
-        }
-      />
 
       <label>Project Notes</label>
 
@@ -201,9 +176,7 @@ function BookingForm() {
         }
       />
 
-      <button type="submit">
-        Book Appointment
-      </button>
+      <button type="submit">Book Appointment</button>
     </form>
   );
 }
