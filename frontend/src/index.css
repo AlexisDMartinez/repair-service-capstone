@@ -1159,9 +1159,6 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     font-size: 10px;
   }
 
-  .admin-calendar-page .booking-card {
-    display: none;
-  }
 
   .today-schedule-panel {
     display: none;
@@ -1254,4 +1251,28 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   cursor: pointer;
   padding: 0 !important;
   margin: 0 !important;
+}
+
+@media (max-width: 768px) {
+  .admin-calendar-page .booking-card {
+    display: block !important;
+    font-size: 6px !important;
+    padding: 1px 2px !important;
+    margin-top: 1px !important;
+    border-radius: 3px !important;
+    line-height: 1 !important;
+  }
+
+  .admin-calendar-page .booking-card p {
+    margin: 0 !important;
+    line-height: 1 !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .admin-calendar-page .booking-name {
+    font-size: 6px !important;
+    font-weight: 700;
+  }
 }
