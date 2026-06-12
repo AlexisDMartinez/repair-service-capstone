@@ -165,6 +165,8 @@ function AdminCalendar() {
     ? getBookingsForDate(selectedDate)
     : [];
 
+  const todayBookings = getBookingsForDate(today);
+
   return (
     <div className="calendar-container admin-calendar-page">
       <h1>Admin Schedule Calendar</h1>
@@ -289,6 +291,63 @@ function AdminCalendar() {
             })}
           </div>
         </div>
+
+        <aside className="today-schedule-panel">
+          <h2>Today&apos;s Schedule</h2>
+
+          <p className="selected-date-label">{today}</p>
+
+          <button
+            className="today-add-button"
+            onClick={() => openScheduleModal(today)}
+          >
+            Add Appointment
+          </button>
+
+          {todayBookings.length === 0 && (
+            <p>No appointments scheduled for today.</p>
+          )}
+
+          {todayBookings.map((booking) => (
+            <div key={booking._id} className="today-booking-tab">
+              <strong>
+                {booking.user?.name || booking.customerName || "Customer"}
+              </strong>
+
+              <p>
+                {booking.date} at {booking.time}
+              </p>
+
+              <p>{booking.status || "Scheduled"}</p>
+
+              <div className="today-tab-actions">
+                <button
+                  onClick={() =>
+                    updateBookingStatus(booking._id, "Confirmed")
+                  }
+                >
+                  Confirm
+                </button>
+
+                <button
+                  onClick={() =>
+                    updateBookingStatus(booking._id, "Declined")
+                  }
+                >
+                  Decline
+                </button>
+
+                <button
+                  onClick={() =>
+                    updateBookingStatus(booking._id, "Contact Customer")
+                  }
+                >
+                  Contact
+                </button>
+              </div>
+            </div>
+          ))}
+        </aside>
       </div>
 
       {showDayModal && (
@@ -472,4 +531,3 @@ function AdminCalendar() {
 }
 
 export default AdminCalendar;
-
