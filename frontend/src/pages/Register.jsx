@@ -41,7 +41,7 @@ function Register() {
     e.preventDefault();
 
     if (form.phone.length !== 12) {
-      alert("Please enter a valid phone number in this format: 123-456-7890.");
+      alert("Please enter a valid phone number.");
       return;
     }
 
@@ -51,7 +51,7 @@ function Register() {
     }
 
     try {
-      await API.post("/auth/register", {
+      const res = await API.post("/auth/register", {
         firstName: form.firstName.trim(),
         lastName: form.lastName.trim(),
         phone: form.phone.trim(),
@@ -61,10 +61,29 @@ function Register() {
         securityAnswer: form.securityAnswer.trim()
       });
 
-      alert("Account created successfully. Please log in.");
-      navigate("/login");
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("user", JSON.stringify(res.data.user));
+
+      alert("Account created successfully. You are now logged in.");
+
+      if (res.data.user?.role === "admin") {
+        navigate("/admin-dashboard");
+      } else {
+        navigate("/dashboard");
+      }
     } catch (error) {
-      alert(error.response?.data?.message || "Unable to register.");
+      const message = error.response?.data?.message;
+
+      if (
+        message === "User already exists" ||
+        message?.toLowerCase().includes("already exists")
+      ) {
+        alert("An account with this email already exists. Please sign in.");
+        navigate("/login");
+        return;
+      }
+
+      alert(message || "Unable to register.");
     }
   };
 
@@ -207,6 +226,5 @@ function Register() {
 }
 
 export default Register;
-
 
 
