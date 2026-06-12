@@ -14,7 +14,20 @@ function Register() {
     securityAnswer: ""
   });
 
+  const [showPassword, setShowPassword] = useState(false);
+  const [showSecurityAnswer, setShowSecurityAnswer] = useState(false);
+
   const navigate = useNavigate();
+
+  const passwordsMatch =
+    form.password.length > 0 &&
+    form.confirmPassword.length > 0 &&
+    form.password === form.confirmPassword;
+
+  const passwordsDoNotMatch =
+    form.password.length > 0 &&
+    form.confirmPassword.length > 0 &&
+    form.password !== form.confirmPassword;
 
   const formatPhoneNumber = (value) => {
     let numbersOnly = value.replace(/\D/g, "");
@@ -45,8 +58,8 @@ function Register() {
       return;
     }
 
-    if (form.password !== form.confirmPassword) {
-      alert("Passwords do not match.");
+    if (!passwordsMatch) {
+      alert("Passwords must match before creating an account.");
       return;
     }
 
@@ -150,21 +163,31 @@ function Register() {
             required
           />
 
-          <input
-            type="password"
-            placeholder="Password"
-            value={form.password}
-            onChange={(e) =>
-              setForm({
-                ...form,
-                password: e.target.value
-              })
-            }
-            required
-          />
+          <div className="password-field">
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              value={form.password}
+              onChange={(e) =>
+                setForm({
+                  ...form,
+                  password: e.target.value
+                })
+              }
+              required
+            />
+
+            <button
+              type="button"
+              className="toggle-password-button"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? "Hide" : "Show"}
+            </button>
+          </div>
 
           <input
-            type="password"
+            type={showPassword ? "text" : "password"}
             placeholder="Confirm Password"
             value={form.confirmPassword}
             onChange={(e) =>
@@ -175,6 +198,14 @@ function Register() {
             }
             required
           />
+
+          {passwordsMatch && (
+            <p className="password-match-message">✓ Passwords match</p>
+          )}
+
+          {passwordsDoNotMatch && (
+            <p className="password-error-message">Passwords do not match</p>
+          )}
 
           <select
             value={form.securityQuestion}
@@ -201,20 +232,36 @@ function Register() {
             </option>
           </select>
 
-          <input
-            type="text"
-            placeholder="Security Answer"
-            value={form.securityAnswer}
-            onChange={(e) =>
-              setForm({
-                ...form,
-                securityAnswer: e.target.value
-              })
-            }
-            required
-          />
+          <div className="password-field">
+            <input
+              type={showSecurityAnswer ? "text" : "password"}
+              placeholder="Security Answer"
+              value={form.securityAnswer}
+              onChange={(e) =>
+                setForm({
+                  ...form,
+                  securityAnswer: e.target.value
+                })
+              }
+              required
+            />
 
-          <button type="submit">Create Account</button>
+            <button
+              type="button"
+              className="toggle-password-button"
+              onClick={() => setShowSecurityAnswer(!showSecurityAnswer)}
+            >
+              {showSecurityAnswer ? "Hide" : "Show"}
+            </button>
+          </div>
+
+          <button
+            type="submit"
+            disabled={!passwordsMatch}
+            className={!passwordsMatch ? "disabled-button" : ""}
+          >
+            Create Account
+          </button>
         </form>
 
         <p className="auth-switch">
