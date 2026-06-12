@@ -1084,4 +1084,107 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   }
 }
 
+/* Global desktop zoom-out feel */
+body {
+  zoom: 0.9;
+}
+
+/* Better browser sizing */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Mobile accessibility */
+@media (max-width: 768px) {
+  body {
+    zoom: 1;
+  }
+
+  .page {
+    padding: 18px;
+    width: 100%;
+  }
+
+  .auth-page {
+    padding: 70px 14px 30px;
+    align-items: flex-start;
+  }
+
+  .auth-card {
+    width: 100%;
+    max-width: 100%;
+    padding: 24px 18px;
+    margin: 0;
+  }
+
+  .auth-card h1 {
+    font-size: 34px;
+  }
+
+  .auth-card h2 {
+    font-size: 24px;
+  }
+
+  form {
+    width: 100%;
+    max-width: 100%;
+    padding: 20px;
+  }
+
+  input,
+  textarea,
+  select {
+    width: 100%;
+    font-size: 16px;
+    padding: 13px;
+  }
+
+  .calendar-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .calendar-grid {
+    grid-template-columns: repeat(7, minmax(40px, 1fr));
+    overflow-x: auto;
+  }
+
+  .calendar-day {
+    min-height: 115px;
+    padding: 5px;
+  }
+
+  .calendar-weekdays div {
+    font-size: 11px;
+    padding: 8px 2px;
+  }
+
+  .calendar-taskbar {
+    position: static;
+    width: 100%;
+  }
+
+  .crm-toolbar,
+  .crm-summary-grid,
+  .crm-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-overlay h1 {
+    font-size: 36px;
+  }
+
+  .hero-overlay p {
+    font-size: 18px;
+  }
+}
+
+
 
