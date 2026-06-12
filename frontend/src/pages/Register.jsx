@@ -16,8 +16,34 @@ function Register() {
 
   const navigate = useNavigate();
 
+  const formatPhoneNumber = (value) => {
+    let numbersOnly = value.replace(/\D/g, "");
+
+    if (numbersOnly.length > 10) {
+      numbersOnly = numbersOnly.slice(0, 10);
+    }
+
+    if (numbersOnly.length > 6) {
+      return `${numbersOnly.slice(0, 3)}-${numbersOnly.slice(
+        3,
+        6
+      )}-${numbersOnly.slice(6)}`;
+    }
+
+    if (numbersOnly.length > 3) {
+      return `${numbersOnly.slice(0, 3)}-${numbersOnly.slice(3)}`;
+    }
+
+    return numbersOnly;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (form.phone.length !== 12) {
+      alert("Please enter a valid phone number in this format: 123-456-7890.");
+      return;
+    }
 
     if (form.password !== form.confirmPassword) {
       alert("Passwords do not match.");
@@ -79,13 +105,14 @@ function Register() {
           />
 
           <input
-            type="tel"
-            placeholder="Phone Number"
+            type="text"
+            placeholder="Phone Number (123-456-7890)"
             value={form.phone}
+            maxLength={12}
             onChange={(e) =>
               setForm({
                 ...form,
-                phone: e.target.value
+                phone: formatPhoneNumber(e.target.value)
               })
             }
             required
@@ -180,5 +207,6 @@ function Register() {
 }
 
 export default Register;
+
 
 
