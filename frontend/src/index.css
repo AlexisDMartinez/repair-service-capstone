@@ -466,7 +466,8 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 }
 
 .hero-section {
-  min-height: 85vh;
+  min-height: calc(100vh - 95px);
+  height: calc(100vh - 95px);
   background-image:
     linear-gradient(
       rgba(0, 0, 0, 0.65),
@@ -475,6 +476,7 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     url("/welding-hero.jpg");
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1066,12 +1068,23 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 }
 
 .auth-page {
-  align-items: flex-start;
-  padding-top: 120px;
+  min-height: calc(100vh - 95px);
+  background: linear-gradient(to bottom right, #000000, #151515);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
 }
 
 .auth-card {
-  margin-top: 0;
+  width: 100%;
+  max-width: 620px;
+  background: #111111;
+  border: 1px solid #2d2d2d;
+  border-radius: 22px;
+  padding: 45px;
+  box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.5);
+  margin-top: -75px;
 }
 
 .auth-card form {
@@ -1080,13 +1093,16 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 
 @media (max-width: 768px) {
   .auth-page {
-    padding-top: 80px;
+    min-height: calc(100vh - 82px);
+    padding: 15px;
   }
-}
 
-/* Global desktop zoom-out feel */
-body {
-  zoom: 0.9;
+  .auth-card {
+    width: 100%;
+    max-width: 100%;
+    padding: 30px 24px;
+    margin-top: -20px;
+  }
 }
 
 /* Better browser sizing */
