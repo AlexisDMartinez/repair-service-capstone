@@ -1236,4 +1236,49 @@ body,
   }
 }
 
+.password-field {
+  position: relative;
+  width: 100%;
+}
+
+.password-field input {
+  width: 100%;
+  padding-right: 52px;
+}
+
+.password-icon {
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-35%);
+  cursor: pointer;
+  color: #888;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  z-index: 5;
+}
+
+.password-icon:hover {
+  color: #d4af37;
+}
+
+.password-match-message {
+  color: #26d07c !important;
+  font-weight: 700;
+  margin: 8px 0 0 0 !important;
+  text-align: left !important;
+}
+
+.password-error-message {
+  color: #ff4d4d !important;
+  font-weight: 700;
+  margin: 8px 0 0 0 !important;
+  text-align: left !important;
+}
+
+.disabled-button {
+  opacity: 0.55;
+  cursor: not-allowed !important;
+}
 

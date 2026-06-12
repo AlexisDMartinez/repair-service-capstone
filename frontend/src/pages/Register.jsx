@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import API from "../services/api";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 function Register() {
   const [form, setForm] = useState({
@@ -177,27 +178,35 @@ function Register() {
               required
             />
 
-            <button
-              type="button"
-              className="toggle-password-button"
+            <span
+              className="password-icon"
               onClick={() => setShowPassword(!showPassword)}
             >
-              {showPassword ? "Hide" : "Show"}
-            </button>
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </span>
           </div>
 
-          <input
-            type={showPassword ? "text" : "password"}
-            placeholder="Confirm Password"
-            value={form.confirmPassword}
-            onChange={(e) =>
-              setForm({
-                ...form,
-                confirmPassword: e.target.value
-              })
-            }
-            required
-          />
+          <div className="password-field">
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Confirm Password"
+              value={form.confirmPassword}
+              onChange={(e) =>
+                setForm({
+                  ...form,
+                  confirmPassword: e.target.value
+                })
+              }
+              required
+            />
+
+            <span
+              className="password-icon"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </span>
+          </div>
 
           {passwordsMatch && (
             <p className="password-match-message">✓ Passwords match</p>
@@ -246,13 +255,12 @@ function Register() {
               required
             />
 
-            <button
-              type="button"
-              className="toggle-password-button"
+            <span
+              className="password-icon"
               onClick={() => setShowSecurityAnswer(!showSecurityAnswer)}
             >
-              {showSecurityAnswer ? "Hide" : "Show"}
-            </button>
+              {showSecurityAnswer ? <FaEyeSlash /> : <FaEye />}
+            </span>
           </div>
 
           <button
