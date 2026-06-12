@@ -110,6 +110,10 @@ function AdminCalendar() {
     }
   };
 
+  const statusIsFinal = (status) => {
+    return ["Confirmed", "Declined", "Contact Customer"].includes(status);
+  };
+
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth();
 
@@ -170,7 +174,6 @@ function AdminCalendar() {
   return (
     <div className="calendar-container admin-calendar-page">
       <h1>Admin Schedule Calendar</h1>
-
 
       <button
         className="open-schedule-button"
@@ -317,31 +320,37 @@ function AdminCalendar() {
 
               <p>{booking.status || "Scheduled"}</p>
 
-              <div className="today-tab-actions">
-                <button
-                  onClick={() =>
-                    updateBookingStatus(booking._id, "Confirmed")
-                  }
-                >
-                  Confirm
-                </button>
+              {statusIsFinal(booking.status) ? (
+                <p className="status-selected-message">
+                  Selected: {booking.status}
+                </p>
+              ) : (
+                <div className="today-tab-actions">
+                  <button
+                    onClick={() =>
+                      updateBookingStatus(booking._id, "Confirmed")
+                    }
+                  >
+                    Confirm
+                  </button>
 
-                <button
-                  onClick={() =>
-                    updateBookingStatus(booking._id, "Declined")
-                  }
-                >
-                  Decline
-                </button>
+                  <button
+                    onClick={() =>
+                      updateBookingStatus(booking._id, "Declined")
+                    }
+                  >
+                    Decline
+                  </button>
 
-                <button
-                  onClick={() =>
-                    updateBookingStatus(booking._id, "Contact Customer")
-                  }
-                >
-                  Contact
-                </button>
-              </div>
+                  <button
+                    onClick={() =>
+                      updateBookingStatus(booking._id, "Contact Customer")
+                    }
+                  >
+                    Contact
+                  </button>
+                </div>
+              )}
             </div>
           ))}
         </aside>
@@ -391,31 +400,37 @@ function AdminCalendar() {
                   <p>{booking.status || "Scheduled"}</p>
                 </div>
 
-                <div className="day-tab-actions">
-                  <button
-                    onClick={() =>
-                      updateBookingStatus(booking._id, "Confirmed")
-                    }
-                  >
-                    Confirm
-                  </button>
+                {statusIsFinal(booking.status) ? (
+                  <p className="status-selected-message">
+                    Selected: {booking.status}
+                  </p>
+                ) : (
+                  <div className="day-tab-actions">
+                    <button
+                      onClick={() =>
+                        updateBookingStatus(booking._id, "Confirmed")
+                      }
+                    >
+                      Confirm
+                    </button>
 
-                  <button
-                    onClick={() =>
-                      updateBookingStatus(booking._id, "Declined")
-                    }
-                  >
-                    Decline
-                  </button>
+                    <button
+                      onClick={() =>
+                        updateBookingStatus(booking._id, "Declined")
+                      }
+                    >
+                      Decline
+                    </button>
 
-                  <button
-                    onClick={() =>
-                      updateBookingStatus(booking._id, "Contact Customer")
-                    }
-                  >
-                    Contact
-                  </button>
-                </div>
+                    <button
+                      onClick={() =>
+                        updateBookingStatus(booking._id, "Contact Customer")
+                      }
+                    >
+                      Contact
+                    </button>
+                  </div>
+                )}
               </div>
             ))}
           </div>

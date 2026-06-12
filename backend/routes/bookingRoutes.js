@@ -41,9 +41,7 @@ router.get("/fully-booked/dates", async (req, res) => {
       }
     ]);
 
-    const fullyBookedDates = bookings.map((booking) => booking._id);
-
-    res.json(fullyBookedDates);
+    res.json(bookings.map((booking) => booking._id));
   } catch (error) {
     res.status(500).json({
       message: "Unable to load fully booked dates"
@@ -55,7 +53,7 @@ router.get("/fully-booked/dates", async (req, res) => {
 router.get("/admin/all", protect, adminMiddleware, async (req, res) => {
   try {
     const bookings = await Booking.find()
-      .populate("user", "name email")
+      .populate("user", "firstName lastName name email phone")
       .populate("service");
 
     const sortedBookings = bookings.sort((a, b) => {
@@ -74,6 +72,7 @@ router.get("/admin/all", protect, adminMiddleware, async (req, res) => {
 router.post("/admin/create", protect, adminMiddleware, async (req, res) => {
   try {
     const {
+      customerId,
       customerName,
       email,
       phone,
@@ -95,14 +94,33 @@ router.post("/admin/create", protect, adminMiddleware, async (req, res) => {
       });
     }
 
-    const customer = await User.findOne({ email });
+    let customer = null;
+
+    if (customerId) {
+      customer = await User.findById(customerId);
+    }
+
+    if (!customer && email) {
+      customer = await User.findOne({
+        email: email.toLowerCase().trim()
+      });
+    }
+
+    if (!customer) {
+      return res.status(404).json({
+        message: "Customer account not found. Please select an existing customer."
+      });
+    }
 
     const booking = await Booking.create({
-      user: customer ? customer._id : null,
+      user: customer._id,
       service: null,
-      customerName,
-      email,
-      phone,
+      customerName:
+        customer.name ||
+        `${customer.firstName || ""} ${customer.lastName || ""}`.trim() ||
+        customerName,
+      email: customer.email,
+      phone: customer.phone || phone,
       serviceName,
       date,
       time,
@@ -110,7 +128,11 @@ router.post("/admin/create", protect, adminMiddleware, async (req, res) => {
       status: "Scheduled"
     });
 
-    res.status(201).json(booking);
+    const populatedBooking = await Booking.findById(booking._id)
+      .populate("user", "firstName lastName name email phone")
+      .populate("service");
+
+    res.status(201).json(populatedBooking);
   } catch (error) {
     res.status(500).json({
       message: "Unable to create admin booking",
@@ -124,12 +146,27 @@ router.put("/admin/status/:id", protect, adminMiddleware, async (req, res) => {
   try {
     const { status } = req.body;
 
+    const allowedStatuses = [
+      "Scheduled",
+      "Confirmed",
+      "Declined",
+      "Contact Customer",
+      "Cancelled",
+      "Time Change Requested"
+    ];
+
+    if (!allowedStatuses.includes(status)) {
+      return res.status(400).json({
+        message: "Invalid booking status."
+      });
+    }
+
     const booking = await Booking.findByIdAndUpdate(
       req.params.id,
       { status },
       { new: true }
     )
-      .populate("user", "name email")
+      .populate("user", "firstName lastName name email phone")
       .populate("service");
 
     if (!booking) {
@@ -151,14 +188,10 @@ router.put("/admin/cancel/:id", protect, adminMiddleware, async (req, res) => {
   try {
     const booking = await Booking.findByIdAndUpdate(
       req.params.id,
-      {
-        status: "Cancelled"
-      },
-      {
-        new: true
-      }
+      { status: "Cancelled" },
+      { new: true }
     )
-      .populate("user", "name email")
+      .populate("user", "firstName lastName name email phone")
       .populate("service");
 
     if (!booking) {
@@ -184,14 +217,10 @@ router.put(
     try {
       const booking = await Booking.findByIdAndUpdate(
         req.params.id,
-        {
-          status: "Time Change Requested"
-        },
-        {
-          new: true
-        }
+        { status: "Time Change Requested" },
+        { new: true }
       )
-        .populate("user", "name email")
+        .populate("user", "firstName lastName name email phone")
         .populate("service");
 
       if (!booking) {
@@ -239,7 +268,8 @@ router.put("/:id", protect, async (req, res) => {
       {
         date,
         time,
-        notes
+        notes,
+        status: "Scheduled"
       },
       {
         new: true
