@@ -1282,3 +1282,137 @@ body,
   cursor: not-allowed !important;
 }
 
+.admin-calendar-page {
+  background: #ffffff !important;
+  color: #000000 !important;
+}
+
+.admin-calendar-page h1 {
+  color: #000000;
+}
+
+.admin-calendar-page .calendar-main {
+  background: #ffffff;
+}
+
+.admin-calendar-page .calendar-body {
+  background: #ffffff;
+}
+
+.admin-calendar-page .calendar-day {
+  background: #ffffff;
+  color: #000000;
+  border: 1px solid #d7d7d7;
+}
+
+.admin-calendar-page .booked-day {
+  background: #fff8e1;
+}
+
+.admin-calendar-page .calendar-date-number {
+  color: #000000;
+}
+
+.calendar-booking-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.admin-calendar-page .booking-card {
+  background: #000000;
+  color: #ffffff;
+  border-left: 4px solid #d4af37;
+  padding: 6px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+.admin-calendar-page .booking-card p {
+  margin: 2px 0;
+}
+
+.admin-calendar-page .calendar-taskbar {
+  background: #d4af37;
+  color: #ffffff;
+  border: none;
+}
+
+.admin-calendar-page .calendar-taskbar h2,
+.admin-calendar-page .calendar-taskbar p,
+.admin-calendar-page .calendar-taskbar strong {
+  color: #ffffff;
+}
+
+.selected-date-label {
+  font-weight: 700;
+}
+
+.taskbar-add-button {
+  background: #000000;
+  color: #ffffff;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-bottom: 14px;
+}
+
+.taskbar-booking-tab {
+  background: #000000;
+  color: #ffffff;
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 10px;
+  font-size: 13px;
+}
+
+.taskbar-booking-tab p {
+  margin: 3px 0;
+}
+
+.taskbar-actions {
+  display: flex;
+  gap: 5px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.taskbar-actions button {
+  border: none;
+  padding: 5px 7px;
+  border-radius: 5px;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 11px;
+}
+
+.admin-calendar-page .small-add-button {
+  display: none;
+}
+
+.schedule-modal {
+  background: #ffffff;
+  color: #000000;
+}
+
+.schedule-modal h2 {
+  color: #000000;
+}
+
+.schedule-modal input[readonly] {
+  background: #eeeeee;
+  color: #000000;
+}
+
+@media (max-width: 768px) {
+  .calendar-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-calendar-page .calendar-taskbar {
+    position: static;
+  }
+}
+

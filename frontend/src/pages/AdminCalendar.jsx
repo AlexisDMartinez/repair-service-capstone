@@ -3,11 +3,13 @@ import API from "../services/api";
 
 function AdminCalendar() {
   const [bookings, setBookings] = useState([]);
+  const [customers, setCustomers] = useState([]);
   const [currentDate, setCurrentDate] = useState(new Date());
   const [showModal, setShowModal] = useState(false);
   const [selectedDate, setSelectedDate] = useState("");
 
   const [adminForm, setAdminForm] = useState({
+    customerId: "",
     customerName: "",
     email: "",
     phone: "",
@@ -19,6 +21,7 @@ function AdminCalendar() {
 
   useEffect(() => {
     fetchBookings();
+    fetchCustomers();
   }, []);
 
   const fetchBookings = async () => {
@@ -26,13 +29,22 @@ function AdminCalendar() {
       const res = await API.get("/bookings/admin/all");
       setBookings(Array.isArray(res.data) ? res.data : []);
     } catch (error) {
-      console.error("Error loading bookings:", error);
       setBookings([]);
+    }
+  };
+
+  const fetchCustomers = async () => {
+    try {
+      const res = await API.get("/customers");
+      setCustomers(Array.isArray(res.data) ? res.data : []);
+    } catch (error) {
+      setCustomers([]);
     }
   };
 
   const openScheduleModal = (date = "") => {
     setAdminForm({
+      customerId: "",
       customerName: "",
       email: "",
       phone: "",
@@ -42,8 +54,30 @@ function AdminCalendar() {
       notes: ""
     });
 
-    setSelectedDate(date);
     setShowModal(true);
+  };
+
+  const handleCustomerSelect = (customerId) => {
+    const customer = customers.find((item) => item._id === customerId);
+
+    if (!customer) {
+      setAdminForm({
+        ...adminForm,
+        customerId: "",
+        customerName: "",
+        email: "",
+        phone: ""
+      });
+      return;
+    }
+
+    setAdminForm({
+      ...adminForm,
+      customerId: customer._id,
+      customerName: `${customer.firstName} ${customer.lastName}`,
+      email: customer.email,
+      phone: customer.phone
+    });
   };
 
   const createAdminBooking = async (e) => {
@@ -126,14 +160,14 @@ function AdminCalendar() {
     : [];
 
   return (
-    <div className="calendar-container">
+    <div className="calendar-container admin-calendar-page">
       <h1>Admin Schedule Calendar</h1>
 
       <button
         className="open-schedule-button"
         onClick={() => openScheduleModal()}
       >
-        Schedule Appointment for Customer
+        Schedule Customer Appointment
       </button>
 
       <div className="calendar-layout">
@@ -186,7 +220,7 @@ function AdminCalendar() {
             <div>Saturday</div>
           </div>
 
-          <div className="calendar-grid">
+          <div className="calendar-grid calendar-body">
             {calendarDays.map((day, index) => {
               const dayDate = day ? formatDate(day) : "";
               const dayBookings = day ? getBookingsForDay(day) : [];
@@ -202,48 +236,35 @@ function AdminCalendar() {
                       setSelectedDate(dayDate);
                     }
                   }}
+                  onDoubleClick={() => {
+                    if (day) {
+                      setSelectedDate(dayDate);
+                      openScheduleModal(dayDate);
+                    }
+                  }}
                 >
                   {day && (
                     <>
                       <div className="calendar-date-row">
                         <span className="calendar-date-number">{day}</span>
-
-                        <button
-                          className="small-add-button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            openScheduleModal(dayDate);
-                          }}
-                        >
-                          +
-                        </button>
                       </div>
 
-                      {dayBookings.map((booking) => (
-                        <div key={booking._id} className="booking-card">
-                          <p className="booking-name">
-                            {booking.user?.name ||
-                              booking.customerName ||
-                              "Customer"}
-                          </p>
+                      <div className="calendar-booking-stack">
+                        {dayBookings.map((booking) => (
+                          <div key={booking._id} className="booking-card">
+                            <p className="booking-name">
+                              {booking.user?.name ||
+                                booking.customerName ||
+                                "Customer"}
+                            </p>
 
-                          <p>
-                            {booking.service?.name ||
-                              booking.serviceName ||
-                              "Service not listed"}
-                          </p>
-
-                          <p>
-                            <strong>Time:</strong>{" "}
-                            {booking.time || "No time listed"}
-                          </p>
-
-                          <p>
-                            <strong>Status:</strong>{" "}
-                            {booking.status || "Scheduled"}
-                          </p>
-                        </div>
-                      ))}
+                            <p>
+                              {booking.time || "No time"} |{" "}
+                              {booking.status || "Scheduled"}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
                     </>
                   )}
                 </div>
@@ -253,13 +274,15 @@ function AdminCalendar() {
         </div>
 
         <aside className="calendar-taskbar">
-          <h2>Selected Date</h2>
+          <h2>Day Schedule</h2>
 
-          <p>{selectedDate || "Click a date to view appointments."}</p>
+          <p className="selected-date-label">
+            {selectedDate || "Click a date to view appointments."}
+          </p>
 
           {selectedDate && (
             <button
-              className="open-schedule-button"
+              className="taskbar-add-button"
               onClick={() => openScheduleModal(selectedDate)}
             >
               Add Appointment
@@ -267,61 +290,40 @@ function AdminCalendar() {
           )}
 
           {selectedDateBookings.length === 0 && selectedDate && (
-            <p>No appointments scheduled for this date.</p>
+            <p>No appointments scheduled.</p>
           )}
 
           {selectedDateBookings.map((booking) => (
-            <div key={booking._id} className="taskbar-booking-card">
-              <h3>
-                {booking.user?.name || booking.customerName || "Customer"}
-              </h3>
+            <div key={booking._id} className="taskbar-booking-tab">
+              <div>
+                <strong>
+                  {booking.user?.name || booking.customerName || "Customer"}
+                </strong>
 
-              <p>
-                <strong>Service:</strong>{" "}
-                {booking.service?.name ||
-                  booking.serviceName ||
-                  "Service not listed"}
-              </p>
-
-              <p>
-                <strong>Email:</strong> {booking.email}
-              </p>
-
-              <p>
-                <strong>Phone:</strong> {booking.phone}
-              </p>
-
-              <p>
-                <strong>Time:</strong> {booking.time}
-              </p>
-
-              <p>
-                <strong>Status:</strong> {booking.status || "Scheduled"}
-              </p>
-
-              {booking.notes && (
                 <p>
-                  <strong>Notes:</strong> {booking.notes}
+                  {booking.date} at {booking.time}
                 </p>
-              )}
 
-              <div className="booking-actions">
+                <p>{booking.status || "Scheduled"}</p>
+              </div>
+
+              <div className="taskbar-actions">
                 <button
                   className="yes-button"
                   onClick={() =>
                     updateBookingStatus(booking._id, "Confirmed")
                   }
                 >
-                  Yes
+                  Confirm
                 </button>
 
                 <button
                   className="no-button"
                   onClick={() =>
-                    updateBookingStatus(booking._id, "Not Confirmed")
+                    updateBookingStatus(booking._id, "Declined")
                   }
                 >
-                  No
+                  Decline
                 </button>
 
                 <button
@@ -348,46 +350,42 @@ function AdminCalendar() {
               ×
             </button>
 
-            <h2>Schedule Appointment for Customer</h2>
+            <h2>Schedule Customer Appointment</h2>
 
             <form className="admin-booking-form" onSubmit={createAdminBooking}>
+              <select
+                value={adminForm.customerId}
+                onChange={(e) => handleCustomerSelect(e.target.value)}
+                required
+              >
+                <option value="">Select Customer</option>
+
+                {customers.map((customer) => (
+                  <option key={customer._id} value={customer._id}>
+                    {customer.firstName} {customer.lastName} - {customer.email}
+                  </option>
+                ))}
+              </select>
+
               <input
                 type="text"
                 placeholder="Customer Name"
                 value={adminForm.customerName}
-                onChange={(e) =>
-                  setAdminForm({
-                    ...adminForm,
-                    customerName: e.target.value
-                  })
-                }
-                required
+                readOnly
               />
 
               <input
                 type="email"
                 placeholder="Customer Email"
                 value={adminForm.email}
-                onChange={(e) =>
-                  setAdminForm({
-                    ...adminForm,
-                    email: e.target.value
-                  })
-                }
-                required
+                readOnly
               />
 
               <input
                 type="text"
                 placeholder="Phone"
                 value={adminForm.phone}
-                onChange={(e) =>
-                  setAdminForm({
-                    ...adminForm,
-                    phone: e.target.value
-                  })
-                }
-                required
+                readOnly
               />
 
               <input
