@@ -5,7 +5,8 @@ function AdminCalendar() {
   const [bookings, setBookings] = useState([]);
   const [customers, setCustomers] = useState([]);
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [showModal, setShowModal] = useState(false);
+  const [showScheduleModal, setShowScheduleModal] = useState(false);
+  const [showDayModal, setShowDayModal] = useState(false);
   const [selectedDate, setSelectedDate] = useState("");
 
   const [adminForm, setAdminForm] = useState({
@@ -54,7 +55,12 @@ function AdminCalendar() {
       notes: ""
     });
 
-    setShowModal(true);
+    setShowScheduleModal(true);
+  };
+
+  const openDayScheduleModal = (date) => {
+    setSelectedDate(date);
+    setShowDayModal(true);
   };
 
   const handleCustomerSelect = (customerId) => {
@@ -86,7 +92,7 @@ function AdminCalendar() {
     try {
       await API.post("/bookings/admin/create", adminForm);
 
-      setShowModal(false);
+      setShowScheduleModal(false);
       fetchBookings();
 
       alert("Appointment scheduled successfully.");
@@ -170,182 +176,189 @@ function AdminCalendar() {
         Schedule Customer Appointment
       </button>
 
-      <div className="calendar-layout">
-        <div className="calendar-main">
-          <div className="calendar-header">
-            <button onClick={() => setCurrentDate(new Date(year, month - 1, 1))}>
-              Back
-            </button>
+      <div className="calendar-main">
+        <div className="calendar-header">
+          <button onClick={() => setCurrentDate(new Date(year, month - 1, 1))}>
+            Back
+          </button>
 
-            <div className="calendar-title-area">
-              <select
-                value={month}
-                onChange={(e) =>
-                  setCurrentDate(new Date(year, Number(e.target.value), 1))
-                }
-              >
-                {months.map((monthName, index) => (
-                  <option key={monthName} value={index}>
-                    {monthName}
-                  </option>
-                ))}
-              </select>
+          <div className="calendar-title-area">
+            <select
+              value={month}
+              onChange={(e) =>
+                setCurrentDate(new Date(year, Number(e.target.value), 1))
+              }
+            >
+              {months.map((monthName, index) => (
+                <option key={monthName} value={index}>
+                  {monthName}
+                </option>
+              ))}
+            </select>
 
-              <select
-                value={year}
-                onChange={(e) =>
-                  setCurrentDate(new Date(Number(e.target.value), month, 1))
-                }
-              >
-                {years.map((calendarYear) => (
-                  <option key={calendarYear} value={calendarYear}>
-                    {calendarYear}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <button onClick={() => setCurrentDate(new Date(year, month + 1, 1))}>
-              Forward
-            </button>
+            <select
+              value={year}
+              onChange={(e) =>
+                setCurrentDate(new Date(Number(e.target.value), month, 1))
+              }
+            >
+              {years.map((calendarYear) => (
+                <option key={calendarYear} value={calendarYear}>
+                  {calendarYear}
+                </option>
+              ))}
+            </select>
           </div>
 
-          <div className="calendar-grid calendar-weekdays">
-            <div>Sunday</div>
-            <div>Monday</div>
-            <div>Tuesday</div>
-            <div>Wednesday</div>
-            <div>Thursday</div>
-            <div>Friday</div>
-            <div>Saturday</div>
-          </div>
-
-          <div className="calendar-grid calendar-body">
-            {calendarDays.map((day, index) => {
-              const dayDate = day ? formatDate(day) : "";
-              const dayBookings = day ? getBookingsForDay(day) : [];
-
-              return (
-                <div
-                  key={index}
-                  className={`calendar-day ${
-                    dayBookings.length > 0 ? "booked-day" : ""
-                  }`}
-                  onClick={() => {
-                    if (day) {
-                      setSelectedDate(dayDate);
-                    }
-                  }}
-                  onDoubleClick={() => {
-                    if (day) {
-                      setSelectedDate(dayDate);
-                      openScheduleModal(dayDate);
-                    }
-                  }}
-                >
-                  {day && (
-                    <>
-                      <div className="calendar-date-row">
-                        <span className="calendar-date-number">{day}</span>
-                      </div>
-
-                      <div className="calendar-booking-stack">
-                        {dayBookings.map((booking) => (
-                          <div key={booking._id} className="booking-card">
-                            <p className="booking-name">
-                              {booking.user?.name ||
-                                booking.customerName ||
-                                "Customer"}
-                            </p>
-
-                            <p>
-                              {booking.time || "No time"} |{" "}
-                              {booking.status || "Scheduled"}
-                            </p>
-                          </div>
-                        ))}
-                      </div>
-                    </>
-                  )}
-                </div>
-              );
-            })}
-          </div>
+          <button onClick={() => setCurrentDate(new Date(year, month + 1, 1))}>
+            Forward
+          </button>
         </div>
 
-        <aside className="calendar-taskbar">
-          <h2>Day Schedule</h2>
+        <div className="calendar-grid calendar-weekdays">
+          <div>Sunday</div>
+          <div>Monday</div>
+          <div>Tuesday</div>
+          <div>Wednesday</div>
+          <div>Thursday</div>
+          <div>Friday</div>
+          <div>Saturday</div>
+        </div>
 
-          <p className="selected-date-label">
-            {selectedDate || "Click a date to view appointments."}
-          </p>
+        <div className="calendar-grid calendar-body">
+          {calendarDays.map((day, index) => {
+            const dayDate = day ? formatDate(day) : "";
+            const dayBookings = day ? getBookingsForDay(day) : [];
 
-          {selectedDate && (
+            return (
+              <div
+                key={index}
+                className={`calendar-day ${
+                  dayBookings.length > 0 ? "booked-day" : ""
+                }`}
+                onClick={() => {
+                  if (day) {
+                    openDayScheduleModal(dayDate);
+                  }
+                }}
+                onDoubleClick={() => {
+                  if (day) {
+                    setSelectedDate(dayDate);
+                    openScheduleModal(dayDate);
+                  }
+                }}
+              >
+                {day && (
+                  <>
+                    <div className="calendar-date-row">
+                      <span className="calendar-date-number">{day}</span>
+                    </div>
+
+                    <div className="calendar-booking-stack">
+                      {dayBookings.map((booking) => (
+                        <div key={booking._id} className="booking-card">
+                          <p className="booking-name">
+                            {booking.user?.name ||
+                              booking.customerName ||
+                              "Customer"}
+                          </p>
+
+                          <p>
+                            {booking.time || "No time"} |{" "}
+                            {booking.status || "Scheduled"}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {showDayModal && (
+        <div className="modal-overlay">
+          <div className="day-schedule-modal">
             <button
-              className="taskbar-add-button"
-              onClick={() => openScheduleModal(selectedDate)}
+              className="modal-close-button day-modal-close"
+              onClick={() => setShowDayModal(false)}
+            >
+              ×
+            </button>
+
+            <h2>Day Schedule</h2>
+
+            <p className="selected-date-label">
+              {selectedDate || "No date selected"}
+            </p>
+
+            <button
+              className="day-modal-add-button"
+              onClick={() => {
+                setShowDayModal(false);
+                openScheduleModal(selectedDate);
+              }}
             >
               Add Appointment
             </button>
-          )}
 
-          {selectedDateBookings.length === 0 && selectedDate && (
-            <p>No appointments scheduled.</p>
-          )}
+            {selectedDateBookings.length === 0 && (
+              <p>No appointments scheduled.</p>
+            )}
 
-          {selectedDateBookings.map((booking) => (
-            <div key={booking._id} className="taskbar-booking-tab">
-              <div>
-                <strong>
-                  {booking.user?.name || booking.customerName || "Customer"}
-                </strong>
+            {selectedDateBookings.map((booking) => (
+              <div key={booking._id} className="day-booking-tab">
+                <div>
+                  <strong>
+                    {booking.user?.name || booking.customerName || "Customer"}
+                  </strong>
 
-                <p>
-                  {booking.date} at {booking.time}
-                </p>
+                  <p>
+                    {booking.date} at {booking.time}
+                  </p>
 
-                <p>{booking.status || "Scheduled"}</p>
+                  <p>{booking.status || "Scheduled"}</p>
+                </div>
+
+                <div className="day-tab-actions">
+                  <button
+                    onClick={() =>
+                      updateBookingStatus(booking._id, "Confirmed")
+                    }
+                  >
+                    Confirm
+                  </button>
+
+                  <button
+                    onClick={() =>
+                      updateBookingStatus(booking._id, "Declined")
+                    }
+                  >
+                    Decline
+                  </button>
+
+                  <button
+                    onClick={() =>
+                      updateBookingStatus(booking._id, "Contact Customer")
+                    }
+                  >
+                    Contact
+                  </button>
+                </div>
               </div>
+            ))}
+          </div>
+        </div>
+      )}
 
-              <div className="taskbar-actions">
-                <button
-                  className="yes-button"
-                  onClick={() =>
-                    updateBookingStatus(booking._id, "Confirmed")
-                  }
-                >
-                  Confirm
-                </button>
-
-                <button
-                  className="no-button"
-                  onClick={() =>
-                    updateBookingStatus(booking._id, "Declined")
-                  }
-                >
-                  Decline
-                </button>
-
-                <button
-                  className="contact-button"
-                  onClick={() =>
-                    updateBookingStatus(booking._id, "Contact Customer")
-                  }
-                >
-                  Contact
-                </button>
-              </div>
-            </div>
-          ))}
-        </aside>
-      </div>
-
-      {showModal && (
+      {showScheduleModal && (
         <div className="modal-overlay">
           <div className="schedule-modal">
             <button
               className="modal-close-button"
-              onClick={() => setShowModal(false)}
+              onClick={() => setShowScheduleModal(false)}
             >
               ×
             </button>

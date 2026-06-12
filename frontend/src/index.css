@@ -1416,3 +1416,142 @@ body,
   }
 }
 
+.admin-calendar-page {
+  background: #ffffff !important;
+  color: #000000 !important;
+}
+
+.admin-calendar-page h1 {
+  color: #000000;
+}
+
+.admin-calendar-page .calendar-main,
+.admin-calendar-page .calendar-body {
+  background: #ffffff;
+}
+
+.admin-calendar-page .calendar-day {
+  background: #ffffff;
+  color: #000000;
+  border: 1px solid #d7d7d7;
+  cursor: pointer;
+}
+
+.admin-calendar-page .calendar-day:hover {
+  background: #f7f7f7;
+}
+
+.admin-calendar-page .booked-day {
+  background: #fff8e1;
+}
+
+.admin-calendar-page .calendar-date-number {
+  color: #000000;
+}
+
+.calendar-booking-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.admin-calendar-page .booking-card {
+  background: #000000;
+  color: #ffffff;
+  border-left: 4px solid #d4af37;
+  padding: 6px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+.admin-calendar-page .booking-card p {
+  margin: 2px 0;
+}
+
+.day-schedule-modal {
+  background: #000000;
+  color: #ffffff;
+  border: 1px solid #d4af37;
+  padding: 28px;
+  border-radius: 14px;
+  width: 95%;
+  max-width: 620px;
+  max-height: 85vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+.day-schedule-modal h2,
+.day-schedule-modal p,
+.day-schedule-modal strong {
+  color: #ffffff;
+}
+
+.day-modal-close {
+  color: #ffffff;
+}
+
+.day-modal-add-button {
+  background: #ffffff;
+  color: #000000;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-bottom: 14px;
+}
+
+.day-booking-tab {
+  background: #ffffff;
+  color: #000000;
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 10px;
+  font-size: 13px;
+}
+
+.day-booking-tab p,
+.day-booking-tab strong {
+  color: #000000;
+  margin: 3px 0;
+}
+
+.day-tab-actions {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.day-tab-actions button {
+  background: #ffffff;
+  color: #000000;
+  border: 1px solid #000000;
+  padding: 5px 8px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.day-tab-actions button:hover,
+.day-modal-add-button:hover {
+  background: #d4af37;
+  color: #000000;
+}
+
+.schedule-modal {
+  background: #ffffff;
+  color: #000000;
+}
+
+.schedule-modal h2 {
+  color: #000000;
+}
+
+.schedule-modal input[readonly] {
+  background: #eeeeee;
+  color: #000000;
+}
+
