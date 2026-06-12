@@ -835,4 +835,10 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   background-color: #0d6efd;
 }
 
+.calendar-title-area {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
 

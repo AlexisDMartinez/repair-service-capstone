@@ -37,8 +37,6 @@ function AdminCalendar() {
   const firstDay = new Date(year, month, 1).getDay();
   const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-  const monthName = currentDate.toLocaleString("default", { month: "long" });
-
   const getBookingsForDay = (day) => {
     const dateString = new Date(year, month, day).toDateString();
 
@@ -59,6 +57,11 @@ function AdminCalendar() {
     setCurrentDate(new Date(year, month + 1, 1));
   };
 
+  const handleMonthChange = (e) => {
+    const selectedMonth = Number(e.target.value);
+    setCurrentDate(new Date(year, selectedMonth, 1));
+  };
+
   const handleYearChange = (e) => {
     const selectedYear = Number(e.target.value);
     setCurrentDate(new Date(selectedYear, month, 1));
@@ -74,6 +77,21 @@ function AdminCalendar() {
     calendarDays.push(day);
   }
 
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
   const years = [];
   for (let y = 2024; y <= 2035; y++) {
     years.push(y);
@@ -87,9 +105,13 @@ function AdminCalendar() {
         <button onClick={previousMonth}>Back</button>
 
         <div className="calendar-title-area">
-          <h2>
-            {monthName} {year}
-          </h2>
+          <select value={month} onChange={handleMonthChange}>
+            {months.map((monthName, index) => (
+              <option key={monthName} value={index}>
+                {monthName}
+              </option>
+            ))}
+          </select>
 
           <select value={year} onChange={handleYearChange}>
             {years.map((calendarYear) => (
