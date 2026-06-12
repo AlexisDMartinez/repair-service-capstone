@@ -106,7 +106,7 @@ function Register() {
 
           <input
             type="text"
-            placeholder="Phone Number (123-456-7890)"
+            placeholder="Phone Number"
             value={form.phone}
             maxLength={12}
             onChange={(e) =>
