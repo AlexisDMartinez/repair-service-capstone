@@ -841,4 +841,135 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   align-items: center;
 }
 
+.calendar-layout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 20px;
+}
+
+.calendar-main {
+  width: 100%;
+}
+
+.open-schedule-button {
+  background-color: #000;
+  color: #fff;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.calendar-date-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.small-add-button {
+  background-color: #000;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 26px;
+  height: 26px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.booking-card {
+  background-color: #000;
+  color: #fff;
+  border-left: 4px solid #fff;
+  padding: 8px;
+  margin-top: 8px;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+.booking-card p {
+  margin: 4px 0;
+}
+
+.calendar-taskbar {
+  background-color: #f4f4f4;
+  border: 1px solid #ddd;
+  padding: 16px;
+  border-radius: 8px;
+  min-height: 400px;
+  position: sticky;
+  top: 20px;
+}
+
+.taskbar-booking-card {
+  background-color: #000;
+  color: #fff;
+  padding: 12px;
+  border-radius: 8px;
+  margin-top: 14px;
+}
+
+.taskbar-booking-card p {
+  margin: 6px 0;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.65);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.schedule-modal {
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 10px;
+  width: 95%;
+  max-width: 520px;
+  position: relative;
+}
+
+.modal-close-button {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  border: none;
+  background: none;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.admin-booking-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.admin-booking-form input,
+.admin-booking-form textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.admin-booking-form textarea {
+  min-height: 80px;
+}
+
+.admin-booking-form button {
+  background-color: #000;
+  color: #fff;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
 
