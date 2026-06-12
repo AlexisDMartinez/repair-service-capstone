@@ -1229,3 +1229,86 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     line-height: 1;
   }
 }
+
+/* Show Today's Schedule on desktop, hide it on mobile */
+
+.today-schedule-panel {
+  display: block;
+}
+
+@media (min-width: 769px) {
+  .calendar-layout {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 14px;
+  }
+
+  .today-schedule-panel {
+    display: block !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .today-schedule-panel {
+    display: none !important;
+  }
+}
+
+/* Desktop Today Schedule Panel */
+
+.today-schedule-panel {
+  background: #000000 !important;
+  color: #ffffff !important;
+  border: 2px solid #d4af37 !important;
+  border-radius: 0 !important;
+  padding: 15px !important;
+}
+
+.today-schedule-panel h2,
+.today-schedule-panel p,
+.today-schedule-panel strong,
+.today-schedule-panel .selected-date-label {
+  color: #ffffff !important;
+}
+
+.today-booking-tab {
+  background: #ffffff !important;
+  color: #000000 !important;
+  border: 1px solid #cccccc !important;
+  border-radius: 0 !important;
+  padding: 10px !important;
+  margin-bottom: 10px !important;
+}
+
+.today-booking-tab p,
+.today-booking-tab strong {
+  color: #000000 !important;
+}
+
+.today-tab-actions {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.today-tab-actions button,
+.today-add-button {
+  background: #ffffff !important;
+  color: #000000 !important;
+  border: 1px solid #000000 !important;
+  border-radius: 0 !important;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.today-tab-actions button:hover,
+.today-add-button:hover {
+  background: #d4af37 !important;
+  color: #000000 !important;
+}
+
+@media (max-width: 768px) {
+  .today-schedule-panel {
+    display: none !important;
+  }
+}
