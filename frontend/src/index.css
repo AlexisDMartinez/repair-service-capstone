@@ -1226,3 +1226,32 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     line-height: 1;
   }
 }
+
+.status-selected-box {
+  background: #ffffff;
+  color: #000000;
+  border: 1px solid #000000;
+  border-radius: 8px;
+  padding: 8px;
+  margin-top: 8px;
+  text-align: center;
+}
+
+.status-selected-message {
+  color: #000000 !important;
+  font-weight: 800;
+  margin: 0 0 6px 0 !important;
+  text-align: center !important;
+}
+
+.change-status-link {
+  background: transparent !important;
+  color: #000000 !important;
+  border: none !important;
+  text-decoration: underline;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0 !important;
+  margin: 0 !important;
+}
