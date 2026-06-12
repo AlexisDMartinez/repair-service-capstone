@@ -25,7 +25,7 @@ function Register() {
     }
 
     try {
-      const registerData = {
+      await API.post("/auth/register", {
         firstName: form.firstName.trim(),
         lastName: form.lastName.trim(),
         phone: form.phone.trim(),
@@ -33,9 +33,7 @@ function Register() {
         password: form.password,
         securityQuestion: form.securityQuestion,
         securityAnswer: form.securityAnswer.trim()
-      };
-
-      await API.post("/auth/register", registerData);
+      });
 
       alert("Account created successfully. Please log in.");
       navigate("/login");
@@ -59,7 +57,10 @@ function Register() {
             placeholder="First Name"
             value={form.firstName}
             onChange={(e) =>
-              setForm({ ...form, firstName: e.target.value })
+              setForm({
+                ...form,
+                firstName: e.target.value
+              })
             }
             required
           />
@@ -69,7 +70,10 @@ function Register() {
             placeholder="Last Name"
             value={form.lastName}
             onChange={(e) =>
-              setForm({ ...form, lastName: e.target.value })
+              setForm({
+                ...form,
+                lastName: e.target.value
+              })
             }
             required
           />
@@ -79,7 +83,10 @@ function Register() {
             placeholder="Phone Number"
             value={form.phone}
             onChange={(e) =>
-              setForm({ ...form, phone: e.target.value })
+              setForm({
+                ...form,
+                phone: e.target.value
+              })
             }
             required
           />
@@ -89,7 +96,10 @@ function Register() {
             placeholder="Email Address"
             value={form.email}
             onChange={(e) =>
-              setForm({ ...form, email: e.target.value })
+              setForm({
+                ...form,
+                email: e.target.value
+              })
             }
             required
           />
@@ -99,7 +109,10 @@ function Register() {
             placeholder="Password"
             value={form.password}
             onChange={(e) =>
-              setForm({ ...form, password: e.target.value })
+              setForm({
+                ...form,
+                password: e.target.value
+              })
             }
             required
           />
@@ -109,7 +122,10 @@ function Register() {
             placeholder="Confirm Password"
             value={form.confirmPassword}
             onChange={(e) =>
-              setForm({ ...form, confirmPassword: e.target.value })
+              setForm({
+                ...form,
+                confirmPassword: e.target.value
+              })
             }
             required
           />
@@ -117,7 +133,10 @@ function Register() {
           <select
             value={form.securityQuestion}
             onChange={(e) =>
-              setForm({ ...form, securityQuestion: e.target.value })
+              setForm({
+                ...form,
+                securityQuestion: e.target.value
+              })
             }
             required
           >
@@ -141,7 +160,10 @@ function Register() {
             placeholder="Security Answer"
             value={form.securityAnswer}
             onChange={(e) =>
-              setForm({ ...form, securityAnswer: e.target.value })
+              setForm({
+                ...form,
+                securityAnswer: e.target.value
+              })
             }
             required
           />
@@ -158,6 +180,5 @@ function Register() {
 }
 
 export default Register;
-
 
 
