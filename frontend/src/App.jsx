@@ -16,6 +16,7 @@ import Services from "./pages/Services";
 import Book from "./pages/Book";
 import Dashboard from "./pages/Dashboard";
 import AdminDashboard from "./pages/AdminDashboard";
+import AdminCalendar from "./pages/AdminCalendar";
 
 function AppContent() {
   const { pathname } = useLocation();
@@ -66,6 +67,15 @@ function AppContent() {
             </ProtectedRoute>
           }
         />
+
+        <Route
+          path="/admin/calendar"
+          element={
+            <ProtectedRoute>
+              <AdminCalendar />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </>
   );
@@ -80,3 +90,4 @@ function App() {
 }
 
 export default App;
+

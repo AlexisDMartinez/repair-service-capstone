@@ -68,12 +68,21 @@ function Navbar() {
         )}
 
         {token && isAdmin && (
-          <Link
-            to="/admin-dashboard"
-            onClick={() => setMenuOpen(false)}
-          >
-            Admin Dashboard
-          </Link>
+          <>
+            <Link
+              to="/admin-dashboard"
+              onClick={() => setMenuOpen(false)}
+            >
+              Admin Dashboard
+            </Link>
+
+            <Link
+              to="/admin/calendar"
+              onClick={() => setMenuOpen(false)}
+            >
+              Schedule Calendar
+            </Link>
+          </>
         )}
 
         {token && (
